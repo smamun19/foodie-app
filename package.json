@@ -8,11 +8,13 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "gittu": "git add . && git commit && git push"
+    "gittu": "git add . && git commit && git push",
+    "bootsplash": "yarn react-native generate-bootsplash assets/bootsplash_logo_original.png --background-color=F5FCFF --logo-width=100 --assets-path=assets --flavor=main"
   },
   "dependencies": {
     "react": "17.0.2",
-    "react-native": "0.66.3"
+    "react-native": "0.66.3",
+    "react-native-bootsplash": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
