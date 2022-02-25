@@ -14,6 +14,7 @@
   "dependencies": {
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "@types/react": "^17",
     "react": "17.0.2",
     "react-native": "0.66.3",
     "react-native-bootsplash": "^4.0.2",
