@@ -7,9 +7,10 @@ import {
   StyleProp,
   ViewStyle,
   TextStyle,
+  TouchableOpacityProps,
 } from 'react-native';
 
-export interface ButtonProps {
+export interface ButtonProps extends TouchableOpacityProps {
   title: string;
   containerStyle?: StyleProp<ViewStyle>;
   btnStyle?: StyleProp<ViewStyle>;
@@ -45,7 +46,6 @@ const styles = StyleSheet.create({
   btn: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'edf109',
     borderRadius: 15,
   },
   innerView: {
@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: 'edf109',
     borderRadius: 60,
   },
   text: {
