@@ -7,9 +7,10 @@ import CustomInput from '../components/TextInput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RootStackScreensProps} from '../navigators/root-stack';
 
-const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
+const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
 
   return (
     <View style={styles.container}>
@@ -17,11 +18,16 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
         contentContainerStyle={styles.KeyboardAwareContainer}>
         <View style={styles.inputContainer}>
           <CustomInput
-            inputStyle={styles.textInput}
             title="Email"
             placeholder="Enter Your Email Address"
             value={email}
             onChangeText={setEmail}
+          />
+          <CustomInput
+            title="Name"
+            placeholder="Enter Your Full Name"
+            value={name}
+            onChangeText={setName}
           />
           <CustomInput
             title="Password"
@@ -30,21 +36,13 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
             onChangeText={setPassword}
             secureTextEntry={true}
           />
-
           <View style={styles.signUp}>
-            <Text style={styles.text2}>New to Foddie?</Text>
+            <Text style={styles.text2}>Already have an Account?</Text>
             <CustomButton
-              title="Sign Up"
+              title="Log in"
               btnStyle={styles.signUpBtn}
               textStyle={styles.btnText2}
-              onPress={() => navigation.navigate('SignUp')}
-            />
-          </View>
-          <View>
-            <CustomButton
-              title="Forgot Password"
-              textStyle={styles.btnText2}
-              btnStyle={styles.forgotBtn}
+              onPress={() => navigation.navigate('Login')}
             />
           </View>
         </View>
@@ -75,6 +73,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'baseline',
+    width: '100%',
   },
   btn: {
     width: '100%',
@@ -87,11 +86,11 @@ const styles = StyleSheet.create({
   signUp: {
     flexDirection: 'row',
     alignItems: 'baseline',
-    width: '50%',
+    width: '60%',
   },
   signUpBtn: {
     width: '40%',
-    marginEnd: 110,
+    marginEnd: 210,
   },
   btnText: {
     color: 'white',
@@ -102,13 +101,11 @@ const styles = StyleSheet.create({
   forgotBtn: {
     width: '40%',
     marginStart: 14,
-    marginBottom: 40,
   },
   forgotBtnArea: {},
   text2: {
     marginLeft: 36,
   },
-  textInput: {},
 });
 
-export default Login;
+export default SignUp;

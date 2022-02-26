@@ -7,12 +7,14 @@ import Initial from '../screens/initial';
 import Main from '../screens/main';
 import Login from '../screens/login';
 import Loader from '../screens/loader';
+import SignUp from '../screens/signup';
 
 export type RootStackParamList = {
   Loader: undefined;
   Initial: undefined;
   Main: undefined;
   Login: undefined;
+  SignUp: undefined;
 };
 
 export type RootStackScreens = keyof RootStackParamList;
@@ -28,6 +30,7 @@ const RootStack = () => (
     <Screen name="Initial" component={Initial} />
     <Screen name="Main" component={Main} />
     <Screen name="Login" component={Login} />
+    <Screen name="SignUp" component={SignUp} />
   </Navigator>
 );
 

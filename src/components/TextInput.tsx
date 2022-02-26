@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   inputInnerContainer: {
-    padding: -1,
     backgroundColor: 'white',
   },
   text: {
