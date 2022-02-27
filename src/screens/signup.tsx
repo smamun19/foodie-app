@@ -38,7 +38,7 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
           />
         </View>
         <View style={styles.signUp}>
-          <Text style={styles.text2}>Already have an Account?</Text>
+          <Text style={styles.text2}>have an Account?</Text>
           <CustomButton
             title="Log in"
             btnStyle={styles.signUpBtn}
@@ -83,25 +83,22 @@ const styles = StyleSheet.create({
   },
   signUp: {
     flexDirection: 'row',
-    alignItems: 'baseline',
+    alignItems: 'center',
     width: '50%',
   },
   signUpBtn: {
     width: '40%',
-    marginEnd: 120,
-    backgroundColor: 'red',
+    marginEnd: 130,
   },
   btnText: {
     color: 'white',
   },
   btnText2: {
     color: '#65a6f0',
-    fontSize: 13,
   },
   forgotBtnArea: {},
   text2: {
     marginLeft: 36,
-    fontSize: 13,
   },
   textInput: {},
 });
