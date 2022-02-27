@@ -36,15 +36,15 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
             onChangeText={setPassword}
             secureTextEntry={true}
           />
-          <View style={styles.signUp}>
-            <Text style={styles.text2}>Already have an Account?</Text>
-            <CustomButton
-              title="Log in"
-              btnStyle={styles.signUpBtn}
-              textStyle={styles.btnText2}
-              onPress={() => navigation.navigate('Login')}
-            />
-          </View>
+        </View>
+        <View style={styles.signUp}>
+          <Text style={styles.text2}>Already have an Account?</Text>
+          <CustomButton
+            title="Log in"
+            btnStyle={styles.signUpBtn}
+            textStyle={styles.btnText2}
+            onPress={() => navigation.navigate('Login')}
+          />
         </View>
       </KeyboardAwareScrollView>
       <KeyboardAvoidingView>
@@ -66,14 +66,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  KeyboardAwareContainer: {
-    flex: 1,
-  },
+  KeyboardAwareContainer: {},
   inputContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'baseline',
-    width: '100%',
+    marginTop: 250,
+    width: 400,
   },
   btn: {
     width: '100%',
@@ -86,26 +84,26 @@ const styles = StyleSheet.create({
   signUp: {
     flexDirection: 'row',
     alignItems: 'baseline',
-    width: '60%',
+    width: '50%',
   },
   signUpBtn: {
     width: '40%',
-    marginEnd: 210,
+    marginEnd: 120,
+    backgroundColor: 'red',
   },
   btnText: {
     color: 'white',
   },
   btnText2: {
     color: '#65a6f0',
-  },
-  forgotBtn: {
-    width: '40%',
-    marginStart: 14,
+    fontSize: 13,
   },
   forgotBtnArea: {},
   text2: {
     marginLeft: 36,
+    fontSize: 13,
   },
+  textInput: {},
 });
 
 export default SignUp;

@@ -68,13 +68,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  KeyboardAwareContainer: {
-    flex: 1,
-  },
+  KeyboardAwareContainer: {},
   inputContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'baseline',
+    marginTop: 250,
+    width: 400,
   },
   btn: {
     width: '100%',
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
   },
   signUpBtn: {
     width: '40%',
-    marginEnd: 110,
+    marginEnd: 100,
   },
   btnText: {
     color: 'white',
@@ -101,8 +100,7 @@ const styles = StyleSheet.create({
   },
   forgotBtn: {
     width: '40%',
-    marginStart: 14,
-    marginBottom: 40,
+    marginTop: 20,
   },
   forgotBtnArea: {},
   text2: {
