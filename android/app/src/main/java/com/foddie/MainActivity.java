@@ -12,7 +12,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "Foddie";
+    return "Foodie";
   } 
   // react native bootsplash
   @Override
