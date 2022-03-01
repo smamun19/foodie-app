@@ -3,6 +3,7 @@ import {Text, TouchableOpacity, StyleSheet, SafeAreaView} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {Image} from 'react-native-elements/dist/image/Image';
 
 const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
   useEffect(() => {
@@ -18,6 +19,12 @@ const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <Text style={styles.text2}>Think Food</Text>
+      <Image
+        style={styles.imageStyle}
+        source={require('../assets/foodie.jpeg')}
+      />
+
       <TouchableOpacity
         onPress={() => navigation.navigate('Login')}
         style={styles.button}>
@@ -31,20 +38,26 @@ const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
   },
   button: {
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'yellow',
     padding: 20,
-    width: '90%',
+    width: '100%',
     borderRadius: 5,
     flexDirection: 'row',
   },
   text: {fontSize: 20, fontWeight: 'bold', color: 'black'},
+  text2: {fontSize: 30, fontWeight: 'bold', color: '#e3ac14'},
+  imageStyle: {
+    width: 200,
+    height: 200,
+  },
+  imgView: {},
 });
 
 export default Loader;

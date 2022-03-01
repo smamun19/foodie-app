@@ -13,9 +13,7 @@ const Spacer = ({width, height, backgroundColor}: SpacerProp) => {
       style={{
         width: width ? width : (width = '100%'),
         height: height ? height : (height = 10),
-        backgroundColor: backgroundColor
-          ? backgroundColor
-          : (backgroundColor = 'white'),
+        backgroundColor: backgroundColor ? backgroundColor : undefined,
       }}
     />
   );
