@@ -42,22 +42,23 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     margin: 10,
+    alignItems: 'center',
     paddingHorizontal: 15,
   },
-  title: {width: '90%', marginHorizontal: 10, marginVertical: -8},
+  title: {width: '100%', marginHorizontal: 10, marginVertical: -8},
   inputOuterContainer: {
-    width: '90%',
-    margin: 10,
     padding: 0.1,
     backgroundColor: 'grey',
     borderRadius: 5,
+    width: '100%',
   },
   inputInnerContainer: {
     backgroundColor: 'white',
   },
   text: {
     height: 45,
-    paddingHorizontal: 17,
+    paddingHorizontal: 10,
+    color: 'grey',
   },
 });
 

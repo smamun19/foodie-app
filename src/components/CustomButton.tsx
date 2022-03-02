@@ -14,6 +14,7 @@ export interface ButtonProps extends TouchableOpacityProps {
   title: string;
   containerStyle?: StyleProp<ViewStyle>;
   btnStyle?: StyleProp<ViewStyle>;
+  btnInnerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
 }
 
@@ -21,13 +22,14 @@ const CustomButton = ({
   title,
   containerStyle,
   btnStyle,
+  btnInnerStyle,
   textStyle,
   ...rest
 }: ButtonProps) => {
   return (
     <View style={[styles.container, containerStyle]}>
       <TouchableOpacity {...rest} style={[styles.btn, btnStyle]}>
-        <View style={styles.innerView}>
+        <View style={[styles.innerView, btnInnerStyle]}>
           <Text style={(styles.text, textStyle)}>{title}</Text>
         </View>
       </TouchableOpacity>
@@ -53,7 +55,6 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
     borderRadius: 60,
   },
   text: {

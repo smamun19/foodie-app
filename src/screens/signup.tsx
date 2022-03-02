@@ -17,24 +17,38 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         contentContainerStyle={styles.KeyboardAwareContainer}>
-        <View style={styles.upperView}>
-          <Text style={styles.text3}>Create an account</Text>
-        </View>
-        <Spacer height={30} />
-        <View>
-          <CustomButton
-            textStyle={styles.btnText2}
-            btnStyle={styles.google}
-            title="Continue with Google"
-          />
+        <View style={styles.upperView2}>
+          <View style={styles.upperView}>
+            <Text style={styles.text3}>Create an account</Text>
+            <Spacer />
+            <Text style={styles.text5}>
+              By continuing, you agree to our{' '}
+              <Text selectable={true} style={styles.btnText2}>
+                User Agreement
+              </Text>{' '}
+              and{' '}
+              <Text selectable={true} style={styles.btnText2}>
+                Privacy Policy
+              </Text>
+            </Text>
+          </View>
           <Spacer height={30} />
-          <CustomButton
-            btnStyle={styles.google}
-            textStyle={styles.btnText2}
-            title="Continue with Facbook"
-          />
-          <Spacer height={30} />
+          <View>
+            <CustomButton
+              textStyle={styles.btnText2}
+              btnStyle={styles.google}
+              title="Continue with Google"
+            />
+            <Spacer height={20} />
+            <CustomButton
+              btnStyle={styles.google}
+              textStyle={styles.btnText2}
+              title="Continue with Facbook"
+            />
+            <Spacer height={30} />
+          </View>
         </View>
+
         <View style={styles.orStyle}>
           <Text style={styles.text4}>OR</Text>
         </View>
@@ -85,15 +99,12 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   KeyboardAwareContainer: {},
   inputContainer: {
     justifyContent: 'center',
-    alignItems: 'baseline',
+    alignItems: 'center',
     marginTop: 20,
-    width: 400,
   },
   btn: {
     width: '100%',
@@ -106,11 +117,11 @@ const styles = StyleSheet.create({
   signUp: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '50%',
+    margin: 15,
   },
   signUpBtn: {
-    width: '40%',
-    marginEnd: 130,
+    width: '20%',
+    marginEnd: '90%',
   },
   btnText: {
     color: 'white',
@@ -118,24 +129,28 @@ const styles = StyleSheet.create({
   btnText2: {
     color: '#65a6f0',
   },
-  text2: {
-    marginLeft: 36,
-  },
+  text2: {},
   text3: {
     fontWeight: 'bold',
   },
   text4: {
     color: 'grey',
   },
+  text5: {
+    color: 'grey',
+    fontSize: 10,
+  },
   upperView: {
-    marginLeft: '9%',
-    flex: 1,
+    marginLeft: '4%',
     marginTop: 50,
+  },
+  upperView2: {
+    justifyContent: 'center',
   },
   google: {
     borderRadius: 30,
     borderWidth: 1,
-    width: '90%',
+    width: '100%',
     height: 60,
     borderColor: '#65a6f0',
   },
