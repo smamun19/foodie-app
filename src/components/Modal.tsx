@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Modal, StyleSheet, Text, View, ModalProps} from 'react-native';
+import CustomButton from './CustomButton';
+import CustomInput from './TextInput';
 
 export interface Props extends ModalProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -7,6 +9,7 @@ export interface Props extends ModalProps {
 }
 
 const CustomModal = ({modalVisible, setModalVisible}: Props) => {
+  const [email, setEmail] = useState('');
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -20,6 +23,30 @@ const CustomModal = ({modalVisible, setModalVisible}: Props) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Forgot your password?</Text>
+            <View style={styles.inputStyle}>
+              <CustomInput
+                title="Email"
+                containerStyle={styles.inputContainer}
+                placeholder="Enter Your Email Address"
+                value={email}
+                onChangeText={setEmail}
+              />
+              <View style={styles.btnContainer}>
+                <CustomButton
+                  containerStyle={styles.button}
+                  textStyle={styles.textStyle}
+                  title="EMAIL ME"
+                />
+                <CustomButton
+                  containerStyle={styles.button}
+                  textStyle={styles.textStyle}
+                  title="CANCEL"
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                  }}
+                />
+              </View>
+            </View>
           </View>
         </View>
       </Modal>
@@ -33,12 +60,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
+    margin: 1,
   },
   modalView: {
-    margin: 20,
+    width: '90%',
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
+    padding: 15,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -50,27 +78,34 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
+    width: '35%',
+    paddingHorizontal: 0,
+  },
+  btnContainer: {
+    flexDirection: 'row-reverse',
+    width: '100%',
   },
   buttonOpen: {
     backgroundColor: '#F194FF',
   },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
   textStyle: {
-    color: 'white',
+    color: '#65a6f0',
     fontWeight: 'bold',
-    textAlign: 'center',
+    alignSelf: 'flex-end',
   },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'black',
   },
-  text: {
-    marginBottom: 100,
+  inputStyle: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inputContainer: {
+    paddingHorizontal: 0,
   },
 });
 
