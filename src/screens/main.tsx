@@ -1,14 +1,10 @@
 import React from 'react';
 import {View, Text, SafeAreaView} from 'react-native';
+import CustomModal from '../components/Modal';
+import {RootStackScreensProps} from '../navigators/root-stack';
 
-const Main = () => {
-  return (
-    <SafeAreaView>
-      <View>
-        <Text>This is the first page</Text>
-      </View>
-    </SafeAreaView>
-  );
+const Main = ({navigation}: RootStackScreensProps<'Main'>) => {
+  return <CustomModal />;
 };
 
 export default Main;

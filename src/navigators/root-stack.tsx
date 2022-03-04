@@ -28,8 +28,8 @@ const RootStack = () => (
   <Navigator screenOptions={{headerShown: false}}>
     <Screen name="Loader" component={Loader} />
     <Screen name="Initial" component={Initial} />
-    <Screen name="Main" component={Main} />
     <Screen name="Login" component={Login} />
+    <Screen name="Main" component={Main} />
     <Screen name="SignUp" component={SignUp} />
   </Navigator>
 );

@@ -7,10 +7,12 @@ import CustomInput from '../components/TextInput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
+import CustomModal from '../components/Modal';
 
 const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -86,8 +88,15 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
               textStyle={styles.btnText2}
               btnStyle={styles.forgotBtn}
               containerStyle={styles.forgotBtnContainer}
+              onPress={() => {
+                setModalVisible(true);
+              }}
             />
           </View>
+          <CustomModal
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+          />
         </View>
       </KeyboardAwareScrollView>
       <KeyboardAvoidingView>
