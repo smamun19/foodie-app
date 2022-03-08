@@ -8,11 +8,13 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
 import CustomModal from '../components/Modal';
+import PasswordReset from '../components/PasswordResetModal';
 
 const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [resetPassVisible, setResetPassVisible] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -96,6 +98,11 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
           <CustomModal
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
+            setResetPassVisible={setResetPassVisible}
+          />
+          <PasswordReset
+            resetPassVisible={resetPassVisible}
+            setResetPassVisible={setResetPassVisible}
           />
         </View>
       </KeyboardAwareScrollView>

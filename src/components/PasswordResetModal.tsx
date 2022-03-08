@@ -4,54 +4,53 @@ import CustomButton from './CustomButton';
 import CustomInput from './TextInput';
 
 export interface Props extends ModalProps {
-  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  modalVisible: boolean;
   setResetPassVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  resetPassVisible: boolean;
 }
 
-const CustomModal = ({
-  modalVisible,
-  setModalVisible,
-  setResetPassVisible,
-}: Props) => {
-  const [email, setEmail] = useState('');
+const PasswordReset = ({resetPassVisible, setResetPassVisible}: Props) => {
+  const [otp, setOtp] = useState('');
+  const [newpass, setNewPass] = useState('');
   return (
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
-        onDismiss={() => setModalVisible(false)}
+        visible={resetPassVisible}
+        onDismiss={() => setResetPassVisible(false)}
         onRequestClose={() => {
-          setModalVisible(!modalVisible);
+          setResetPassVisible(!resetPassVisible);
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Forgot your password?</Text>
+            <Text style={styles.modalText}>Password Reset</Text>
             <View style={styles.inputStyle}>
               <CustomInput
-                title="Email"
+                title="OTP"
                 containerStyle={styles.inputContainer}
-                placeholder="Enter Your Email Address"
-                value={email}
-                onChangeText={setEmail}
+                placeholder="Enter Your OTP"
+                value={otp}
+                onChangeText={setOtp}
+              />
+              <CustomInput
+                title="New Password"
+                containerStyle={styles.inputContainer}
+                placeholder="Enter Your new password"
+                value={newpass}
+                onChangeText={setNewPass}
               />
               <View style={styles.btnContainer}>
                 <CustomButton
                   containerStyle={styles.button}
                   textStyle={styles.textStyle}
-                  title="EMAIL ME"
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                    setResetPassVisible(true);
-                  }}
+                  title="OKAY"
                 />
                 <CustomButton
                   containerStyle={styles.button}
                   textStyle={styles.textStyle}
                   title="CANCEL"
                   onPress={() => {
-                    setModalVisible(!modalVisible);
+                    setResetPassVisible(!resetPassVisible);
                   }}
                 />
               </View>
@@ -118,4 +117,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomModal;
+export default PasswordReset;
