@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Modal, StyleSheet, Text, View, ModalProps} from 'react-native';
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+  ModalProps,
+  Pressable,
+} from 'react-native';
 import CustomButton from './CustomButton';
 import CustomInput from './TextInput';
 
@@ -12,7 +19,7 @@ const PasswordReset = ({resetPassVisible, setResetPassVisible}: Props) => {
   const [otp, setOtp] = useState('');
   const [newpass, setNewPass] = useState('');
   return (
-    <View style={styles.centeredView}>
+    <View style={styles.container}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -21,8 +28,10 @@ const PasswordReset = ({resetPassVisible, setResetPassVisible}: Props) => {
         onRequestClose={() => {
           setResetPassVisible(!resetPassVisible);
         }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
+        <Pressable
+          onPressOut={() => setResetPassVisible(false)}
+          style={styles.centeredView}>
+          <Pressable style={styles.modalView}>
             <Text style={styles.modalText}>Password Reset</Text>
             <View style={styles.inputStyle}>
               <CustomInput
@@ -55,20 +64,25 @@ const PasswordReset = ({resetPassVisible, setResetPassVisible}: Props) => {
                 />
               </View>
             </View>
-          </View>
-        </View>
+          </Pressable>
+        </Pressable>
       </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
+  container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
     margin: 1,
+    backgroundColor: 'red',
+  },
+  centeredView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.62)',
   },
   modalView: {
     width: '90%',

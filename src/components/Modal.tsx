@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Modal, StyleSheet, Text, View, ModalProps} from 'react-native';
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+  ModalProps,
+  Pressable,
+} from 'react-native';
 import CustomButton from './CustomButton';
 import CustomInput from './TextInput';
 
@@ -16,7 +23,7 @@ const CustomModal = ({
 }: Props) => {
   const [email, setEmail] = useState('');
   return (
-    <View style={styles.centeredView}>
+    <View style={styles.container}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -25,8 +32,10 @@ const CustomModal = ({
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
+        <Pressable
+          onPressOut={() => setModalVisible(false)}
+          style={styles.centeredView}>
+          <Pressable style={styles.modalView}>
             <Text style={styles.modalText}>Forgot your password?</Text>
             <View style={styles.inputStyle}>
               <CustomInput
@@ -56,20 +65,25 @@ const CustomModal = ({
                 />
               </View>
             </View>
-          </View>
-        </View>
+          </Pressable>
+        </Pressable>
       </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
+  container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
     margin: 1,
+    backgroundColor: 'red',
+  },
+  centeredView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.62)',
   },
   modalView: {
     width: '90%',

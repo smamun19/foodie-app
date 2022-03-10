@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   upperView: {
-    marginLeft: '4%',
+    margin: 15,
     marginTop: 50,
   },
   upperView2: {
