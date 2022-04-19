@@ -9,6 +9,7 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
 import CustomModal from '../components/Modal';
 import PasswordReset from '../components/PasswordResetModal';
+import {signin} from '../services/auth';
 
 const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [password, setPassword] = useState('');
@@ -112,6 +113,7 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
             title="Continue"
             btnStyle={styles.btn}
             textStyle={styles.btnText}
+            onPress={() => signin(email, password)}
           />
         </View>
       </KeyboardAvoidingView>
