@@ -7,6 +7,7 @@ import {
   ModalProps,
   Pressable,
 } from 'react-native';
+import {reqReset} from '../services/auth';
 import CustomButton from './CustomButton';
 import CustomInput from './TextInput';
 
@@ -51,6 +52,7 @@ const CustomModal = ({
                   textStyle={styles.textStyle}
                   title="EMAIL ME"
                   onPress={() => {
+                    reqReset(email);
                     setModalVisible(!modalVisible);
                     setResetPassVisible(true);
                   }}
