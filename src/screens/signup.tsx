@@ -67,19 +67,19 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
         <View style={styles.inputContainer}>
           <CustomInput
             title="Email"
-            placeholder="Enter Your Email Address"
+            placeholder="Enter your email address"
             value={email}
             onChangeText={setEmail}
           />
           <CustomInput
             title="Name"
-            placeholder="Enter Your Full Name"
+            placeholder="Enter your full name"
             value={name}
             onChangeText={setName}
           />
           <CustomInput
             title="Password"
-            placeholder="Enter Your Password"
+            placeholder="Enter your password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry={true}

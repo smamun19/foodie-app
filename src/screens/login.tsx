@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, KeyboardAvoidingView} from 'react-native';
 import {Text} from 'react-native-elements';
 import CustomButton from '../components/CustomButton';
@@ -8,7 +8,6 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
 import CustomModal from '../components/Modal';
-import PasswordReset from '../components/PasswordResetModal';
 import {signin} from '../services/auth';
 
 const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
@@ -16,6 +15,12 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [email, setEmail] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [resetPassVisible, setResetPassVisible] = useState(false);
+
+  useEffect(() => {
+    if (resetPassVisible) {
+      navigation.navigate('Otp');
+    }
+  });
 
   return (
     <View style={styles.container}>
@@ -61,13 +66,13 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
         <View style={styles.inputContainer}>
           <CustomInput
             title="Email"
-            placeholder="Enter Your Email Address"
+            placeholder="Enter your email address"
             value={email}
             onChangeText={setEmail}
           />
           <CustomInput
             title="Password"
-            placeholder="Enter Your Password"
+            placeholder="Enter your password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry={true}
@@ -101,10 +106,10 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
             setModalVisible={setModalVisible}
             setResetPassVisible={setResetPassVisible}
           />
-          <PasswordReset
+          {/* <PasswordReset
             resetPassVisible={resetPassVisible}
             setResetPassVisible={setResetPassVisible}
-          />
+          /> */}
         </View>
       </KeyboardAwareScrollView>
       <KeyboardAvoidingView>
