@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, KeyboardAvoidingView} from 'react-native';
 import {Text} from 'react-native-elements';
 import CustomButton from '../components/CustomButton';
@@ -14,14 +14,6 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  const [resetPassVisible, setResetPassVisible] = useState(false);
-
-  useEffect(() => {
-    if (resetPassVisible) {
-      navigation.navigate('Otp');
-    }
-  });
-
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -103,13 +95,9 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
           </View>
           <CustomModal
             modalVisible={modalVisible}
+            navigation={navigation}
             setModalVisible={setModalVisible}
-            setResetPassVisible={setResetPassVisible}
           />
-          {/* <PasswordReset
-            resetPassVisible={resetPassVisible}
-            setResetPassVisible={setResetPassVisible}
-          /> */}
         </View>
       </KeyboardAwareScrollView>
       <KeyboardAvoidingView>
