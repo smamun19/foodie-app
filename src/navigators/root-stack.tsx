@@ -17,8 +17,8 @@ export type RootStackParamList = {
   Main: undefined;
   Login: undefined;
   SignUp: undefined;
-  Otp: undefined;
-  ResetPassword: undefined;
+  Otp: {email: string};
+  ResetPassword: {email: string};
 };
 
 export type RootStackScreens = keyof RootStackParamList;

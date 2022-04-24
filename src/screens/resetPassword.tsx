@@ -5,6 +5,7 @@ import CustomInput from '../components/TextInput';
 import Spacer from '../components/Spacer';
 
 import {RootStackScreensProps} from '../navigators/root-stack';
+import {resetPass} from '../services/auth';
 
 export interface Props extends ModalProps {
   setResetPassVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,14 +14,23 @@ export interface Props extends ModalProps {
 
 const ResetPassword = ({
   navigation,
+  route,
 }: RootStackScreensProps<'ResetPassword'>) => {
   const [newpass, setNewPass] = useState('');
+  const {email} = route.params;
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
+    const res = await resetPass(email, newpass);
+    if (res.statusCode !== 200) {
+      return Alert.alert('Error!', res.message, undefined, {
+        cancelable: true,
+      });
+    }
     Alert.alert('Success!', 'Your password has been reset successfully', [
       {onPress: () => navigation.navigate('Login')},
     ]);
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.modalText}>Reset Password</Text>

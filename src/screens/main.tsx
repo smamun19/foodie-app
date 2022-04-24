@@ -6,7 +6,7 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 const Main = ({navigation}: RootStackScreensProps<'Main'>) => {
   return (
     <View>
-      <Text>This will be the verify email page</Text>
+      <Text>This will be the after sign in page</Text>
     </View>
   );
 };

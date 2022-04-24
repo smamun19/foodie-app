@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet, View, KeyboardAvoidingView, Alert} from 'react-native';
 import {Text} from 'react-native-elements';
 import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/TextInput';
@@ -7,13 +7,24 @@ import CustomInput from '../components/TextInput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
-import CustomModal from '../components/Modal';
+import CustomModal from '../components/ForgotPassModal';
 import {signin} from '../services/auth';
 
 const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+
   const [modalVisible, setModalVisible] = useState(false);
+
+  const signinHanlder = async () => {
+    const res = await signin(email, password);
+    if (res.statusCode !== 200) {
+      return Alert.alert('Error!', res.message, undefined, {
+        cancelable: true,
+      });
+    }
+    navigation.navigate('Main');
+  };
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -106,7 +117,7 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
             title="Continue"
             btnStyle={styles.btn}
             textStyle={styles.btnText}
-            onPress={() => signin(email, password)}
+            onPress={signinHanlder}
           />
         </View>
       </KeyboardAvoidingView>

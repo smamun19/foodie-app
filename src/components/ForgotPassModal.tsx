@@ -30,7 +30,7 @@ const CustomModal = ({modalVisible, setModalVisible, navigation}: Props) => {
       });
     }
     setModalVisible(!modalVisible);
-    navigation.navigate('Otp');
+    navigation.navigate('Otp', {email});
   };
   return (
     <View style={styles.container}>
