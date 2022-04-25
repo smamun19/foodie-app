@@ -1,3 +1,4 @@
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {
   Modal,
@@ -6,22 +7,31 @@ import {
   View,
   ModalProps,
   Pressable,
+  Alert,
 } from 'react-native';
+import {RootStackParamList} from '../navigators/root-stack';
+import {reqReset} from '../services/auth';
 import CustomButton from './CustomButton';
 import CustomInput from './TextInput';
 
 export interface Props extends ModalProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   modalVisible: boolean;
-  setResetPassVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>;
 }
 
-const CustomModal = ({
-  modalVisible,
-  setModalVisible,
-  setResetPassVisible,
-}: Props) => {
+const CustomModal = ({modalVisible, setModalVisible, navigation}: Props) => {
   const [email, setEmail] = useState('');
+  const modalHandler = async () => {
+    const res = await reqReset(email);
+    if (res.statusCode !== 200) {
+      return Alert.alert('Error!', res.message, undefined, {
+        cancelable: true,
+      });
+    }
+    setModalVisible(!modalVisible);
+    navigation.navigate('Otp', {email});
+  };
   return (
     <View style={styles.container}>
       <Modal
@@ -50,10 +60,7 @@ const CustomModal = ({
                   containerStyle={styles.button}
                   textStyle={styles.textStyle}
                   title="EMAIL ME"
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                    setResetPassVisible(true);
-                  }}
+                  onPress={modalHandler}
                 />
                 <CustomButton
                   containerStyle={styles.button}

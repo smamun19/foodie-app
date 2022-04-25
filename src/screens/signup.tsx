@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet, View, KeyboardAvoidingView, Alert} from 'react-native';
 import {Text} from 'react-native-elements';
 import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/TextInput';
@@ -7,11 +7,23 @@ import CustomInput from '../components/TextInput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
+import {signup} from '../services/auth';
 
 const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+
+  const signUpHandler = async () => {
+    const res = await signup(email, name, password);
+    if (res.statusCode !== 201) {
+      return Alert.alert('Error!', res.message, undefined, {
+        cancelable: true,
+      });
+    }
+
+    return navigation.navigate('Main');
+  };
 
   return (
     <View style={styles.container}>
@@ -55,19 +67,19 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
         <View style={styles.inputContainer}>
           <CustomInput
             title="Email"
-            placeholder="Enter Your Email Address"
+            placeholder="Enter your email address"
             value={email}
             onChangeText={setEmail}
           />
           <CustomInput
             title="Name"
-            placeholder="Enter Your Full Name"
+            placeholder="Enter your full name"
             value={name}
             onChangeText={setName}
           />
           <CustomInput
             title="Password"
-            placeholder="Enter Your Password"
+            placeholder="Enter your password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry={true}
@@ -89,6 +101,7 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
             title="Continue"
             btnStyle={styles.btn}
             textStyle={styles.btnText}
+            onPress={signUpHandler}
           />
         </View>
       </KeyboardAvoidingView>

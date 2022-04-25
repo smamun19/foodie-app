@@ -8,6 +8,8 @@ import Main from '../screens/main';
 import Login from '../screens/login';
 import Loader from '../screens/loader';
 import SignUp from '../screens/signup';
+import Otp from '../screens/otp';
+import ResetPassword from '../screens/resetPassword';
 
 export type RootStackParamList = {
   Loader: undefined;
@@ -15,6 +17,8 @@ export type RootStackParamList = {
   Main: undefined;
   Login: undefined;
   SignUp: undefined;
+  Otp: {email: string};
+  ResetPassword: {email: string};
 };
 
 export type RootStackScreens = keyof RootStackParamList;
@@ -31,6 +35,8 @@ const RootStack = () => (
     <Screen name="Login" component={Login} />
     <Screen name="Main" component={Main} />
     <Screen name="SignUp" component={SignUp} />
+    <Screen name="Otp" component={Otp} />
+    <Screen name="ResetPassword" component={ResetPassword} />
   </Navigator>
 );
 
