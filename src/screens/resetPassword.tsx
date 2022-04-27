@@ -20,15 +20,26 @@ const ResetPassword = ({
   const {email} = route.params;
 
   const submitHandler = async () => {
-    const res = await resetPass(email, newpass);
-    if (res.statusCode !== 200) {
-      return Alert.alert('Error!', res.message, undefined, {
-        cancelable: true,
-      });
+    try {
+      const res = await resetPass(email, newpass);
+      if (res.statusCode !== 200) {
+        return Alert.alert('Error!', res.message, undefined, {
+          cancelable: true,
+        });
+      }
+      Alert.alert('Success!', 'Your password has been reset successfully', [
+        {onPress: () => navigation.navigate('Login')},
+      ]);
+    } catch (error) {
+      return Alert.alert(
+        'Error!',
+        'Unable to process your request at this moment',
+        undefined,
+        {
+          cancelable: true,
+        },
+      );
     }
-    Alert.alert('Success!', 'Your password has been reset successfully', [
-      {onPress: () => navigation.navigate('Login')},
-    ]);
   };
 
   return (

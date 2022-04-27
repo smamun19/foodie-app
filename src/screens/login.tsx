@@ -17,13 +17,24 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const signinHanlder = async () => {
-    const res = await signin(email, password);
-    if (res.statusCode !== 200) {
-      return Alert.alert('Error!', res.message, undefined, {
-        cancelable: true,
-      });
+    try {
+      const res = await signin(email, password);
+      if (res.statusCode !== 200) {
+        return Alert.alert('Error!', res.message, undefined, {
+          cancelable: true,
+        });
+      }
+      navigation.navigate('Main');
+    } catch (error) {
+      return Alert.alert(
+        'Error!',
+        'Unable to process your request at this moment',
+        undefined,
+        {
+          cancelable: true,
+        },
+      );
     }
-    navigation.navigate('Main');
   };
   return (
     <View style={styles.container}>

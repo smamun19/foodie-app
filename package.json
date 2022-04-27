@@ -41,7 +41,7 @@
   },
   "resolutions": {
     "@types/react": "^17",
-    "minimist":"1.2.6"
+    "minimist": "1.2.6"
   },
   "jest": {
     "preset": "react-native",

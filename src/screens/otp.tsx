@@ -30,25 +30,36 @@ const Otp = ({navigation, route}: RootStackScreensProps<'Otp'>) => {
   };
 
   const resendOtpHandler = async () => {
-    const res = await sendOtp(email);
-    if (res.statusCode !== 200) {
+    try {
+      const res = await sendOtp(email);
+      if (res.statusCode !== 200) {
+        return Alert.alert(
+          'Error!',
+          'Unable to send OTP. Please try again later',
+          undefined,
+          {
+            cancelable: true,
+          },
+        );
+      }
+      Alert.alert(
+        'Success!',
+        `An email has been sent to ${email}. Please check your inbox`,
+        undefined,
+        {
+          cancelable: true,
+        },
+      );
+    } catch (error) {
       return Alert.alert(
         'Error!',
-        'Unable to send OTP. Please try again later',
+        'Unable to process your request at this moment',
         undefined,
         {
           cancelable: true,
         },
       );
     }
-    Alert.alert(
-      'Success!',
-      `An email has been sent to ${email}. Please check your inbox`,
-      undefined,
-      {
-        cancelable: true,
-      },
-    );
   };
 
   return (

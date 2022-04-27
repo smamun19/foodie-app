@@ -22,16 +22,29 @@ export interface Props extends ModalProps {
 
 const CustomModal = ({modalVisible, setModalVisible, navigation}: Props) => {
   const [email, setEmail] = useState('');
+
   const modalHandler = async () => {
-    const res = await reqReset(email);
-    if (res.statusCode !== 200) {
-      return Alert.alert('Error!', res.message, undefined, {
-        cancelable: true,
-      });
+    try {
+      const res = await reqReset(email);
+      if (res.statusCode !== 200) {
+        return Alert.alert('Error!', res.message, undefined, {
+          cancelable: true,
+        });
+      }
+      setModalVisible(!modalVisible);
+      navigation.navigate('Otp', {email});
+    } catch (error) {
+      return Alert.alert(
+        'Error!',
+        'Unable to process your request at this moment',
+        undefined,
+        {
+          cancelable: true,
+        },
+      );
     }
-    setModalVisible(!modalVisible);
-    navigation.navigate('Otp', {email});
   };
+
   return (
     <View style={styles.container}>
       <Modal
