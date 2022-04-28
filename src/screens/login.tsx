@@ -24,7 +24,7 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
           cancelable: true,
         });
       }
-      navigation.navigate('Main');
+      navigation.navigate('Home');
     } catch (error) {
       return Alert.alert(
         'Error!',

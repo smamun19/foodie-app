@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 
 import {RootStackScreensProps} from '../navigators/root-stack';
 
-const Main = ({navigation}: RootStackScreensProps<'Main'>) => {
+const Home = ({navigation}: RootStackScreensProps<'Home'>) => {
   return (
     <View>
       <Text>This will be the after sign in page</Text>
@@ -11,4 +11,4 @@ const Main = ({navigation}: RootStackScreensProps<'Main'>) => {
   );
 };
 
-export default Main;
+export default Home;

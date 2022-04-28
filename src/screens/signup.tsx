@@ -25,7 +25,7 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
         });
       }
 
-      return navigation.navigate('Main');
+      return navigation.navigate('Home');
     } catch (error) {
       return Alert.alert(
         'Error!',
