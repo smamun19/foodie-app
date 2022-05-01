@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, View, KeyboardAvoidingView, Alert} from 'react-native';
 import {Text} from 'react-native-elements';
 import CustomButton from '../components/CustomButton';
@@ -9,16 +9,20 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
 import CustomModal from '../components/ForgotPassModal';
 import {signin} from '../services/auth';
+import {UserContext} from '../services/userContext';
 
 const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const test = useContext(UserContext);
 
   const [modalVisible, setModalVisible] = useState(false);
 
   const signinHanlder = async () => {
+    test?.login({name: 'hello', token: 'dasdhs', cartItem: []});
     try {
       const res = await signin(email, password);
+
       if (res.statusCode !== 200) {
         return Alert.alert('Error!', res.message, undefined, {
           cancelable: true,

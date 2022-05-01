@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, View, KeyboardAvoidingView, Alert} from 'react-native';
 import {Text} from 'react-native-elements';
 import CustomButton from '../components/CustomButton';
@@ -8,11 +8,15 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
 import {signup} from '../services/auth';
+import {UserContext} from '../services/userContext';
 
 const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+
+  const test = useContext(UserContext);
+  console.log(test?.name, test?.token);
 
   const signUpHandler = async () => {
     try {
