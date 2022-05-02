@@ -22,6 +22,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.1",
+    "react-native-sensitive-info": "^6.0.0-alpha.9",
     "react-native-vector-icons": "^9.1.0"
   },
   "devDependencies": {

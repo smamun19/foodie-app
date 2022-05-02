@@ -10,16 +10,16 @@ import Spacer from '../components/Spacer';
 import CustomModal from '../components/ForgotPassModal';
 import {signin} from '../services/auth';
 import {UserContext} from '../services/userContext';
+import {setItem} from '../utils/sInfo';
 
 const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const test = useContext(UserContext);
+  const userInfo = useContext(UserContext);
 
   const [modalVisible, setModalVisible] = useState(false);
 
   const signinHanlder = async () => {
-    test?.login({name: 'hello', token: 'dasdhs', cartItem: []});
     try {
       const res = await signin(email, password);
 
@@ -28,6 +28,13 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
           cancelable: true,
         });
       }
+      const authInfo = {
+        name: res.details.name,
+        token: res.details.token,
+        cartItem: [],
+      };
+      userInfo?.login(authInfo);
+      setItem('userInfo', authInfo);
       navigation.navigate('Home');
     } catch (error) {
       return Alert.alert(

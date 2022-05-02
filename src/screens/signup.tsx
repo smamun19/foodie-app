@@ -9,16 +9,16 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
 import {signup} from '../services/auth';
 import {UserContext} from '../services/userContext';
+import {setItem, getItem} from '../utils/sInfo';
 
 const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
 
-  const test = useContext(UserContext);
-  console.log(test?.name, test?.token);
-
   const signUpHandler = async () => {
+    const x = await getItem('userInfo');
+    console.log(x);
     try {
       const res = await signup(email, name, password);
       console.log(res);
