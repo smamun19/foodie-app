@@ -13,7 +13,7 @@ export interface Props extends ModalProps {
 
 const Otp = ({navigation, route}: RootStackScreensProps<'Otp'>) => {
   const [otp, setOtp] = useState('');
-  const {email} = route.params;
+  const {email, fromSignup} = route.params;
   const otpHandler = async () => {
     const res = await verifyOtp(email, otp);
     if (res.details === false) {
@@ -26,7 +26,21 @@ const Otp = ({navigation, route}: RootStackScreensProps<'Otp'>) => {
         },
       );
     }
-    navigation.navigate('ResetPassword', {email});
+    fromSignup
+      ? Alert.alert(
+          'Verified!',
+          'You have successfully verified the email address',
+          [
+            {
+              onPress: () => {
+                navigation.navigate('Login');
+              },
+              style: 'destructive',
+              text: 'Go back to login',
+            },
+          ],
+        )
+      : navigation.navigate('ResetPassword', {email});
   };
 
   const resendOtpHandler = async () => {

@@ -28,7 +28,11 @@ const ResetPassword = ({
         });
       }
       Alert.alert('Success!', 'Your password has been reset successfully', [
-        {onPress: () => navigation.navigate('Login')},
+        {
+          onPress: () => navigation.navigate('Login'),
+          style: 'destructive',
+          text: 'Go back to login',
+        },
       ]);
     } catch (error) {
       return Alert.alert(

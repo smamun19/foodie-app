@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, KeyboardAvoidingView, Alert} from 'react-native';
 import {Text} from 'react-native-elements';
 import CustomButton from '../components/CustomButton';
@@ -8,8 +8,6 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
 import {signup} from '../services/auth';
-import {UserContext} from '../services/userContext';
-import {setItem, getItem} from '../utils/sInfo';
 
 const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
   const [password, setPassword] = useState('');
@@ -17,8 +15,6 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
   const [name, setName] = useState('');
 
   const signUpHandler = async () => {
-    const x = await getItem('userInfo');
-    console.log(x);
     try {
       const res = await signup(email, name, password);
       console.log(res);
@@ -29,7 +25,7 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
         });
       }
 
-      return navigation.navigate('Home');
+      return navigation.navigate('Otp', {email, fromSignup: true});
     } catch (error) {
       return Alert.alert(
         'Error!',
