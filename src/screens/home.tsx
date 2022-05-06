@@ -1,5 +1,7 @@
 import React from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import CustomCard from '../components/CustomCard';
+import Spacer from '../components/Spacer';
 
 import {RootStackScreensProps} from '../navigators/root-stack';
 
@@ -20,23 +22,46 @@ const Home = ({navigation}: RootStackScreensProps<'Home'>) => {
         </View>
       </View>
       <ScrollView>
+        <ScrollView
+          contentContainerStyle={styles.horizontalScroll}
+          horizontal={true}>
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+        </ScrollView>
+        <Spacer />
+        <ScrollView
+          contentContainerStyle={styles.horizontalScroll}
+          horizontal={true}>
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+          <CustomCard title="hello" />
+        </ScrollView>
+        <Spacer />
+
         <View style={styles.header}>
-          <Text style={styles.text}>This is the main area</Text>
-        </View>
-        <View style={styles.header}>
-          <Text style={styles.text}>This is the main area</Text>
-        </View>
-        <View style={styles.header}>
-          <Text style={styles.text}>This is the main area</Text>
-        </View>
-        <View style={styles.header}>
-          <Text style={styles.text}>This is the main area</Text>
-        </View>
-        <View style={styles.header}>
-          <Text style={styles.text}>This is the main area</Text>
-        </View>
-        <View style={styles.header}>
-          <Text style={styles.text}>This is the main area</Text>
+          <CustomCard title="hello" />
+          <Spacer />
+          <CustomCard title="hello" />
+          <Spacer />
+          <CustomCard title="hello" />
+          <Spacer />
+          <CustomCard title="hello" />
+          <Spacer />
         </View>
       </ScrollView>
     </View>
@@ -57,6 +82,7 @@ const styles = StyleSheet.create({
   },
   rightHeader: {},
   text: {fontSize: 50},
+  horizontalScroll: {},
 });
 
 export default Home;

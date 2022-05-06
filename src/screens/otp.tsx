@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, ModalProps, Alert} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CustomButton from '../components/CustomButton';
 import Spacer from '../components/Spacer';
 import CustomInput from '../components/TextInput';
@@ -77,7 +78,7 @@ const Otp = ({navigation, route}: RootStackScreensProps<'Otp'>) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Text style={styles.modalText}>Confirmation Code</Text>
       <View style={styles.inputStyle}>
         <CustomInput
@@ -103,7 +104,7 @@ const Otp = ({navigation, route}: RootStackScreensProps<'Otp'>) => {
           onPress={resendOtpHandler}
         />
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
