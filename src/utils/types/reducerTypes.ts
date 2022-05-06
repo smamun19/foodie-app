@@ -14,6 +14,7 @@ export interface ValueTypes {
   name?: string;
   cartItem: CartItemTypes[];
   login: (userData: UserAuthParams) => void;
+  hydrate: (userData: UserAuthParams) => void;
   logout: () => void;
   addItem: (item: CartItemTypes) => void;
 }
@@ -23,6 +24,7 @@ export enum ActionType {
   LOGOUT = 'LOGOUT',
   ADD_TO_CARD = 'ADD_TO_CART',
   REMOVE_FROM_CART = 'REMOVE_FROM_CART',
+  HYDRATE = 'HYDRATE',
 }
 
 export interface ActionParams {

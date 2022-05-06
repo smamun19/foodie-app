@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {createContext, useReducer} from 'react';
 import {
   ActionParams,
@@ -8,6 +8,7 @@ import {
   UserAuthParams,
   ValueTypes,
 } from '../utils/types/reducerTypes';
+import {setItem, getItem} from '../utils/sInfo';
 
 const initialState: UserAuthParams = {
   token: undefined,
@@ -36,6 +37,9 @@ const reducer = (
       });
       return {...state, cartItem: [...filteredItem]};
     }
+    case ActionType.HYDRATE: {
+      return {...state, ...action.payload};
+    }
     default:
       return state;
   }
@@ -52,6 +56,9 @@ const Provider: FC<ProviderProps> = ({children}) => {
     login: (userData: UserAuthParams) => {
       dispacth({type: ActionType.LOGIN, payload: userData});
     },
+    hydrate: (userData: UserAuthParams) => {
+      dispacth({type: ActionType.HYDRATE, payload: userData});
+    },
     logout: () => {
       dispacth({type: ActionType.LOGOUT});
     },
@@ -59,6 +66,18 @@ const Provider: FC<ProviderProps> = ({children}) => {
       dispacth({type: ActionType.ADD_TO_CARD, item});
     },
   };
+
+  useEffect(() => {
+    (async () => {
+      const result = await getItem('userInfo');
+      dispacth({type: ActionType.HYDRATE, payload: result});
+    })();
+  }, []);
+
+  useEffect(() => {
+    const {name, token} = state;
+    setItem('userInfo', {name, token, cartItem: []});
+  }, [state]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

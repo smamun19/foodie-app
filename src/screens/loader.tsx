@@ -1,11 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Text, TouchableOpacity, StyleSheet, SafeAreaView} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Image} from 'react-native-elements/dist/image/Image';
+import {UserContext} from '../services/userContext';
 
 const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
+  const userInfo = useContext(UserContext);
+
   useEffect(() => {
     const init = async () => {
       // …do multiple sync or async tasks
@@ -17,6 +20,13 @@ const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
     });
   }, []);
 
+  const loaderHandler = () => {
+    if (userInfo?.token) {
+      return navigation.navigate('Home');
+    }
+    return navigation.navigate('Login');
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <Text style={styles.text2}>Think Food</Text>
@@ -25,9 +35,7 @@ const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
         source={require('../assets/foodie.jpeg')}
       />
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Login')}
-        style={styles.button}>
+      <TouchableOpacity onPress={loaderHandler} style={styles.button}>
         <Text style={styles.text}>Lets Order</Text>
         <MaterialIcons name="arrow-forward-ios" size={22} color="#000" />
       </TouchableOpacity>

@@ -1,11 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
 import CustomCard from '../components/CustomCard';
 import Spacer from '../components/Spacer';
 
 import {RootStackScreensProps} from '../navigators/root-stack';
+import {UserContext} from '../services/userContext';
 
 const Home = ({navigation}: RootStackScreensProps<'Home'>) => {
+  const userInfo = useContext(UserContext);
+
+  const logout = () => {
+    userInfo?.logout();
+    navigation.navigate('Login');
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -54,13 +61,30 @@ const Home = ({navigation}: RootStackScreensProps<'Home'>) => {
         <Spacer />
 
         <View style={styles.header}>
-          <CustomCard title="hello" />
+          <CustomCard
+            cardStyle={styles.card}
+            imgStyle={styles.card}
+            title="hello"
+          />
           <Spacer />
-          <CustomCard title="hello" />
+          <CustomCard
+            cardStyle={styles.card}
+            imgStyle={styles.card}
+            title="hello"
+          />
           <Spacer />
-          <CustomCard title="hello" />
+          <CustomCard
+            cardStyle={styles.card}
+            imgStyle={styles.card}
+            title="hello"
+          />
           <Spacer />
-          <CustomCard title="hello" />
+          <CustomCard
+            cardStyle={styles.card}
+            imgStyle={styles.card}
+            title="hello"
+            onPress={logout}
+          />
           <Spacer />
         </View>
       </ScrollView>
@@ -83,6 +107,7 @@ const styles = StyleSheet.create({
   rightHeader: {},
   text: {fontSize: 50},
   horizontalScroll: {},
+  card: {width: '100%'},
 });
 
 export default Home;

@@ -14,24 +14,31 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export interface CardProps extends TouchableOpacityProps {
   title: string;
-  btnStyle?: StyleProp<ViewStyle>;
-  btnInnerStyle?: StyleProp<ViewStyle>;
+  cardStyle?: StyleProp<ViewStyle>;
+  imgStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  specialOffer?: string;
 }
 
-const CustomCard = ({title, ...rest}: CardProps) => {
+const CustomCard = ({
+  title,
+  cardStyle,
+  imgStyle,
+  specialOffer,
+  ...rest
+}: CardProps) => {
   return (
-    <TouchableOpacity {...rest} style={styles.card}>
+    <TouchableOpacity {...rest} style={[styles.card, cardStyle]}>
       <ImageBackground
-        style={styles.imgStyle}
+        style={[styles.imgStyle, imgStyle]}
         resizeMode="cover"
-        source={require('../assets/foodie.jpeg')}>
+        source={require('../assets/placeholder.jpg')}>
         <View style={styles.leftImg}>
           <View style={styles.leftImg1}>
-            <Text> 15% off</Text>
+            {specialOffer ? <Text> {specialOffer}</Text> : null}
           </View>
           <View style={styles.leftImg2}>
-            <Text>time</Text>
+            <Text>69 min</Text>
           </View>
         </View>
         <View style={styles.rightImg}>
@@ -60,12 +67,13 @@ const CustomCard = ({title, ...rest}: CardProps) => {
 const styles = StyleSheet.create({
   imgStyle: {
     flexDirection: 'row',
-    height: 100,
+    height: 150,
     width: 200,
+
     justifyContent: 'space-between',
   },
   card: {
-    marginHorizontal: 3,
+    marginHorizontal: 5,
   },
   titleText: {fontWeight: 'bold'},
   leftImg: {justifyContent: 'space-between'},
@@ -79,10 +87,12 @@ const styles = StyleSheet.create({
   leftImg2: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 15,
+    alignSelf: 'flex-start',
     backgroundColor: 'white',
     marginHorizontal: 5,
-    padding: 1,
+    padding: 3,
+    marginBottom: 5,
   },
   rightImg: {
     justifyContent: 'space-between',
