@@ -12,6 +12,7 @@
     "bootsplash": "yarn react-native generate-bootsplash src/assets/bootsplash_logo_original.png --background-color=edf109 --logo-width=250 --assets-path=assets --flavor=main"
   },
   "dependencies": {
+    "@react-navigation/drawer": "^6.4.1",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "@types/react": "^17",
@@ -19,7 +20,9 @@
     "react-native": "0.66.3",
     "react-native-bootsplash": "^4.0.2",
     "react-native-elements": "^3.4.2",
+    "react-native-gesture-handler": "^2.4.2",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-reanimated": "^2.8.0",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.1",
     "react-native-sensitive-info": "^6.0.0-alpha.9",

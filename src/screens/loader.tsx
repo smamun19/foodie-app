@@ -22,7 +22,7 @@ const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
 
   const loaderHandler = () => {
     if (userInfo?.token) {
-      return navigation.navigate('Home');
+      return navigation.navigate('Drawer');
     }
     return navigation.navigate('Login');
   };

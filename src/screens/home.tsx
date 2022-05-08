@@ -11,11 +11,11 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomCard from '../components/CustomCard';
 import Spacer from '../components/Spacer';
 import CustomInput from '../components/TextInput';
+import {DrawerScreensProps} from '../navigators/drawer';
 
-import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 
-const Home = ({navigation}: RootStackScreensProps<'Home'>) => {
+const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
   const userInfo = useContext(UserContext);
   const {width} = useWindowDimensions();
 
@@ -30,7 +30,7 @@ const Home = ({navigation}: RootStackScreensProps<'Home'>) => {
       <View style={styles.header}>
         <View style={styles.topHeader}>
           <View style={styles.leftHeader}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
               <MaterialIcons name="list" size={22} color="red" />
             </TouchableOpacity>
             <View style={styles.leftHeader1}>
