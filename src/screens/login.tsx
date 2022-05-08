@@ -35,7 +35,7 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
       };
       userInfo?.login(authInfo);
       setItem('userInfo', authInfo);
-      navigation.navigate('Home');
+      navigation.navigate('Drawer');
     } catch (error) {
       return Alert.alert(
         'Error!',
@@ -72,6 +72,7 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
             <CustomButton
               textStyle={styles.btnText2}
               btnStyle={styles.google}
+              onPress={() => navigation.navigate('Drawer')}
               title="Continue with Google"
             />
             <Spacer height={20} />

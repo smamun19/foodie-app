@@ -30,12 +30,14 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
       <View style={styles.header}>
         <View style={styles.topHeader}>
           <View style={styles.leftHeader}>
-            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-              <MaterialIcons name="list" size={22} color="red" />
+            <TouchableOpacity
+              style={styles.menuBtn}
+              onPress={() => navigation.toggleDrawer()}>
+              <MaterialIcons name="menu" size={30} color="red" />
             </TouchableOpacity>
             <View style={styles.leftHeader1}>
-              <Text>Location Address</Text>
-              <Text>Address</Text>
+              <Text style={styles.text2}>Location Address</Text>
+              <Text style={styles.text}>Address</Text>
             </View>
           </View>
           <View style={styles.rightHeader}>
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
   },
   topHeader: {
     flexDirection: 'row',
-    padding: 5,
+    padding: 2,
   },
   bottomHeader: {margin: 0, marginBottom: 10},
   leftHeader: {
@@ -138,13 +140,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   leftHeader1: {
-    alignSelf: 'flex-start',
+    marginLeft: 15,
   },
-  rightHeader: {flexDirection: 'row'},
+  rightHeader: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+  },
   rightHeaderBtn: {marginHorizontal: 10},
-  text: {fontSize: 50},
+  text: {color: 'black', fontSize: 10},
+  text2: {fontWeight: 'bold', color: 'red', fontSize: 13},
   horizontalScroll: {padding: 5},
   card: {width: '100%', marginRight: 0, padding: 5},
+  menuBtn: {alignSelf: 'center'},
 });
 
 export default Home;
