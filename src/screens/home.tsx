@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -13,18 +13,11 @@ import Spacer from '../components/Spacer';
 import CustomInput from '../components/TextInput';
 import {DrawerScreensProps} from '../navigators/drawer';
 
-import {UserContext} from '../services/userContext';
-
 const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
-  const userInfo = useContext(UserContext);
   const {width} = useWindowDimensions();
 
   const epxtectedWidth = width * 0.9;
 
-  const logout = () => {
-    userInfo?.logout();
-    navigation.navigate('Login');
-  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -115,7 +108,6 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
             cardStyle={styles.card}
             imgStyle={styles.card}
             title="hello"
-            onPress={logout}
           />
           <Spacer />
         </View>
