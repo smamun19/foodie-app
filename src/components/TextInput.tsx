@@ -13,7 +13,7 @@ import {
 import {Card} from 'react-native-elements';
 
 export interface InputProps extends TextInputProps {
-  title: string;
+  title?: string;
   containerStyle?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -28,7 +28,7 @@ const CustomInput = ({
 }: InputProps) => {
   return (
     <View style={[styles.container, containerStyle]}>
-      <Text style={styles.title}>{title} </Text>
+      {title ? <Text style={styles.title}>{title} </Text> : null}
       <Card
         wrapperStyle={[styles.inputInnerContainer]}
         containerStyle={[styles.inputOuterContainer, inputStyle]}>

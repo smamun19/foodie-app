@@ -1,14 +1,33 @@
 import React from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {Text} from 'react-native-elements';
+import Container from '../components/Container';
+import CustomHeader from '../components/CustomHeader';
+import {DrawerScreensProps} from '../navigators/drawer';
 
-const Initial = () => {
+const Initial = ({navigation}: DrawerScreensProps<'Initial'>) => {
   return (
-    <SafeAreaView>
-      <View>
-        <Text>This is the first page</Text>
-      </View>
-    </SafeAreaView>
+    <Container
+      header={
+        <CustomHeader
+          title="Initial"
+          onLeftPress={() => navigation.navigate('Home')}
+        />
+      }>
+      <Text>hello</Text>
+    </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  view: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  scrollview: {
+    flex: 1,
+  },
+});
 
 export default Initial;

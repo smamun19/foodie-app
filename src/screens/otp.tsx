@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, ModalProps, Alert} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CustomButton from '../components/CustomButton';
 import Spacer from '../components/Spacer';
 import CustomInput from '../components/TextInput';
@@ -13,7 +14,7 @@ export interface Props extends ModalProps {
 
 const Otp = ({navigation, route}: RootStackScreensProps<'Otp'>) => {
   const [otp, setOtp] = useState('');
-  const {email} = route.params;
+  const {email, fromSignup} = route.params;
   const otpHandler = async () => {
     const res = await verifyOtp(email, otp);
     if (res.details === false) {
@@ -26,33 +27,58 @@ const Otp = ({navigation, route}: RootStackScreensProps<'Otp'>) => {
         },
       );
     }
-    navigation.navigate('ResetPassword', {email});
+    fromSignup
+      ? Alert.alert(
+          'Verified!',
+          'You have successfully verified the email address',
+          [
+            {
+              onPress: () => {
+                navigation.navigate('Login');
+              },
+              style: 'destructive',
+              text: 'Go back to login',
+            },
+          ],
+        )
+      : navigation.navigate('ResetPassword', {email});
   };
 
   const resendOtpHandler = async () => {
-    const res = await sendOtp(email);
-    if (res.statusCode !== 200) {
+    try {
+      const res = await sendOtp(email);
+      if (res.statusCode !== 200) {
+        return Alert.alert(
+          'Error!',
+          'Unable to send OTP. Please try again later',
+          undefined,
+          {
+            cancelable: true,
+          },
+        );
+      }
+      Alert.alert(
+        'Success!',
+        `An email has been sent to ${email}. Please check your inbox`,
+        undefined,
+        {
+          cancelable: true,
+        },
+      );
+    } catch (error) {
       return Alert.alert(
         'Error!',
-        'Unable to send OTP. Please try again later',
+        'Unable to process your request at this moment',
         undefined,
         {
           cancelable: true,
         },
       );
     }
-    Alert.alert(
-      'Success!',
-      `An email has been sent to ${email}. Please check your inbox`,
-      undefined,
-      {
-        cancelable: true,
-      },
-    );
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Text style={styles.modalText}>Confirmation Code</Text>
       <View style={styles.inputStyle}>
         <CustomInput
@@ -78,7 +104,7 @@ const Otp = ({navigation, route}: RootStackScreensProps<'Otp'>) => {
           onPress={resendOtpHandler}
         />
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

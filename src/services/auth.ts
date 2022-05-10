@@ -14,7 +14,7 @@ export const signin = async (email: string, password: string) => {
     password,
   });
   const res = await result.json();
-  console.log(res);
+  //console.log(res);
 
   return res;
 };
@@ -27,7 +27,7 @@ export const signup = async (email: string, name: string, password: string) => {
   });
 
   const res = await result.json();
-  console.log(res);
+  //console.log(res);
 
   return res;
 };

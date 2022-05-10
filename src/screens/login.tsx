@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, View, KeyboardAvoidingView, Alert} from 'react-native';
 import {Text} from 'react-native-elements';
 import CustomButton from '../components/CustomButton';
@@ -9,21 +9,43 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
 import CustomModal from '../components/ForgotPassModal';
 import {signin} from '../services/auth';
+import {UserContext} from '../services/userContext';
+import {setItem} from '../utils/sInfo';
 
 const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const userInfo = useContext(UserContext);
 
   const [modalVisible, setModalVisible] = useState(false);
 
   const signinHanlder = async () => {
-    const res = await signin(email, password);
-    if (res.statusCode !== 200) {
-      return Alert.alert('Error!', res.message, undefined, {
-        cancelable: true,
-      });
+    try {
+      const res = await signin(email, password);
+
+      if (res.statusCode !== 200) {
+        return Alert.alert('Error!', res.message, undefined, {
+          cancelable: true,
+        });
+      }
+      const authInfo = {
+        name: res.details.name,
+        token: res.details.token,
+        cartItem: [],
+      };
+      userInfo?.login(authInfo);
+      setItem('userInfo', authInfo);
+      navigation.navigate('Drawer');
+    } catch (error) {
+      return Alert.alert(
+        'Error!',
+        'Unable to process your request at this moment',
+        undefined,
+        {
+          cancelable: true,
+        },
+      );
     }
-    navigation.navigate('Main');
   };
   return (
     <View style={styles.container}>
@@ -50,6 +72,7 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
             <CustomButton
               textStyle={styles.btnText2}
               btnStyle={styles.google}
+              onPress={() => navigation.navigate('Drawer')}
               title="Continue with Google"
             />
             <Spacer height={20} />

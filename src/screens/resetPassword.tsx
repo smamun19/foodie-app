@@ -6,6 +6,7 @@ import Spacer from '../components/Spacer';
 
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {resetPass} from '../services/auth';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export interface Props extends ModalProps {
   setResetPassVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,19 +21,34 @@ const ResetPassword = ({
   const {email} = route.params;
 
   const submitHandler = async () => {
-    const res = await resetPass(email, newpass);
-    if (res.statusCode !== 200) {
-      return Alert.alert('Error!', res.message, undefined, {
-        cancelable: true,
-      });
+    try {
+      const res = await resetPass(email, newpass);
+      if (res.statusCode !== 200) {
+        return Alert.alert('Error!', res.message, undefined, {
+          cancelable: true,
+        });
+      }
+      Alert.alert('Success!', 'Your password has been reset successfully', [
+        {
+          onPress: () => navigation.navigate('Login'),
+          style: 'destructive',
+          text: 'Go back to login',
+        },
+      ]);
+    } catch (error) {
+      return Alert.alert(
+        'Error!',
+        'Unable to process your request at this moment',
+        undefined,
+        {
+          cancelable: true,
+        },
+      );
     }
-    Alert.alert('Success!', 'Your password has been reset successfully', [
-      {onPress: () => navigation.navigate('Login')},
-    ]);
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Text style={styles.modalText}>Reset Password</Text>
       <View style={styles.inputStyle}>
         <CustomInput
@@ -58,7 +74,7 @@ const ResetPassword = ({
           }}
         />
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

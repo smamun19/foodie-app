@@ -15,14 +15,27 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
   const [name, setName] = useState('');
 
   const signUpHandler = async () => {
-    const res = await signup(email, name, password);
-    if (res.statusCode !== 201) {
-      return Alert.alert('Error!', res.message, undefined, {
-        cancelable: true,
-      });
-    }
+    try {
+      const res = await signup(email, name, password);
+      console.log(res);
 
-    return navigation.navigate('Main');
+      if (res.statusCode !== 201) {
+        return Alert.alert('Error!', res.message, undefined, {
+          cancelable: true,
+        });
+      }
+
+      return navigation.navigate('Otp', {email, fromSignup: true});
+    } catch (error) {
+      return Alert.alert(
+        'Error!',
+        'Unable to process your request at this moment',
+        undefined,
+        {
+          cancelable: true,
+        },
+      );
+    }
   };
 
   return (
