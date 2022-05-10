@@ -3,7 +3,7 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
-
+import {NavigatorScreenParams} from '@react-navigation/native';
 import Login from '../screens/login';
 import Loader from '../screens/loader';
 import SignUp from '../screens/signup';
@@ -11,7 +11,6 @@ import Otp from '../screens/otp';
 import Drawer from './drawer';
 import ResetPassword from '../screens/resetPassword';
 import {DrawerParamList} from './drawer';
-import {NavigatorScreenParams} from '@react-navigation/native';
 
 export type RootStackParamList = {
   Loader: undefined;

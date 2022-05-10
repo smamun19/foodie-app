@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   createDrawerNavigator,
-  DrawerNavigationProp,
   DrawerScreenProps,
 } from '@react-navigation/drawer';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
