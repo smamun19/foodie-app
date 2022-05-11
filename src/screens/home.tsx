@@ -2,11 +2,11 @@ import React from 'react';
 import {
   View,
   Text,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomCard from '../components/CustomCard';
 import Spacer from '../components/Spacer';
@@ -17,6 +17,21 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
   const {width} = useWindowDimensions();
 
   const epxtectedWidth = width * 0.9;
+
+  const DATA = [
+    {
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      title: 'First Shop',
+    },
+    {
+      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      title: 'Second Shop',
+    },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      title: 'Third Shop',
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -53,65 +68,37 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
         </View>
       </View>
       <Spacer />
-      <ScrollView>
-        <ScrollView
-          contentContainerStyle={styles.horizontalScroll}
-          horizontal={true}>
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-        </ScrollView>
-        <Spacer />
-        <ScrollView
-          contentContainerStyle={styles.horizontalScroll}
-          horizontal={true}>
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-        </ScrollView>
-        <Spacer />
-
-        <View>
+      <FlatList
+        ListHeaderComponent={
+          <View>
+            <Text style={styles.text3}>Favorites</Text>
+            <FlatList
+              contentContainerStyle={styles.horizontalScroll}
+              horizontal={true}
+              data={DATA}
+              renderItem={({item}) => <CustomCard title={item.title} />}
+            />
+            <Spacer />
+            <Text style={styles.text3}>Nearby</Text>
+            <FlatList
+              contentContainerStyle={styles.horizontalScroll}
+              horizontal={true}
+              data={DATA}
+              renderItem={({item}) => <CustomCard title={item.title} />}
+            />
+            <Spacer />
+            <Text style={styles.text3}>All restaurants</Text>
+          </View>
+        }
+        data={DATA}
+        renderItem={({item}) => (
           <CustomCard
             cardStyle={styles.card}
             imgStyle={styles.card}
-            title="hello"
+            title={item.title}
           />
-          <Spacer />
-          <CustomCard
-            cardStyle={styles.card}
-            imgStyle={styles.card}
-            title="hello"
-          />
-          <Spacer />
-          <CustomCard
-            cardStyle={styles.card}
-            imgStyle={styles.card}
-            title="hello"
-          />
-          <Spacer />
-          <CustomCard
-            cardStyle={styles.card}
-            imgStyle={styles.card}
-            title="hello"
-          />
-          <Spacer />
-        </View>
-      </ScrollView>
+        )}
+      />
     </View>
   );
 };
@@ -141,6 +128,7 @@ const styles = StyleSheet.create({
   rightHeaderBtn: {marginHorizontal: 10},
   text: {color: 'black', fontSize: 10},
   text2: {fontWeight: 'bold', color: 'red', fontSize: 13},
+  text3: {fontWeight: 'bold', color: 'red', fontSize: 13, padding: 5},
   horizontalScroll: {padding: 5},
   card: {width: '100%', marginRight: 0, padding: 5},
   menuBtn: {alignSelf: 'center'},
