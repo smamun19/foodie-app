@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
+  SectionList,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -18,18 +19,130 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
 
   const epxtectedWidth = width * 0.9;
 
+  // const DATA1 = [
+  //   {
+  //     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  //     title: 'First Shop',
+  //   },
+  //   {
+  //     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+  //     title: 'Second Shop',
+  //   },
+  //   {
+  //     id: '58694a0f-3da1-471f-bd96-145571e29d72',
+  //     title: 'Third Shop',
+  //   },
+  // ];
+
   const DATA = [
     {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Shop',
+      title: 'Main dishes',
+      data: [
+        {
+          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+          title: 'First Shop',
+          data: [
+            {
+              id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+              title: 'First Shop',
+            },
+            {
+              id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+              title: 'Second Shop',
+            },
+            {
+              id: '58694a0f-3da1-471f-bd96-145571e29d72',
+              title: 'Third Shop',
+            },
+          ],
+        },
+      ],
     },
     {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Shop',
+      title: 'XXX',
+      data: [
+        {
+          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+          title: 'First Shop',
+          data: [
+            {
+              id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+              title: 'First Shop',
+            },
+            {
+              id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+              title: 'Second Shop',
+            },
+            {
+              id: '58694a0f-3da1-471f-bd96-145571e29d72',
+              title: 'Third Shop',
+            },
+          ],
+        },
+      ],
     },
     {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Shop',
+      title: 'Sides',
+      data: [
+        {
+          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+          title: 'First Shop',
+          data: [
+            {
+              id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+              title: 'First Shop',
+            },
+            {
+              id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+              title: 'Second Shop',
+            },
+            {
+              id: '58694a0f-3da1-471f-bd96-145571e29d72',
+              title: 'Third Shop',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: 'Drinks',
+      data: [
+        {
+          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+          title: 'First Shop',
+          data: [
+            {
+              id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+              title: 'First Shop',
+            },
+            {
+              id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+              title: 'Second Shop',
+            },
+            {
+              id: '58694a0f-3da1-471f-bd96-145571e29d72',
+              title: 'Third Shop',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: 'ALL',
+      data: [
+        {
+          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+          title: 'First Shop',
+        },
+        {
+          id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+          title: 'Second Shop',
+        },
+        {
+          id: '58694a0f-3da1-471f-bd96-145571e29d72',
+          title: 'Third Shop',
+        },
+      ],
     },
   ];
 
@@ -68,7 +181,7 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
         </View>
       </View>
       <Spacer />
-      <FlatList
+      {/* <FlatList
         ListHeaderComponent={
           <View>
             <Text style={styles.text3}>Favorites</Text>
@@ -98,6 +211,28 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
             title={item.title}
           />
         )}
+      /> */}
+
+      <SectionList
+        sections={DATA}
+        renderSectionHeader={({section}) => (
+          <Text style={{color: 'red'}}>{section.title}</Text>
+        )}
+        renderItem={({section, item}) =>
+          section.title !== 'ALL' ? (
+            <FlatList
+              data={item.data}
+              horizontal={true}
+              renderItem={({item}) => <CustomCard title={item.title} />}
+            />
+          ) : (
+            <CustomCard
+              cardStyle={styles.card}
+              imgStyle={styles.card}
+              title={item.title}
+            />
+          )
+        }
       />
     </View>
   );
