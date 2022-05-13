@@ -13,138 +13,12 @@ import CustomCard from '../components/CustomCard';
 import Spacer from '../components/Spacer';
 import CustomInput from '../components/TextInput';
 import {DrawerScreensProps} from '../navigators/drawer';
+import {DATA} from '../utils/testData';
 
 const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
   const {width} = useWindowDimensions();
 
   const epxtectedWidth = width * 0.9;
-
-  // const DATA1 = [
-  //   {
-  //     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-  //     title: 'First Shop',
-  //   },
-  //   {
-  //     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-  //     title: 'Second Shop',
-  //   },
-  //   {
-  //     id: '58694a0f-3da1-471f-bd96-145571e29d72',
-  //     title: 'Third Shop',
-  //   },
-  // ];
-
-  const DATA = [
-    {
-      title: 'Main dishes',
-      data: [
-        {
-          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-          title: 'First Shop',
-          data: [
-            {
-              id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-              title: 'First Shop',
-            },
-            {
-              id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-              title: 'Second Shop',
-            },
-            {
-              id: '58694a0f-3da1-471f-bd96-145571e29d72',
-              title: 'Third Shop',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: 'XXX',
-      data: [
-        {
-          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-          title: 'First Shop',
-          data: [
-            {
-              id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-              title: 'First Shop',
-            },
-            {
-              id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-              title: 'Second Shop',
-            },
-            {
-              id: '58694a0f-3da1-471f-bd96-145571e29d72',
-              title: 'Third Shop',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: 'Sides',
-      data: [
-        {
-          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-          title: 'First Shop',
-          data: [
-            {
-              id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-              title: 'First Shop',
-            },
-            {
-              id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-              title: 'Second Shop',
-            },
-            {
-              id: '58694a0f-3da1-471f-bd96-145571e29d72',
-              title: 'Third Shop',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: 'Drinks',
-      data: [
-        {
-          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-          title: 'First Shop',
-          data: [
-            {
-              id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-              title: 'First Shop',
-            },
-            {
-              id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-              title: 'Second Shop',
-            },
-            {
-              id: '58694a0f-3da1-471f-bd96-145571e29d72',
-              title: 'Third Shop',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: 'ALL',
-      data: [
-        {
-          id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-          title: 'First Shop',
-        },
-        {
-          id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-          title: 'Second Shop',
-        },
-        {
-          id: '58694a0f-3da1-471f-bd96-145571e29d72',
-          title: 'Third Shop',
-        },
-      ],
-    },
-  ];
 
   return (
     <View style={styles.container}>
@@ -181,49 +55,23 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
         </View>
       </View>
       <Spacer />
-      {/* <FlatList
-        ListHeaderComponent={
-          <View>
-            <Text style={styles.text3}>Favorites</Text>
-            <FlatList
-              contentContainerStyle={styles.horizontalScroll}
-              horizontal={true}
-              data={DATA}
-              renderItem={({item}) => <CustomCard title={item.title} />}
-            />
-            <Spacer />
-            <Text style={styles.text3}>Nearby</Text>
-            <FlatList
-              contentContainerStyle={styles.horizontalScroll}
-              horizontal={true}
-              data={DATA}
-              renderItem={({item}) => <CustomCard title={item.title} />}
-            />
-            <Spacer />
-            <Text style={styles.text3}>All restaurants</Text>
-          </View>
-        }
-        data={DATA}
-        renderItem={({item}) => (
-          <CustomCard
-            cardStyle={styles.card}
-            imgStyle={styles.card}
-            title={item.title}
-          />
-        )}
-      /> */}
-
       <SectionList
         sections={DATA}
         renderSectionHeader={({section}) => (
-          <Text style={{color: 'red'}}>{section.title}</Text>
+          <Text style={styles.sectionHeader}>{section.title}</Text>
         )}
         renderItem={({section, item}) =>
           section.title !== 'ALL' ? (
             <FlatList
+              //@ts-ignore
               data={item.data}
               horizontal={true}
-              renderItem={({item}) => <CustomCard title={item.title} />}
+              renderItem={({item: i}) => (
+                <CustomCard
+                  cardStyle={styles.horizontalScroll}
+                  title={i.title}
+                />
+              )}
             />
           ) : (
             <CustomCard
@@ -265,6 +113,7 @@ const styles = StyleSheet.create({
   text2: {fontWeight: 'bold', color: 'red', fontSize: 13},
   text3: {fontWeight: 'bold', color: 'red', fontSize: 13, padding: 5},
   horizontalScroll: {padding: 5},
+  sectionHeader: {color: 'red', padding: 5},
   card: {width: '100%', marginRight: 0, padding: 5},
   menuBtn: {alignSelf: 'center'},
 });
