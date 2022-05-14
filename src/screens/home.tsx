@@ -57,6 +57,7 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
       <Spacer />
       <SectionList
         sections={DATA}
+        keyExtractor={e => e.id}
         renderSectionHeader={({section}) => (
           <Text style={styles.sectionHeader}>{section.title}</Text>
         )}
@@ -66,10 +67,14 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
               //@ts-ignore
               data={item.data}
               horizontal={true}
+              keyExtractor={e => e.id}
+              //@ts-ignore
+              key={item.data.id}
               renderItem={({item: i}) => (
                 <CustomCard
                   cardStyle={styles.horizontalScroll}
                   title={i.title}
+                  onPress={() => navigation.navigate('Restaurant')}
                 />
               )}
             />

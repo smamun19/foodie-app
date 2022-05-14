@@ -109,3 +109,67 @@ export const DATA = [
     ],
   },
 ];
+
+export const FOOD_DATA = [
+  {
+    title: 'Main dishes',
+    data: [
+      {
+        name: 'Burger',
+        price: 50,
+        description:
+          'Double patty burger with a smoking flavour serves with a strong aroma of honey mustered sauce',
+      },
+      {
+        name: 'Burger',
+        price: 50,
+        description: 'Double patty buregr with a smoking flavour',
+      },
+    ],
+  },
+  {
+    title: 'Sides',
+    data: [
+      {
+        name: 'Burger',
+        price: 50,
+        description: 'Double patty buregr with a smoking flavour',
+      },
+      {
+        name: 'Burger',
+        price: 50,
+        description: 'Double patty buregr with a smoking flavour',
+      },
+    ],
+  },
+  {
+    title: 'Drinks',
+    data: [
+      {
+        name: 'Burger',
+        price: 50,
+        description: 'Double patty buregr with a smoking flavour',
+      },
+      {
+        name: 'Burger',
+        price: 50,
+        description: 'Double patty buregr with a smoking flavour',
+      },
+    ],
+  },
+  {
+    title: 'Desserts',
+    data: [
+      {
+        name: 'Burger',
+        price: 50,
+        description: 'Double patty buregr with a smoking flavour',
+      },
+      {
+        name: 'Burger',
+        price: 50,
+        description: 'Double patty buregr with a smoking flavour',
+      },
+    ],
+  },
+];
