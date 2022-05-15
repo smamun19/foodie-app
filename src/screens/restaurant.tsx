@@ -1,6 +1,7 @@
 import React from 'react';
 import {SectionList, StyleSheet, Text, View} from 'react-native';
 import FoodItem from '../components/FoodItemCardView';
+import FoodItemHeader from '../components/FoodItemHeader';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {FOOD_DATA} from '../utils/testData';
 
@@ -9,6 +10,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
     <View style={styles.container}>
       <SectionList
         sections={FOOD_DATA}
+        ListHeaderComponent={FoodItemHeader}
         renderSectionHeader={({section}) => (
           <Text style={styles.headerText}>{section.title}</Text>
         )}
