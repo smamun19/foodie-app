@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  FlatList,
   ImageBackground,
   StyleSheet,
   Text,
@@ -15,6 +16,8 @@ interface HeaderProps {
   rating?: number;
   specialOffer?: string;
   deliveryTime?: number;
+  flatListData?: Record<string, any>[];
+  onSectionPress: (e: number) => void;
   onLeftPress?: () => void;
   onRightPress1?: () => void;
   onRightPress2?: () => void;
@@ -26,6 +29,8 @@ const FoodItemHeader = ({
   distance = '1.2km',
   specialOffer = 'its working',
   deliveryTime = 25,
+  flatListData,
+  onSectionPress,
   onLeftPress,
   onRightPress1,
   onRightPress2,
@@ -76,6 +81,21 @@ const FoodItemHeader = ({
           <Text style={styles.text2}>More info</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.view5}>
+        <FlatList
+          horizontal={true}
+          data={flatListData}
+          renderItem={({item, index}) => (
+            <View style={styles.view6}>
+              <TouchableOpacity
+                onPress={() => onSectionPress(index)}
+                style={styles.flatListView}>
+                <Text>{item.title}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      </View>
     </View>
   );
 };
@@ -120,6 +140,12 @@ const styles = StyleSheet.create({
   view4: {
     flex: 1,
   },
+  view5: {
+    padding: 5,
+  },
+  view6: {
+    paddingHorizontal: 20,
+  },
   text1: {flex: 1, fontSize: 20, color: '#bd06b4', paddingRight: 15},
   text2: {color: 'red'},
   moreInfoBtn: {
@@ -127,6 +153,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 15,
   },
+  flatListView: {paddingVertical: 15},
 });
 
 export default FoodItemHeader;

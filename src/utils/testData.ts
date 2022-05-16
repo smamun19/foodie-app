@@ -123,7 +123,7 @@ export const FOOD_DATA = [
       {
         name: 'Burger',
         price: 50,
-        description: 'Double patty buregr with a smoking flavour',
+        description: 'Double patty burger with a smoking flavour',
       },
     ],
   },
@@ -133,12 +133,12 @@ export const FOOD_DATA = [
       {
         name: 'Burger',
         price: 50,
-        description: 'Double patty buregr with a smoking flavour',
+        description: 'Double patty burger with a smoking flavour',
       },
       {
         name: 'Burger',
         price: 50,
-        description: 'Double patty buregr with a smoking flavour',
+        description: 'Double patty burger with a smoking flavour',
       },
     ],
   },
@@ -148,12 +148,12 @@ export const FOOD_DATA = [
       {
         name: 'Burger',
         price: 50,
-        description: 'Double patty buregr with a smoking flavour',
+        description: 'Double patty burger with a smoking flavour',
       },
       {
         name: 'Burger',
         price: 50,
-        description: 'Double patty buregr with a smoking flavour',
+        description: 'Double patty burger with a smoking flavour',
       },
     ],
   },
@@ -163,12 +163,12 @@ export const FOOD_DATA = [
       {
         name: 'Burger',
         price: 50,
-        description: 'Double patty buregr with a smoking flavour',
+        description: 'Double patty burger with a smoking flavour',
       },
       {
         name: 'Burger',
         price: 50,
-        description: 'Double patty buregr with a smoking flavour',
+        description: 'Double patty burger with a smoking flavour',
       },
     ],
   },
