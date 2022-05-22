@@ -1,9 +1,14 @@
 import React, {useContext, useEffect} from 'react';
-import {Text, TouchableOpacity, StyleSheet, SafeAreaView} from 'react-native';
+import {
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {Image} from 'react-native-elements/dist/image/Image';
 import {UserContext} from '../services/userContext';
 
 const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {

@@ -6,8 +6,9 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native';
-import {Image} from 'react-native-elements';
+
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface HeaderProps {
@@ -101,7 +102,7 @@ const FoodItemHeader = ({
 };
 
 const styles = StyleSheet.create({
-  container: {borderBottomWidth: 3, borderBottomColor: '#00000033', flex: 1},
+  container: {flex: 1},
   imageStyle: {height: 150, width: '100%'},
   imageStyle2: {
     height: 90,
@@ -140,8 +141,12 @@ const styles = StyleSheet.create({
   view4: {
     flex: 1,
   },
+  // Last view of the header
   view5: {
     padding: 5,
+    borderBottomWidth: 3,
+    borderBottomColor: '#00000033',
+    transform: [{translateY: 0}],
   },
   view6: {
     paddingHorizontal: 20,
