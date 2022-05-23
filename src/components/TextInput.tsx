@@ -10,8 +10,6 @@ import {
   TextInputProps,
 } from 'react-native';
 
-import {Card} from 'react-native-elements';
-
 export interface InputProps extends TextInputProps {
   title?: string;
   containerStyle?: StyleProp<ViewStyle>;
@@ -29,11 +27,9 @@ const CustomInput = ({
   return (
     <View style={[styles.container, containerStyle]}>
       {title ? <Text style={styles.title}>{title} </Text> : null}
-      <Card
-        wrapperStyle={[styles.inputInnerContainer]}
-        containerStyle={[styles.inputOuterContainer, inputStyle]}>
+      <View style={[styles.inputOuterContainer, inputStyle]}>
         <TextInput {...rest} style={[styles.text, textStyle]} />
-      </Card>
+      </View>
     </View>
   );
 };
@@ -45,15 +41,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 15,
   },
-  title: {width: '100%', marginHorizontal: 10, marginVertical: -8},
+  title: {width: '100%', paddingVertical: 5},
   inputOuterContainer: {
     padding: 0.1,
-    backgroundColor: 'grey',
-    borderRadius: 5,
-    width: '100%',
-  },
-  inputInnerContainer: {
     backgroundColor: 'white',
+    borderRadius: 5,
+    borderWidth: 0.5,
+    width: '100%',
+    borderColor: '#6b6b6b',
   },
   text: {
     height: 45,

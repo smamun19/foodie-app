@@ -43,7 +43,12 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
       <View style={styles.bottom}>
         {userInfo?.token ? (
           <CustomButton title="Logout" onPress={logout} />
-        ) : null}
+        ) : (
+          <CustomButton
+            title="Login / Create account"
+            onPress={() => props.navigation.navigate('Login')}
+          />
+        )}
       </View>
     </View>
   );

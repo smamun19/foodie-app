@@ -2,22 +2,19 @@ import React from 'react';
 import {
   View,
   Text,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
-  useWindowDimensions,
+  SectionList,
 } from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomCard from '../components/CustomCard';
 import Spacer from '../components/Spacer';
 import CustomInput from '../components/TextInput';
 import {DrawerScreensProps} from '../navigators/drawer';
+import {DATA} from '../utils/testData';
 
 const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
-  const {width} = useWindowDimensions();
-
-  const epxtectedWidth = width * 0.9;
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -44,74 +41,44 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
         </View>
         <View>
           <CustomInput
-            inputStyle={{
-              width: epxtectedWidth,
-            }}
             containerStyle={styles.bottomHeader}
             placeholder="Search for restaurants"
           />
         </View>
       </View>
       <Spacer />
-      <ScrollView>
-        <ScrollView
-          contentContainerStyle={styles.horizontalScroll}
-          horizontal={true}>
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-        </ScrollView>
-        <Spacer />
-        <ScrollView
-          contentContainerStyle={styles.horizontalScroll}
-          horizontal={true}>
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-          <CustomCard title="hello" />
-        </ScrollView>
-        <Spacer />
-
-        <View>
-          <CustomCard
-            cardStyle={styles.card}
-            imgStyle={styles.card}
-            title="hello"
-          />
-          <Spacer />
-          <CustomCard
-            cardStyle={styles.card}
-            imgStyle={styles.card}
-            title="hello"
-          />
-          <Spacer />
-          <CustomCard
-            cardStyle={styles.card}
-            imgStyle={styles.card}
-            title="hello"
-          />
-          <Spacer />
-          <CustomCard
-            cardStyle={styles.card}
-            imgStyle={styles.card}
-            title="hello"
-          />
-          <Spacer />
-        </View>
-      </ScrollView>
+      <SectionList
+        sections={DATA}
+        keyExtractor={e => e.id}
+        renderSectionHeader={({section}) => (
+          <Text style={styles.sectionHeader}>{section.title}</Text>
+        )}
+        renderItem={({section, item}) =>
+          section.title !== 'ALL' ? (
+            <FlatList
+              //@ts-ignore
+              data={item.data}
+              horizontal={true}
+              keyExtractor={e => e.id}
+              //@ts-ignore
+              key={item.data.id}
+              renderItem={({item: i}) => (
+                <CustomCard
+                  cardStyle={styles.horizontalScroll}
+                  title={i.title}
+                  onPress={() => navigation.navigate('Restaurant')}
+                />
+              )}
+            />
+          ) : (
+            <CustomCard
+              cardStyle={styles.card}
+              imgStyle={styles.card}
+              title={item.title}
+            />
+          )
+        }
+      />
     </View>
   );
 };
@@ -126,7 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 2,
   },
-  bottomHeader: {margin: 0, marginBottom: 10},
+  bottomHeader: {marginVertical: 10},
   leftHeader: {
     flex: 1,
     flexDirection: 'row',
@@ -141,7 +108,9 @@ const styles = StyleSheet.create({
   rightHeaderBtn: {marginHorizontal: 10},
   text: {color: 'black', fontSize: 10},
   text2: {fontWeight: 'bold', color: 'red', fontSize: 13},
+  text3: {fontWeight: 'bold', color: 'red', fontSize: 13, padding: 5},
   horizontalScroll: {padding: 5},
+  sectionHeader: {color: 'red', padding: 5},
   card: {width: '100%', marginRight: 0, padding: 5},
   menuBtn: {alignSelf: 'center'},
 });

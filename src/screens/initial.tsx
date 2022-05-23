@@ -1,6 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Text} from 'react-native-elements';
+import {StyleSheet, Text} from 'react-native';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
 import {DrawerScreensProps} from '../navigators/drawer';
