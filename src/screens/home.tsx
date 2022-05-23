@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  useWindowDimensions,
   SectionList,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
@@ -16,10 +15,6 @@ import {DrawerScreensProps} from '../navigators/drawer';
 import {DATA} from '../utils/testData';
 
 const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
-  const {width} = useWindowDimensions();
-
-  const epxtectedWidth = width * 0.9;
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -46,9 +41,6 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
         </View>
         <View>
           <CustomInput
-            inputStyle={{
-              width: epxtectedWidth,
-            }}
             containerStyle={styles.bottomHeader}
             placeholder="Search for restaurants"
           />
@@ -101,7 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 2,
   },
-  bottomHeader: {margin: 0, marginBottom: 10},
+  bottomHeader: {marginVertical: 10},
   leftHeader: {
     flex: 1,
     flexDirection: 'row',
