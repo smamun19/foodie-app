@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 2,
   },
-  bottomHeader: {marginVertical: 10},
+  bottomHeader: {marginVertical: 10, margin: 0},
   leftHeader: {
     flex: 1,
     flexDirection: 'row',

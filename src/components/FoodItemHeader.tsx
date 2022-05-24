@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Image,
+  Animated,
 } from 'react-native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -61,6 +62,7 @@ const FoodItemHeader = ({
           </View>
         </View>
       </ImageBackground>
+
       {specialOffer ? (
         <View style={styles.view2}>
           <Text style={styles.text1}>{specialOffer}</Text>
@@ -82,7 +84,7 @@ const FoodItemHeader = ({
           <Text style={styles.text2}>More info</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.view5}>
+      <Animated.View style={styles.view5}>
         <FlatList
           horizontal={true}
           data={flatListData}
@@ -96,7 +98,7 @@ const FoodItemHeader = ({
             </View>
           )}
         />
-      </View>
+      </Animated.View>
     </View>
   );
 };
