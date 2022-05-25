@@ -23,6 +23,7 @@ interface HeaderProps {
   onLeftPress?: () => void;
   onRightPress1?: () => void;
   onRightPress2?: () => void;
+  test: any;
 }
 
 const FoodItemHeader = ({
@@ -36,9 +37,14 @@ const FoodItemHeader = ({
   onLeftPress,
   onRightPress1,
   onRightPress2,
+  test = 0,
 }: HeaderProps) => {
   return (
-    <View style={styles.container}>
+    <Animated.View
+      style={[
+        styles.container,
+        {transform: [{translateY: test}], position: 'relative'},
+      ]}>
       <ImageBackground
         style={styles.imageStyle}
         source={require('../assets/burger.jpeg')}>
@@ -84,7 +90,7 @@ const FoodItemHeader = ({
           <Text style={styles.text2}>More info</Text>
         </TouchableOpacity>
       </View>
-      <Animated.View style={styles.view5}>
+      <View style={[styles.view5]}>
         <FlatList
           horizontal={true}
           data={flatListData}
@@ -98,8 +104,8 @@ const FoodItemHeader = ({
             </View>
           )}
         />
-      </Animated.View>
-    </View>
+      </View>
+    </Animated.View>
   );
 };
 
@@ -148,7 +154,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderBottomWidth: 3,
     borderBottomColor: '#00000033',
-    transform: [{translateY: 0}],
+    backgroundColor: 'tomato',
   },
   view6: {
     paddingHorizontal: 20,

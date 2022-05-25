@@ -17,8 +17,8 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const translation = scrollY.interpolate({
-    inputRange: [100, 130],
-    outputRange: [-100, 0],
+    inputRange: [340, 410],
+    outputRange: [0, 65],
     extrapolate: 'clamp',
   });
 
@@ -26,7 +26,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
     <Animated.View style={styles.container}>
       {console.log(scrollY)}
       <StatusBar hidden />
-      <Animated.View
+      {/* <Animated.View
         style={{
           position: 'absolute',
           top: 0,
@@ -41,7 +41,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         <Text>This is for test</Text>
         <Text>This is for test</Text>
         <Text>This is for test</Text>
-      </Animated.View>
+      </Animated.View> */}
       <Animated.SectionList
         onScroll={Animated.event(
           [
@@ -56,18 +56,19 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         scrollEventThrottle={16}
         ref={sectionRef}
         sections={FOOD_DATA}
-        // ListHeaderComponent={
-        //   <FoodItemHeader
-        //     onLeftPress={() => navigation.navigate('Drawer')}
-        //     onSectionPress={e =>
-        //       sectionRef.current?.scrollToLocation({
-        //         sectionIndex: e,
-        //         itemIndex: 0,
-        //       })
-        //     }
-        //     flatListData={FOOD_DATA}
-        //   />
-        // }
+        ListHeaderComponent={
+          <FoodItemHeader
+            test={translation}
+            onLeftPress={() => navigation.navigate('Drawer')}
+            onSectionPress={e =>
+              sectionRef.current?.scrollToLocation({
+                sectionIndex: e,
+                itemIndex: 0,
+              })
+            }
+            flatListData={FOOD_DATA}
+          />
+        }
         renderSectionHeader={({section}) => (
           <Text style={styles.headerText}>{section.title}</Text>
         )}
