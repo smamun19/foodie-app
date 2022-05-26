@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 import {
   SectionList,
   StyleSheet,
@@ -6,7 +6,9 @@ import {
   View,
   StatusBar,
   Animated,
+  TouchableOpacity,
 } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FoodItem from '../components/FoodItemCardView';
 import FoodItemHeader from '../components/FoodItemHeader';
 import {RootStackScreensProps} from '../navigators/root-stack';
@@ -23,25 +25,9 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   });
 
   return (
-    <Animated.View style={styles.container}>
+    <View style={styles.container}>
       {console.log(scrollY)}
-      <StatusBar hidden />
-      {/* <Animated.View
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 100,
-          backgroundColor: 'tomato',
-          transform: [{translateY: translation}],
-        }}>
-        <Text>This is for test</Text>
-        <Text>This is for test</Text>
-        <Text>This is for test</Text>
-        <Text>This is for test</Text>
-        <Text>This is for test</Text>
-      </Animated.View> */}
+      <StatusBar animated />
       <Animated.SectionList
         onScroll={Animated.event(
           [
@@ -51,15 +37,14 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
               },
             },
           ],
-          {useNativeDriver: true},
+          {useNativeDriver: false},
         )}
         scrollEventThrottle={16}
         ref={sectionRef}
         sections={FOOD_DATA}
         ListHeaderComponent={
           <FoodItemHeader
-            test={translation}
-            onLeftPress={() => navigation.navigate('Drawer')}
+            test={scrollY}
             onSectionPress={e =>
               sectionRef.current?.scrollToLocation({
                 sectionIndex: e,
@@ -80,13 +65,67 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           />
         )}
       />
-    </Animated.View>
+      <Animated.View
+        style={[
+          styles.header,
+          {
+            backgroundColor: scrollY.interpolate({
+              inputRange: [290, 291],
+              outputRange: ['transparent', 'white'],
+            }),
+          },
+        ]}>
+        <View style={styles.leftHeader}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Drawer')}
+            style={styles.menuBtn}>
+            <MaterialIcons name="arrow-back" size={30} color="red" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.rightHeader}>
+          <TouchableOpacity style={styles.rightHeaderBtn1}>
+            <MaterialIcons name="favorite" size={30} color="red" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.rightHeaderBtn2}>
+            <MaterialIcons name="shopping-cart" size={30} color="red" />
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {flex: 1},
   headerText: {fontWeight: 'bold', fontSize: 20, color: 'black', padding: 5},
+  header: {
+    padding: 5,
+    flexDirection: 'row',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+  },
+
+  leftHeader: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+
+  rightHeader: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+  },
+  rightHeaderBtn1: {
+    marginHorizontal: 10,
+    borderRadius: 20,
+    backgroundColor: 'white',
+  },
+  rightHeaderBtn2: {
+    borderRadius: 20,
+    backgroundColor: 'white',
+  },
+  menuBtn: {alignSelf: 'center', borderRadius: 20, backgroundColor: 'white'},
 });
 
 export default Restaurant;

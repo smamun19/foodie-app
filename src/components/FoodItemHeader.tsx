@@ -10,7 +10,7 @@ import {
   Animated,
 } from 'react-native';
 
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+const HEADER_HEIGHT = 400;
 
 interface HeaderProps {
   title?: string;
@@ -20,9 +20,6 @@ interface HeaderProps {
   deliveryTime?: number;
   flatListData?: Record<string, any>[];
   onSectionPress: (e: number) => void;
-  onLeftPress?: () => void;
-  onRightPress1?: () => void;
-  onRightPress2?: () => void;
   test: any;
 }
 
@@ -34,40 +31,27 @@ const FoodItemHeader = ({
   deliveryTime = 25,
   flatListData,
   onSectionPress,
-  onLeftPress,
-  onRightPress1,
-  onRightPress2,
   test = 0,
 }: HeaderProps) => {
   return (
     <Animated.View
       style={[
         styles.container,
-        {transform: [{translateY: test}], position: 'relative'},
+        {
+          // transform: [
+          //   {
+          //     translateY: test.interpolate({
+          //       inputRange: [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
+          //       outputRange: [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.85],
+          //     }),
+          //   },
+          // ],
+        },
       ]}>
       <ImageBackground
         style={styles.imageStyle}
-        source={require('../assets/burger.jpeg')}>
-        <View style={styles.header}>
-          <View style={styles.leftHeader}>
-            <TouchableOpacity onPress={onLeftPress} style={styles.menuBtn}>
-              <MaterialIcons name="arrow-back" size={30} color="red" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.rightHeader}>
-            <TouchableOpacity
-              onPress={onRightPress1}
-              style={styles.rightHeaderBtn1}>
-              <MaterialIcons name="favorite" size={30} color="red" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={onRightPress2}
-              style={styles.rightHeaderBtn2}>
-              <MaterialIcons name="shopping-cart" size={30} color="red" />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ImageBackground>
+        source={require('../assets/burger.jpeg')}
+      />
 
       {specialOffer ? (
         <View style={styles.view2}>
@@ -90,7 +74,16 @@ const FoodItemHeader = ({
           <Text style={styles.text2}>More info</Text>
         </TouchableOpacity>
       </View>
-      <View style={[styles.view5]}>
+      <Animated.View
+        style={[
+          styles.view5,
+          {
+            opacity: test.interpolate({
+              inputRange: [0, HEADER_HEIGHT],
+              outputRange: [0, 1],
+            }),
+          },
+        ]}>
         <FlatList
           horizontal={true}
           data={flatListData}
@@ -104,39 +97,22 @@ const FoodItemHeader = ({
             </View>
           )}
         />
-      </View>
+      </Animated.View>
     </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {
+    height: HEADER_HEIGHT,
+    flex: 1,
+    overflow: 'hidden',
+  },
   imageStyle: {height: 150, width: '100%'},
   imageStyle2: {
     height: 90,
     width: 30,
   },
-  header: {padding: 5, flexDirection: 'row'},
-
-  leftHeader: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-
-  rightHeader: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-  },
-  rightHeaderBtn1: {
-    marginHorizontal: 10,
-    borderRadius: 20,
-    backgroundColor: 'white',
-  },
-  rightHeaderBtn2: {
-    borderRadius: 20,
-    backgroundColor: 'white',
-  },
-  menuBtn: {alignSelf: 'center', borderRadius: 20, backgroundColor: 'white'},
   view2: {
     flexDirection: 'row',
     padding: 5,
