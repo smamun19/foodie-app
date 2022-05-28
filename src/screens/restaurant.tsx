@@ -7,6 +7,7 @@ import {
   StatusBar,
   Animated,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FoodItem from '../components/FoodItemCardView';
@@ -17,12 +18,6 @@ import {FOOD_DATA} from '../utils/testData';
 const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const sectionRef = useRef<SectionList>(null);
   const scrollY = useRef(new Animated.Value(0)).current;
-
-  const translation = scrollY.interpolate({
-    inputRange: [340, 410],
-    outputRange: [0, 65],
-    extrapolate: 'clamp',
-  });
 
   return (
     <View style={styles.container}>
@@ -37,23 +32,12 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
               },
             },
           ],
-          {useNativeDriver: false},
+          {useNativeDriver: true},
         )}
         scrollEventThrottle={16}
         ref={sectionRef}
         sections={FOOD_DATA}
-        ListHeaderComponent={
-          <FoodItemHeader
-            test={scrollY}
-            onSectionPress={e =>
-              sectionRef.current?.scrollToLocation({
-                sectionIndex: e,
-                itemIndex: 0,
-              })
-            }
-            flatListData={FOOD_DATA}
-          />
-        }
+        ListHeaderComponent={<FoodItemHeader scrollY={scrollY} />}
         renderSectionHeader={({section}) => (
           <Text style={styles.headerText}>{section.title}</Text>
         )}
@@ -65,16 +49,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           />
         )}
       />
-      <Animated.View
-        style={[
-          styles.header,
-          {
-            backgroundColor: scrollY.interpolate({
-              inputRange: [290, 291],
-              outputRange: ['transparent', 'white'],
-            }),
-          },
-        ]}>
+      <Animated.View style={[styles.header]}>
         <View style={styles.leftHeader}>
           <TouchableOpacity
             onPress={() => navigation.navigate('Drawer')}
@@ -90,6 +65,40 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
             <MaterialIcons name="shopping-cart" size={30} color="red" />
           </TouchableOpacity>
         </View>
+      </Animated.View>
+      <Animated.View
+        style={[
+          styles.view5,
+          {
+            transform: [
+              {
+                translateY: scrollY.interpolate({
+                  inputRange: [0, 300],
+                  outputRange: [0, -300],
+                  extrapolate: 'clamp',
+                }),
+              },
+            ],
+          },
+        ]}>
+        <FlatList
+          horizontal={true}
+          data={FOOD_DATA}
+          renderItem={({item, index}) => (
+            <View style={styles.view6}>
+              <TouchableOpacity
+                onPress={() =>
+                  sectionRef.current?.scrollToLocation({
+                    sectionIndex: index,
+                    itemIndex: 0,
+                  })
+                }
+                style={styles.flatListView}>
+                <Text>{item.title}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
       </Animated.View>
     </View>
   );
@@ -126,6 +135,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   menuBtn: {alignSelf: 'center', borderRadius: 20, backgroundColor: 'white'},
+  view6: {
+    paddingHorizontal: 20,
+  },
+  view5: {
+    padding: 5,
+    borderBottomWidth: 3,
+    borderBottomColor: '#00000033',
+    position: 'absolute',
+    top: 340,
+    width: '100%',
+  },
+  flatListView: {paddingVertical: 10},
 });
 
 export default Restaurant;
