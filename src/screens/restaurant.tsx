@@ -46,6 +46,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
             price={item.price}
             name={item.name}
             description={item.description}
+            onPress={() => navigation.navigate('FoodDetails')}
           />
         )}
       />

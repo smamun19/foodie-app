@@ -11,6 +11,7 @@ import Otp from '../screens/otp';
 import Drawer from './drawer';
 import ResetPassword from '../screens/resetPassword';
 import Restaurant from '../screens/restaurant';
+import FoodDetails from '../screens/foodDetails';
 import {DrawerParamList} from './drawer';
 
 export type RootStackParamList = {
@@ -21,6 +22,7 @@ export type RootStackParamList = {
   Otp: {email: string; fromSignup?: Boolean};
   ResetPassword: {email: string};
   Restaurant: undefined;
+  FoodDetails: undefined;
 };
 
 export type RootStackScreens = keyof RootStackParamList;
@@ -39,6 +41,7 @@ const RootStack = () => (
     <Screen name="Otp" component={Otp} />
     <Screen name="ResetPassword" component={ResetPassword} />
     <Screen name="Restaurant" component={Restaurant} />
+    <Screen name="FoodDetails" component={FoodDetails} />
   </Navigator>
 );
 
