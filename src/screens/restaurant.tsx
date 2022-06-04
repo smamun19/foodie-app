@@ -21,7 +21,6 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
 
   return (
     <View style={styles.container}>
-      {console.log(scrollY)}
       <StatusBar animated />
       <Animated.SectionList
         onScroll={Animated.event(

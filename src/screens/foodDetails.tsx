@@ -1,33 +1,77 @@
-import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, Image} from 'react-native';
+import RadioButton from '../components/RadioButton';
+import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
-import FoodItem from '../components/FoodItemCardView';
-import FoodItemHeader from '../components/FoodItemHeader';
+import Spacer from '../components/Spacer';
 import {RootStackScreensProps} from '../navigators/root-stack';
-import {FOOD_DATA} from '../utils/testData';
 
 const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
+  const array = [
+    {name: 'small', price: 100},
+    {name: 'medium', price: 150},
+    {name: 'large', price: 200},
+    {name: ' extra large', price: 300},
+  ];
+
+  const [check, setCheck] = useState<Record<string, any>>({});
+
   return (
-    <View>
-      <CustomHeader
-        headerStyle={styles.header}
-        onLeftPress={() => navigation.navigate('Restaurant')}
+    <Container
+      header={
+        <CustomHeader
+          title="Details"
+          onLeftPress={() => navigation.navigate('Restaurant')}
+        />
+      }>
+      <Image
+        style={styles.imageStyle}
+        source={require('../assets/burger.jpeg')}
       />
-    </View>
+      <View style={styles.view1}>
+        <View style={styles.left}>
+          <Text style={styles.titleText}>Food name</Text>
+          <Text numberOfLines={2} style={styles.desText}>
+            description
+          </Text>
+        </View>
+        <View style={styles.right}>
+          <Text style={styles.priceText}>Tk {check.price}</Text>
+        </View>
+      </View>
+      <Spacer />
+      <View style={styles.view1}>
+        <View style={styles.left}>
+          <Text style={styles.titleText}>Variation</Text>
+          <Text numberOfLines={2} style={styles.desText}>
+            Select one
+          </Text>
+        </View>
+        <View style={styles.right}>
+          <Text style={styles.priceText}>1 Required</Text>
+        </View>
+      </View>
+      <View>
+        <RadioButton check={check} setCheck={setCheck} data={array} />
+      </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    padding: 5,
+  imageStyle: {height: 150, width: '100%'},
+  view1: {
+    width: '100%',
     flexDirection: 'row',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    borderBottomWidth: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 5,
   },
+  left: {flex: 1, paddingRight: 10},
+  right: {},
+  titleText: {fontWeight: 'bold', color: 'black', fontSize: 15},
+  desText: {},
+  priceText: {},
 });
 
 export default FoodDetails;
