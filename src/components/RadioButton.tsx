@@ -29,11 +29,12 @@ const RadioButton = ({data, check, setCheck}: CheckBoxProps) => {
                     : 'check-circle-outline'
                 }
                 size={20}
+                color={check.name === item.name ? 'red' : 'grey'}
               />
               <Text>{item.name}</Text>
             </View>
             <View>
-              <Text>{item.price}</Text>
+              <Text>{item.price} Tk</Text>
             </View>
           </Pressable>
         );

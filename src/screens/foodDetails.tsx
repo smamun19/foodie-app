@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
 import RadioButton from '../components/RadioButton';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
 import Spacer from '../components/Spacer';
 import {RootStackScreensProps} from '../navigators/root-stack';
+import CustomButton from '../components/CustomButton';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import CustomInput from '../components/TextInput';
 
 const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const array = [
@@ -15,7 +18,8 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   ];
 
   const [check, setCheck] = useState<Record<string, any>>({});
-
+  const [counter, setCounter] = useState<number>(1);
+  const [instructions, setInstructions] = useState<string>('');
   return (
     <Container
       header={
@@ -23,6 +27,36 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           title="Details"
           onLeftPress={() => navigation.navigate('Restaurant')}
         />
+      }
+      footer={
+        <View style={styles.footerContainer}>
+          <View style={styles.counter}>
+            <Pressable
+              disabled={counter === 1 ? true : false}
+              onPress={() => setCounter(counter - 1)}>
+              <MaterialIcons
+                name="remove-circle"
+                size={30}
+                color={counter === 1 ? 'grey' : 'red'}
+              />
+            </Pressable>
+            <Text style={styles.counterText}>{counter}</Text>
+            <Pressable onPress={() => setCounter(counter + 1)}>
+              <MaterialIcons name="add-circle" size={30} color="red" />
+            </Pressable>
+          </View>
+
+          <CustomButton
+            disabled={!check.name}
+            onPress={() => console.log('add to cart')}
+            containerStyle={[
+              styles.btn,
+              // eslint-disable-next-line react-native/no-inline-styles
+              {backgroundColor: !check.name ? 'grey' : 'red'},
+            ]}
+            title="Add to card"
+          />
+        </View>
       }>
       <Image
         style={styles.imageStyle}
@@ -54,6 +88,23 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       <View>
         <RadioButton check={check} setCheck={setCheck} data={array} />
       </View>
+      <View style={styles.extra}>
+        <Text style={styles.titleText}>Special instructions</Text>
+        <Text>
+          Please let us know if you are allergic to anything or if we need to
+          avoid anything
+        </Text>
+        <CustomInput
+          placeholder="e.g. no mayo"
+          multiline
+          textAlignVertical="top"
+          textStyle={styles.input}
+          maxLength={200}
+          onChangeText={setInstructions}
+          containerStyle={styles.inputContainer}
+        />
+        <Text style={styles.textCounter}>{instructions.length}/200</Text>
+      </View>
     </Container>
   );
 };
@@ -72,6 +123,32 @@ const styles = StyleSheet.create({
   titleText: {fontWeight: 'bold', color: 'black', fontSize: 15},
   desText: {},
   priceText: {},
+  footerContainer: {
+    flexDirection: 'row',
+    padding: 5,
+    borderTopWidth: 0.5,
+    borderTopColor: '#00000033',
+    justifyContent: 'space-between',
+  },
+  counter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  counterText: {paddingHorizontal: 10},
+  btn: {width: '70%'},
+  extra: {padding: 5, paddingVertical: 15},
+  inputContainer: {
+    width: '100%',
+    margin: 0,
+    alignItems: 'center',
+    paddingHorizontal: 0,
+    paddingVertical: 15,
+  },
+  input: {height: 100},
+  textCounter: {
+    alignSelf: 'flex-end',
+    marginBottom: 100,
+  },
 });
 
 export default FoodDetails;

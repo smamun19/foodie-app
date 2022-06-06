@@ -3,14 +3,16 @@ import {View, ScrollView, StyleSheet} from 'react-native';
 
 interface ContainerProps {
   header?: React.ReactNode;
+  footer?: React.ReactNode;
   children?: React.ReactNode;
 }
 
-const Container = ({children, header}: ContainerProps) => {
+const Container = ({children, header, footer}: ContainerProps) => {
   return (
     <View style={styles.view}>
       {header}
       <ScrollView style={styles.scrollview}>{children}</ScrollView>
+      {footer}
     </View>
   );
 };
