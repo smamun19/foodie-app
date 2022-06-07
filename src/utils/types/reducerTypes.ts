@@ -1,6 +1,9 @@
 export interface CartItemTypes {
   id: string;
   name: string;
+  price: number;
+  variation?: string;
+  quantity: number;
 }
 
 export interface UserAuthParams {

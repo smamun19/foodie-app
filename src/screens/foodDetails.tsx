@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
 import RadioButton from '../components/RadioButton';
 import Container from '../components/Container';
@@ -8,6 +8,7 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import CustomButton from '../components/CustomButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomInput from '../components/TextInput';
+import {UserContext} from '../services/userContext';
 
 const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const array = [
@@ -20,6 +21,18 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const [check, setCheck] = useState<Record<string, any>>({});
   const [counter, setCounter] = useState<number>(1);
   const [instructions, setInstructions] = useState<string>('');
+
+  const userInfo = useContext(UserContext);
+
+  const addToCart = () => {
+    userInfo?.addItem({
+      id: 'xxkj',
+      variation: check.name,
+      price: check.price,
+      quantity: 1,
+      name: check.name,
+    });
+  };
   return (
     <Container
       header={
@@ -48,7 +61,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
 
           <CustomButton
             disabled={!check.name}
-            onPress={() => console.log('add to cart')}
+            onPress={addToCart}
             containerStyle={[
               styles.btn,
               // eslint-disable-next-line react-native/no-inline-styles
@@ -135,19 +148,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   counterText: {paddingHorizontal: 10},
-  btn: {width: '70%'},
+  btn: {width: '70%', borderRadius: 15},
   extra: {padding: 5, paddingVertical: 15},
   inputContainer: {
     width: '100%',
     margin: 0,
     alignItems: 'center',
     paddingHorizontal: 0,
-    paddingVertical: 15,
+    paddingTop: 15,
   },
   input: {height: 100},
   textCounter: {
     alignSelf: 'flex-end',
-    marginBottom: 100,
   },
 });
 

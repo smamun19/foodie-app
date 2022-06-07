@@ -62,7 +62,12 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
             <MaterialIcons name="favorite" size={30} color="red" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.rightHeaderBtn2}>
-            <MaterialIcons name="shopping-cart" size={30} color="red" />
+            <MaterialIcons
+              onPress={() => navigation.navigate('Cart')}
+              name="shopping-cart"
+              size={30}
+              color="red"
+            />
           </TouchableOpacity>
         </View>
       </Animated.View>

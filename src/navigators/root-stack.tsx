@@ -13,6 +13,7 @@ import ResetPassword from '../screens/resetPassword';
 import Restaurant from '../screens/restaurant';
 import FoodDetails from '../screens/foodDetails';
 import {DrawerParamList} from './drawer';
+import Cart from '../screens/cart';
 
 export type RootStackParamList = {
   Loader: undefined;
@@ -23,6 +24,7 @@ export type RootStackParamList = {
   ResetPassword: {email: string};
   Restaurant: undefined;
   FoodDetails: undefined;
+  Cart: undefined;
 };
 
 export type RootStackScreens = keyof RootStackParamList;
@@ -42,6 +44,7 @@ const RootStack = () => (
     <Screen name="ResetPassword" component={ResetPassword} />
     <Screen name="Restaurant" component={Restaurant} />
     <Screen name="FoodDetails" component={FoodDetails} />
+    <Screen name="Cart" component={Cart} />
   </Navigator>
 );
 
