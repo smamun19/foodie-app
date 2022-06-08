@@ -64,7 +64,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         <Spacer height={10} />
 
         <View style={styles.subTotal}>
-          <Text>deliveryFee</Text>
+          <Text>Delivery fee</Text>
           <Text>Tk 15</Text>
         </View>
         <Spacer height={10} />
