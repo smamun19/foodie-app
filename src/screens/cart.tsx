@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CartCard from '../components/CartCard';
 import Container from '../components/Container';
 import CustomButton from '../components/CustomButton';
@@ -24,8 +25,8 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       footer={
         <View style={styles.footer}>
           <View style={styles.subTotal}>
-            <Text>Total</Text>
-            <Text>Tk 315</Text>
+            <Text style={styles.footerText}>Total</Text>
+            <Text style={styles.footerText}>Tk 315</Text>
           </View>
 
           <CustomButton
@@ -39,25 +40,43 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         <View style={styles.card}>
           <Image
             style={styles.img}
-            source={require('../assets/placeholder.jpg')}
+            source={require('../assets/food_delivery.png')}
           />
           <View>
             <Text>Estimated delivery</Text>
-            <Text>ASAP (40 min)</Text>
+            <Text style={styles.bold}>ASAP (40 min)</Text>
           </View>
         </View>
         <Spacer height={30} />
         <CartCard />
+        <Spacer height={10} />
+        <CustomButton
+          btnStyle={styles.addMoreBtnStyle}
+          containerStyle={styles.addMoreBtnContainer}
+          textStyle={styles.addMoreBtnText}
+          title="Add more items"
+        />
         <Spacer height={30} />
         <View style={styles.subTotal}>
-          <Text>Subtotal</Text>
-          <Text>Tk 300</Text>
+          <Text style={styles.bold}>Subtotal</Text>
+          <Text style={styles.bold}>Tk 300</Text>
         </View>
         <Spacer height={10} />
 
         <View style={styles.subTotal}>
           <Text>deliveryFee</Text>
           <Text>Tk 15</Text>
+        </View>
+        <Spacer height={10} />
+        <View style={styles.voucher}>
+          <MaterialIcons name="redeem" color={'red'} size={20} />
+          <Spacer height={0} width={10} />
+          <CustomButton
+            btnStyle={styles.addMoreBtnStyle}
+            containerStyle={styles.addMoreBtnContainer}
+            textStyle={styles.addMoreBtnText}
+            title="Apply a voucher"
+          />
         </View>
       </View>
     </Container>
@@ -80,12 +99,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
   },
-  img: {height: 50, width: 50},
+  img: {height: 50, width: 50, borderRadius: 20},
   subTotal: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  bold: {fontWeight: 'bold', color: 'black'},
+  footerText: {fontWeight: 'bold', paddingVertical: 5, color: 'black'},
+  addMoreBtnText: {color: 'red'},
+  addMoreBtnStyle: {
+    width: 'auto',
+  },
+  addMoreBtnContainer: {
+    height: 25,
+    paddingHorizontal: 0,
+    width: 'auto',
+    alignItems: 'flex-start',
+  },
+  voucher: {flexDirection: 'row', alignItems: 'center'},
 });
 
 export default Cart;

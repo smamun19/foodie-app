@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   innerView: {
     width: '100%',
     height: '100%',
-
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 60,
