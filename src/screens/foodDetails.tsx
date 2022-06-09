@@ -11,12 +11,16 @@ import CustomInput from '../components/TextInput';
 import {UserContext} from '../services/userContext';
 
 const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
-  const array = [
-    {name: 'small', price: 100},
-    {name: 'medium', price: 150},
-    {name: 'large', price: 200},
-    {name: ' extra large', price: 300},
-  ];
+  const foodDetails = {
+    id: 1,
+    name: 'Burger',
+    variation: [
+      {name: 'small', price: 100},
+      {name: 'medium', price: 150},
+      {name: 'large', price: 200},
+      {name: ' extra large', price: 300},
+    ],
+  };
 
   const [check, setCheck] = useState<Record<string, any>>({});
   const [counter, setCounter] = useState<number>(1);
@@ -26,11 +30,11 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
 
   const addToCart = () => {
     userInfo?.addItem({
-      id: 'xxkj',
+      id: foodDetails.id,
       variation: check.name,
       price: check.price,
-      quantity: 1,
-      name: check.name,
+      quantity: counter,
+      name: foodDetails.name,
     });
   };
   return (
@@ -99,7 +103,11 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         </View>
       </View>
       <View>
-        <RadioButton check={check} setCheck={setCheck} data={array} />
+        <RadioButton
+          check={check}
+          setCheck={setCheck}
+          data={foodDetails.variation}
+        />
       </View>
       <View style={styles.extra}>
         <Text style={styles.titleText}>Special instructions</Text>

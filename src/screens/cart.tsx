@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CartCard from '../components/CartCard';
@@ -12,7 +12,18 @@ import {UserContext} from '../services/userContext';
 const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const userInfo = useContext(UserContext);
 
-  console.log(userInfo?.cartItem);
+  const deliveryFee = 15;
+
+  const subTotal = useMemo(() => {
+    return userInfo?.cartItem.reduce((previousValue, currentValue) => {
+      return previousValue + currentValue.price * currentValue.quantity;
+    }, 0);
+  }, [userInfo?.cartItem]);
+
+  const totalAmount = useMemo(() => {
+    // @ts-ignore
+    return subTotal + deliveryFee;
+  }, [subTotal]);
 
   return (
     <Container
@@ -26,7 +37,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         <View style={styles.footer}>
           <View style={styles.subTotal}>
             <Text style={styles.footerText}>Total</Text>
-            <Text style={styles.footerText}>Tk 315</Text>
+            <Text style={styles.footerText}>Tk {totalAmount}</Text>
           </View>
 
           <CustomButton
@@ -48,7 +59,15 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           </View>
         </View>
         <Spacer height={30} />
-        <CartCard />
+        {userInfo?.cartItem.map(e => (
+          <CartCard
+            name={e.name}
+            price={e.price}
+            quantity={e.quantity}
+            variation={e.variation}
+            key={e.variation}
+          />
+        ))}
         <Spacer height={10} />
         <CustomButton
           btnStyle={styles.addMoreBtnStyle}
@@ -59,13 +78,13 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         <Spacer height={30} />
         <View style={styles.subTotal}>
           <Text style={styles.bold}>Subtotal</Text>
-          <Text style={styles.bold}>Tk 300</Text>
+          <Text style={styles.bold}>Tk {subTotal}</Text>
         </View>
         <Spacer height={10} />
 
         <View style={styles.subTotal}>
           <Text>Delivery fee</Text>
-          <Text>Tk 15</Text>
+          <Text>Tk {deliveryFee}</Text>
         </View>
         <Spacer height={10} />
         <View style={styles.voucher}>

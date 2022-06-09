@@ -25,12 +25,26 @@ const reducer = (
       return {...state, ...action.payload};
     case ActionType.LOGOUT:
       return {...state, name: undefined, token: undefined};
-    case ActionType.ADD_TO_CARD:
-      return {
-        ...state,
-        //@ts-ignores
-        cartItem: [...state.cartItem, action.item],
-      };
+    case ActionType.ADD_TO_CARD: {
+      const isExistIndex = state.cartItem.findIndex(
+        e => e.id === action.item?.id && e.variation === action.item.variation,
+      );
+
+      if (isExistIndex !== -1) {
+        // @ts-ignore
+        state.cartItem[isExistIndex] = {
+          ...action.item,
+
+          quantity:
+            // @ts-ignore
+            state.cartItem[isExistIndex].quantity + action.item.quantity,
+        };
+
+        return {...state, cartItem: [...state.cartItem]};
+      }
+      // @ts-ignore
+      return {...state, cartItem: [...state.cartItem, action.item]};
+    }
     case ActionType.REMOVE_FROM_CART: {
       const filteredItem = state.cartItem.filter(e => {
         e.id !== action.item?.id;
