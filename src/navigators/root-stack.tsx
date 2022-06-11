@@ -14,6 +14,7 @@ import Restaurant from '../screens/restaurant';
 import FoodDetails from '../screens/foodDetails';
 import {DrawerParamList} from './drawer';
 import Cart from '../screens/cart';
+import Voucher from '../screens/voucher';
 
 export type RootStackParamList = {
   Loader: undefined;
@@ -25,6 +26,7 @@ export type RootStackParamList = {
   Restaurant: undefined;
   FoodDetails: undefined;
   Cart: undefined;
+  Voucher: undefined;
 };
 
 export type RootStackScreens = keyof RootStackParamList;
@@ -45,6 +47,7 @@ const RootStack = () => (
     <Screen name="Restaurant" component={Restaurant} />
     <Screen name="FoodDetails" component={FoodDetails} />
     <Screen name="Cart" component={Cart} />
+    <Screen name="Voucher" component={Voucher} />
   </Navigator>
 );
 

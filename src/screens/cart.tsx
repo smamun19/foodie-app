@@ -25,6 +25,28 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
     return subTotal + deliveryFee;
   }, [subTotal]);
 
+  if (userInfo?.cartItem.length === 0) {
+    return (
+      <Container
+        header={
+          <CustomHeader
+            title="Cart"
+            onLeftPress={() => navigation.navigate('Restaurant')}
+          />
+        }>
+        <View style={styles.emptyCart}>
+          <Text>Hungry?</Text>
+          <Text>You havent added anything to your cart!</Text>
+          <CustomButton
+            onPress={() => navigation.goBack()}
+            title="Browse"
+            btnStyle={styles.browseBtn}
+          />
+        </View>
+      </Container>
+    );
+  }
+
   return (
     <Container
       header={
@@ -94,6 +116,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
             btnStyle={styles.addMoreBtnStyle}
             containerStyle={styles.addMoreBtnContainer}
             textStyle={styles.addMoreBtnText}
+            onPress={() => navigation.navigate('Voucher')}
             title="Apply a voucher"
           />
         </View>
@@ -137,6 +160,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   voucher: {flexDirection: 'row', alignItems: 'center'},
+  emptyCart: {justifyContent: 'center', alignItems: 'center', padding: 5},
+  browseBtn: {
+    backgroundColor: 'red',
+    width: 80,
+    marginVertical: 10,
+    height: 30,
+  },
 });
 
 export default Cart;
