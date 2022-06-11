@@ -31,7 +31,7 @@ const RadioButton = ({data, check, setCheck}: CheckBoxProps) => {
                 size={20}
                 color={check.name === item.name ? 'red' : 'grey'}
               />
-              <Text>{item.name}</Text>
+              <Text style={styles.name}>{item.name}</Text>
             </View>
             <View>
               <Text>{item.price} Tk</Text>
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   lebel: {flexDirection: 'row'},
+  name: {flexWrap: 'wrap', maxWidth: 250},
 });
 
 export default RadioButton;

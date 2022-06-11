@@ -36,6 +36,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       quantity: counter,
       name: foodDetails.name,
     });
+    navigation.goBack();
   };
   return (
     <Container

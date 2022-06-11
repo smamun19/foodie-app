@@ -35,7 +35,12 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
               <MaterialIcons name="favorite" size={22} color="red" />
             </TouchableOpacity>
             <TouchableOpacity>
-              <MaterialIcons name="shopping-cart" size={22} color="red" />
+              <MaterialIcons
+                onPress={() => navigation.navigate('Cart')}
+                name="shopping-cart"
+                size={22}
+                color="red"
+              />
             </TouchableOpacity>
           </View>
         </View>
