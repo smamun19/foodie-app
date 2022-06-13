@@ -20,6 +20,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       {name: 'large', price: 200},
       {name: ' extra large', price: 300},
     ],
+    price: undefined,
   };
 
   const [check, setCheck] = useState<Record<string, any>>({});
@@ -29,14 +30,24 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const userInfo = useContext(UserContext);
 
   const addToCart = () => {
+    if (check.name) {
+      userInfo?.addItem({
+        id: foodDetails.id,
+        variation: check.name,
+        price: check.price,
+        quantity: counter,
+        name: foodDetails.name,
+      });
+      return navigation.goBack();
+    }
+
     userInfo?.addItem({
       id: foodDetails.id,
-      variation: check.name,
-      price: check.price,
+      price: foodDetails.price ?? 0,
       quantity: counter,
       name: foodDetails.name,
     });
-    navigation.goBack();
+    return navigation.goBack();
   };
   return (
     <Container
@@ -65,12 +76,18 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           </View>
 
           <CustomButton
-            disabled={!check.name}
+            disabled={foodDetails.variation && !check.name}
             onPress={addToCart}
             containerStyle={[
               styles.btn,
               // eslint-disable-next-line react-native/no-inline-styles
-              {backgroundColor: !check.name ? 'grey' : 'red'},
+              {
+                backgroundColor: !foodDetails.variation
+                  ? 'red'
+                  : !check.name
+                  ? 'grey'
+                  : 'red',
+              },
             ]}
             title="Add to card"
           />
@@ -88,27 +105,35 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           </Text>
         </View>
         <View style={styles.right}>
-          <Text style={styles.priceText}>Tk {check.price}</Text>
+          <Text style={styles.priceText}>
+            Tk {check.price ?? foodDetails.price}
+          </Text>
         </View>
       </View>
       <Spacer />
-      <View style={styles.view1}>
-        <View style={styles.left}>
-          <Text style={styles.titleText}>Variation</Text>
-          <Text numberOfLines={2} style={styles.desText}>
-            Select one
-          </Text>
-        </View>
-        <View style={styles.right}>
-          <Text style={styles.priceText}>1 Required</Text>
-        </View>
-      </View>
       <View>
-        <RadioButton
-          check={check}
-          setCheck={setCheck}
-          data={foodDetails.variation}
-        />
+        {foodDetails.variation && (
+          <View>
+            <View style={styles.view1}>
+              <View style={styles.left}>
+                <Text style={styles.titleText}>Variation</Text>
+                <Text numberOfLines={2} style={styles.desText}>
+                  Select one
+                </Text>
+              </View>
+              <View style={styles.right}>
+                <Text style={styles.priceText}>1 Required</Text>
+              </View>
+            </View>
+            <View>
+              <RadioButton
+                check={check}
+                setCheck={setCheck}
+                data={foodDetails.variation}
+              />
+            </View>
+          </View>
+        )}
       </View>
       <View style={styles.extra}>
         <Text style={styles.titleText}>Special instructions</Text>
