@@ -84,10 +84,11 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         {userInfo?.cartItem.map(e => (
           <CartCard
             name={e.name}
+            id={e.id}
             price={e.price}
             quantity={e.quantity}
             variation={e.variation}
-            key={`${e.id}-${e.variation}`}
+            key={`${e.id}${e.variation}`}
           />
         ))}
         <Spacer height={10} />

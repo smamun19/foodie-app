@@ -37,6 +37,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         price: check.price,
         quantity: counter,
         name: foodDetails.name,
+        compositeId: `${foodDetails.id}${check.name}`,
       });
       return navigation.goBack();
     }
@@ -46,8 +47,9 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       price: foodDetails.price ?? 0,
       quantity: counter,
       name: foodDetails.name,
+      compositeId: `${foodDetails.id}`,
     });
-    return navigation.goBack();
+    navigation.goBack();
   };
   return (
     <Container
