@@ -9,9 +9,17 @@ interface CartCardProps {
   price: number;
   variation?: string;
   id: number;
+  compositeId: string;
 }
 
-const CartCard = ({name, price, quantity, variation, id}: CartCardProps) => {
+const CartCard = ({
+  name,
+  price,
+  quantity,
+  variation,
+  id,
+  compositeId,
+}: CartCardProps) => {
   const userInfo = useContext(UserContext);
 
   const addQuantity = () => {
@@ -22,7 +30,7 @@ const CartCard = ({name, price, quantity, variation, id}: CartCardProps) => {
         price: price,
         quantity: 1,
         name: name,
-        compositeId: `${id}${variation}`,
+        compositeId: compositeId,
       });
       return;
     }
@@ -32,7 +40,7 @@ const CartCard = ({name, price, quantity, variation, id}: CartCardProps) => {
       price: price,
       quantity: 1,
       name: name,
-      compositeId: `${id}`,
+      compositeId: compositeId,
     });
   };
 
@@ -44,7 +52,7 @@ const CartCard = ({name, price, quantity, variation, id}: CartCardProps) => {
         price: price,
         quantity: 1,
         name: name,
-        compositeId: `${id}${variation}`,
+        compositeId: compositeId,
       });
       return;
     }
@@ -54,7 +62,7 @@ const CartCard = ({name, price, quantity, variation, id}: CartCardProps) => {
       price: price,
       quantity: 1,
       name: name,
-      compositeId: `${id}`,
+      compositeId: compositeId,
     });
   };
   return (
