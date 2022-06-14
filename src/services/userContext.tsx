@@ -25,16 +25,41 @@ const reducer = (
       return {...state, ...action.payload};
     case ActionType.LOGOUT:
       return {...state, name: undefined, token: undefined};
-    case ActionType.ADD_TO_CARD:
-      return {
-        ...state,
-        //@ts-ignores
-        cartItem: [...state.cartItem, action.item],
-      };
+    case ActionType.ADD_TO_CARD: {
+      const isExistIndex = state.cartItem.findIndex(
+        e => e.compositeId === action.item?.compositeId,
+      );
+
+      if (isExistIndex !== -1) {
+        // @ts-ignore
+        state.cartItem[isExistIndex] = {
+          ...action.item,
+
+          quantity:
+            // @ts-ignore
+            state.cartItem[isExistIndex].quantity + action.item.quantity,
+        };
+
+        return {...state, cartItem: [...state.cartItem]};
+      }
+      // @ts-ignore
+      return {...state, cartItem: [...state.cartItem, action.item]};
+    }
     case ActionType.REMOVE_FROM_CART: {
-      const filteredItem = state.cartItem.filter(e => {
-        e.id !== action.item?.id;
-      });
+      // const filteredItem = state.cartItem.filter(e => {
+      //   e.id !== action.item?.id;
+      // });
+      const filteredItem = state.cartItem
+        .map(e => {
+          if (e.compositeId === action.item?.compositeId) {
+            return {
+              ...action.item,
+              quantity: e.quantity - action.item.quantity,
+            };
+          }
+          return e;
+        })
+        .filter(e => e.quantity > 0);
       return {...state, cartItem: [...filteredItem]};
     }
     case ActionType.HYDRATE: {
@@ -64,6 +89,9 @@ const Provider: FC<ProviderProps> = ({children}) => {
     },
     addItem: (item: CartItemTypes) => {
       dispacth({type: ActionType.ADD_TO_CARD, item});
+    },
+    removeItem: (item: CartItemTypes) => {
+      dispacth({type: ActionType.REMOVE_FROM_CART, item});
     },
   };
 

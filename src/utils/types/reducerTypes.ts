@@ -1,6 +1,10 @@
 export interface CartItemTypes {
-  id: string;
+  id: number;
   name: string;
+  price: number;
+  variation?: string;
+  quantity: number;
+  compositeId: string;
 }
 
 export interface UserAuthParams {
@@ -17,6 +21,7 @@ export interface ValueTypes {
   hydrate: (userData: UserAuthParams) => void;
   logout: () => void;
   addItem: (item: CartItemTypes) => void;
+  removeItem: (item: CartItemTypes) => void;
 }
 
 export enum ActionType {

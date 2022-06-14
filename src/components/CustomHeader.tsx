@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, ViewStyle} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface HeaderProps {
@@ -7,6 +7,7 @@ interface HeaderProps {
   name?: string;
   color?: string;
   size?: number;
+  headerStyle?: ViewStyle;
   onLeftPress?: () => void;
   onRightPress?: () => void;
   children?: React.ReactNode;
@@ -19,38 +20,36 @@ const CustomHeader: React.FC<HeaderProps> = ({
   name = 'mood-bad',
   size,
   color,
+  headerStyle,
 }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.leftHeader}>
+    <View style={[styles.header, headerStyle]}>
+      <View style={styles.leftHeader}>
+        <MaterialIcons
+          onPress={onLeftPress}
+          name="arrow-back"
+          size={30}
+          color="red"
+        />
+        <View style={styles.leftHeader1}>
+          <Text style={styles.text}>{title}</Text>
+        </View>
+      </View>
+      <View style={styles.rightHeader}>
+        {size && color ? (
           <MaterialIcons
-            onPress={onLeftPress}
-            name="arrow-back"
-            size={30}
-            color="red"
+            onPress={onRightPress}
+            name={name}
+            size={size}
+            color={color}
           />
-          <View style={styles.leftHeader1}>
-            <Text style={styles.text}>{title}</Text>
-          </View>
-        </View>
-        <View style={styles.rightHeader}>
-          {size && color ? (
-            <MaterialIcons
-              onPress={onRightPress}
-              name={name}
-              size={size}
-              color={color}
-            />
-          ) : null}
-        </View>
+        ) : null}
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
   header: {
     borderBottomWidth: 3,
     borderBottomColor: '#00000033',
