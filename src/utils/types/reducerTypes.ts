@@ -10,14 +10,17 @@ export interface CartItemTypes {
 export interface UserAuthParams {
   token?: string;
   name?: string;
+  voucher?: Record<string, any>;
   cartItem: CartItemTypes[];
 }
 
 export interface ValueTypes {
   token?: string;
   name?: string;
+  voucher?: Record<string, any>;
   cartItem: CartItemTypes[];
   login: (userData: UserAuthParams) => void;
+  addVoucher: (userData: UserAuthParams) => void;
   hydrate: (userData: UserAuthParams) => void;
   logout: () => void;
   addItem: (item: CartItemTypes) => void;
@@ -27,6 +30,7 @@ export interface ValueTypes {
 export enum ActionType {
   LOGIN = 'LOGIN',
   LOGOUT = 'LOGOUT',
+  ADD_VOUCHER = 'ADD_VOUCHER',
   ADD_TO_CARD = 'ADD_TO_CART',
   REMOVE_FROM_CART = 'REMOVE_FROM_CART',
   HYDRATE = 'HYDRATE',

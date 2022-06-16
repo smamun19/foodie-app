@@ -11,6 +11,7 @@ import {UserContext} from '../services/userContext';
 
 const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const userInfo = useContext(UserContext);
+  const voucherValue = userInfo?.voucher?.value ?? 0;
 
   const deliveryFee = 15;
 
@@ -22,8 +23,8 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
 
   const totalAmount = useMemo(() => {
     // @ts-ignore
-    return subTotal + deliveryFee;
-  }, [subTotal]);
+    return subTotal + deliveryFee - voucherValue;
+  }, [subTotal, voucherValue]);
 
   if (userInfo?.cartItem.length === 0) {
     return (
@@ -111,16 +112,25 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           <Text>Tk {deliveryFee}</Text>
         </View>
         <Spacer height={10} />
-        <View style={styles.voucher}>
-          <MaterialIcons name="redeem" color={'red'} size={20} />
-          <Spacer height={0} width={10} />
-          <CustomButton
-            btnStyle={styles.addMoreBtnStyle}
-            containerStyle={styles.addMoreBtnContainer}
-            textStyle={styles.addMoreBtnText}
-            onPress={() => navigation.navigate('Voucher')}
-            title="Apply a voucher"
-          />
+        <View>
+          {!userInfo?.voucher ? (
+            <View style={styles.voucher}>
+              <MaterialIcons name="redeem" color={'red'} size={20} />
+              <Spacer height={0} width={10} />
+              <CustomButton
+                btnStyle={styles.addMoreBtnStyle}
+                containerStyle={styles.addMoreBtnContainer}
+                textStyle={styles.addMoreBtnText}
+                onPress={() => navigation.navigate('Voucher')}
+                title="Apply a voucher"
+              />
+            </View>
+          ) : (
+            <View style={styles.subTotal}>
+              <Text>{userInfo.voucher?.name}</Text>
+              <Text>Tk {userInfo.voucher?.value}</Text>
+            </View>
+          )}
         </View>
       </View>
     </Container>

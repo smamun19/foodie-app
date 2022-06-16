@@ -4,6 +4,7 @@ export const requestHandler = (
   url: RequestInfo,
   method?: MethodType,
   body?: Record<string, any>,
+  token?: string,
   headers?: HeadersInit_,
 ) =>
   fetch(url, {
@@ -12,6 +13,7 @@ export const requestHandler = (
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
       ...headers,
     },
   });

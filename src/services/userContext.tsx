@@ -13,6 +13,7 @@ import {setItem, getItem} from '../utils/sInfo';
 const initialState: UserAuthParams = {
   token: undefined,
   name: undefined,
+  voucher: undefined,
   cartItem: [],
 };
 
@@ -24,7 +25,9 @@ const reducer = (
     case ActionType.LOGIN:
       return {...state, ...action.payload};
     case ActionType.LOGOUT:
-      return {...state, name: undefined, token: undefined};
+      return {...state, name: undefined, token: undefined, voucher: undefined};
+    case ActionType.ADD_VOUCHER:
+      return {...state, voucher: action.payload};
     case ActionType.ADD_TO_CARD: {
       const isExistIndex = state.cartItem.findIndex(
         e => e.compositeId === action.item?.compositeId,
@@ -77,9 +80,13 @@ const Provider: FC<ProviderProps> = ({children}) => {
   const value: ValueTypes = {
     token: state.token,
     name: state.name,
+    voucher: state.voucher,
     cartItem: state.cartItem,
     login: (userData: UserAuthParams) => {
       dispacth({type: ActionType.LOGIN, payload: userData});
+    },
+    addVoucher: (userData: UserAuthParams) => {
+      dispacth({type: ActionType.ADD_VOUCHER, payload: userData});
     },
     hydrate: (userData: UserAuthParams) => {
       dispacth({type: ActionType.HYDRATE, payload: userData});
