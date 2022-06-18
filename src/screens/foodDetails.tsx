@@ -183,7 +183,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  counterText: {paddingHorizontal: 10},
+  counterText: {
+    width: 25,
+    textAlign: 'center',
+  },
   btn: {width: '70%', borderRadius: 15},
   extra: {padding: 5, paddingVertical: 15},
   inputContainer: {

@@ -85,7 +85,7 @@ const CartCard = ({
           size={30}
           color="red"
         />
-        <Text>{quantity}</Text>
+        <Text style={styles.quantity}>{quantity}</Text>
         <MaterialIcons
           onPress={addQuantity}
           name="add-circle"
@@ -126,6 +126,10 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: 150,
     marginLeft: 20,
+  },
+  quantity: {
+    width: 25,
+    textAlign: 'center',
   },
 });
 
