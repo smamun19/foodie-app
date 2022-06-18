@@ -28,8 +28,10 @@ const reducer = (
       return {...state, name: undefined, token: undefined, voucher: undefined};
     case ActionType.ADD_VOUCHER:
       return {...state, voucher: action.payload};
+    case ActionType.REMOVE_VOUCHER:
+      return {...state, voucher: undefined};
     case ActionType.ADD_TO_CARD: {
-      const isExistIndex = state.cartItem.findIndex(
+      const isExistIndex = state.cartItem?.findIndex(
         e => e.compositeId === action.item?.compositeId,
       );
 
@@ -87,6 +89,9 @@ const Provider: FC<ProviderProps> = ({children}) => {
     },
     addVoucher: (userData: UserAuthParams) => {
       dispacth({type: ActionType.ADD_VOUCHER, payload: userData});
+    },
+    removeVoucher: () => {
+      dispacth({type: ActionType.REMOVE_VOUCHER});
     },
     hydrate: (userData: UserAuthParams) => {
       dispacth({type: ActionType.HYDRATE, payload: userData});
