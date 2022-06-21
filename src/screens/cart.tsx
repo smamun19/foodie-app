@@ -9,10 +9,15 @@ import Spacer from '../components/Spacer';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 
-const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
+const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
   const userInfo = useContext(UserContext);
+  const voucherValue = userInfo?.voucher?.value ?? 0;
 
   const deliveryFee = 15;
+
+  const removeVoucher = () => {
+    userInfo?.removeVoucher();
+  };
 
   const subTotal = useMemo(() => {
     return userInfo?.cartItem.reduce((previousValue, currentValue) => {
@@ -22,8 +27,8 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
 
   const totalAmount = useMemo(() => {
     // @ts-ignore
-    return subTotal + deliveryFee;
-  }, [subTotal]);
+    return subTotal + deliveryFee - voucherValue;
+  }, [subTotal, voucherValue]);
 
   if (userInfo?.cartItem.length === 0) {
     return (
@@ -111,16 +116,43 @@ const Cart = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           <Text>Tk {deliveryFee}</Text>
         </View>
         <Spacer height={10} />
-        <View style={styles.voucher}>
-          <MaterialIcons name="redeem" color={'red'} size={20} />
-          <Spacer height={0} width={10} />
-          <CustomButton
-            btnStyle={styles.addMoreBtnStyle}
-            containerStyle={styles.addMoreBtnContainer}
-            textStyle={styles.addMoreBtnText}
-            onPress={() => navigation.navigate('Voucher')}
-            title="Apply a voucher"
-          />
+        <View>
+          {!userInfo?.voucher ? (
+            <View style={styles.voucherBody}>
+              <MaterialIcons name="redeem" color={'red'} size={20} />
+              <Spacer height={0} width={10} />
+              <CustomButton
+                btnStyle={styles.addMoreBtnStyle}
+                containerStyle={styles.addMoreBtnContainer}
+                textStyle={styles.addMoreBtnText}
+                onPress={() => navigation.navigate('Voucher')}
+                title="Apply a voucher"
+              />
+            </View>
+          ) : (
+            <View style={styles.voucher}>
+              <View style={styles.voucherBody}>
+                <MaterialIcons name="loyalty" color={'red'} size={20} />
+                <Spacer height={0} width={10} />
+                <Text style={styles.voucherNameText}>
+                  {userInfo.voucher.name}
+                </Text>
+                <Spacer height={0} width={10} />
+                <CustomButton
+                  btnStyle={styles.addMoreBtnStyle}
+                  containerStyle={styles.addMoreBtnContainer}
+                  textStyle={styles.addMoreBtnText}
+                  onPress={removeVoucher}
+                  title="Remove"
+                />
+              </View>
+              <View style={styles.voucherValue}>
+                <Text style={styles.voucherValueText}>
+                  - Tk {userInfo.voucher.value}
+                </Text>
+              </View>
+            </View>
+          )}
         </View>
       </View>
     </Container>
@@ -161,7 +193,24 @@ const styles = StyleSheet.create({
     width: 'auto',
     alignItems: 'flex-start',
   },
-  voucher: {flexDirection: 'row', alignItems: 'center'},
+  voucher: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 2,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    elevation: 2,
+  },
+  voucherBody: {flexDirection: 'row', alignItems: 'center'},
+  voucherNameText: {color: 'black', fontWeight: 'bold'},
+  voucherValueText: {color: 'red', fontWeight: 'bold'},
+  voucherValue: {
+    backgroundColor: '#deadad',
+    borderRadius: 10,
+    padding: 2,
+    paddingHorizontal: 6,
+  },
   emptyCart: {justifyContent: 'center', alignItems: 'center', padding: 5},
   browseBtn: {
     backgroundColor: 'red',

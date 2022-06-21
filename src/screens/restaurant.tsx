@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useContext, useMemo, useRef} from 'react';
 import {
   SectionList,
   StyleSheet,
@@ -8,16 +8,39 @@ import {
   Animated,
   TouchableOpacity,
   FlatList,
+  Pressable,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FoodItem from '../components/FoodItemCardView';
 import FoodItemHeader from '../components/FoodItemHeader';
 import {RootStackScreensProps} from '../navigators/root-stack';
+import {UserContext} from '../services/userContext';
 import {FOOD_DATA} from '../utils/testData';
 
 const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const sectionRef = useRef<SectionList>(null);
   const scrollY = useRef(new Animated.Value(0)).current;
+  const userInfo = useContext(UserContext);
+  const deliveryFee = 15;
+
+  const voucherValue = userInfo?.voucher?.value ?? 0;
+
+  const totalItem = useMemo(() => {
+    return userInfo?.cartItem.reduce((previousValue, currentValue) => {
+      return previousValue + currentValue.quantity;
+    }, 0);
+  }, [userInfo?.cartItem]);
+
+  const totalAmount = useMemo(() => {
+    const subTotal = userInfo?.cartItem.reduce(
+      (previousValue, currentValue) => {
+        return previousValue + currentValue.price * currentValue.quantity;
+      },
+      0,
+    );
+    // @ts-ignore
+    return subTotal + deliveryFee - voucherValue;
+  }, [userInfo?.cartItem, voucherValue]);
 
   return (
     <View style={styles.container}>
@@ -105,6 +128,21 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           )}
         />
       </Animated.View>
+      <View>
+        {userInfo?.cartItem.length !== 0 ? (
+          <Pressable
+            onPress={() => {
+              navigation.navigate('Cart');
+            }}
+            style={styles.conditionalFooter}>
+            <View style={styles.footerItemCounter}>
+              <Text style={styles.footerText}>{totalItem}</Text>
+            </View>
+            <Text style={styles.footerText}>View your cart</Text>
+            <Text style={styles.footerText}>Tk {totalAmount}</Text>
+          </Pressable>
+        ) : null}
+      </View>
     </View>
   );
 };
@@ -152,6 +190,24 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   flatListView: {paddingVertical: 10},
+  conditionalFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    padding: 10,
+    margin: 5,
+    borderRadius: 5,
+    height: 40,
+  },
+  footerText: {color: 'white', alignSelf: 'center'},
+  footerItemCounter: {
+    borderRadius: 12,
+    height: 24,
+    width: 24,
+    borderColor: 'white',
+    borderWidth: 1,
+  },
 });
 
 export default Restaurant;

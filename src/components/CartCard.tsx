@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Alert, Image, StyleSheet, Text, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {UserContext} from '../services/userContext';
 
@@ -21,6 +21,28 @@ const CartCard = ({
   compositeId,
 }: CartCardProps) => {
   const userInfo = useContext(UserContext);
+
+  const removeItem = () => {
+    if (variation) {
+      userInfo?.removeItem({
+        id: id,
+        variation: variation,
+        price: price,
+        quantity: 1,
+        name: name,
+        compositeId: compositeId,
+      });
+      return;
+    }
+
+    userInfo?.removeItem({
+      id: id,
+      price: price,
+      quantity: 1,
+      name: name,
+      compositeId: compositeId,
+    });
+  };
 
   const addQuantity = () => {
     if (variation) {
@@ -45,25 +67,14 @@ const CartCard = ({
   };
 
   const removeQuantity = () => {
-    if (variation) {
-      userInfo?.removeItem({
-        id: id,
-        variation: variation,
-        price: price,
-        quantity: 1,
-        name: name,
-        compositeId: compositeId,
-      });
-      return;
+    if (quantity === 1) {
+      return Alert.alert(
+        'WARNING!',
+        'Do you want to remove this item from the cart?',
+        [{text: 'CANCEL'}, {text: 'YES', onPress: removeItem}],
+      );
     }
-
-    userInfo?.removeItem({
-      id: id,
-      price: price,
-      quantity: 1,
-      name: name,
-      compositeId: compositeId,
-    });
+    removeItem();
   };
   return (
     <View style={styles.cartCard}>
@@ -74,7 +85,7 @@ const CartCard = ({
           size={30}
           color="red"
         />
-        <Text>{quantity}</Text>
+        <Text style={styles.quantity}>{quantity}</Text>
         <MaterialIcons
           onPress={addQuantity}
           name="add-circle"
@@ -115,6 +126,10 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: 150,
     marginLeft: 20,
+  },
+  quantity: {
+    width: 25,
+    textAlign: 'center',
   },
 });
 
