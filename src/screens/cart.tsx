@@ -69,7 +69,11 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
 
           <CustomButton
             onPress={() =>
-              navigation.navigate('Checkout', {totalAmount: totalAmount})
+              navigation.navigate('Checkout', {
+                totalAmount: totalAmount,
+                deliveryFee: deliveryFee,
+                subTotal: subTotal,
+              })
             }
             containerStyle={styles.btn}
             textStyle={styles.btnText}

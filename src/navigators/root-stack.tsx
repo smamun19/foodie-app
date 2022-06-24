@@ -28,7 +28,7 @@ export type RootStackParamList = {
   FoodDetails: undefined;
   Cart: undefined;
   Voucher: undefined;
-  Checkout: {totalAmount: number};
+  Checkout: {totalAmount: number; subTotal?: number; deliveryFee: number};
 };
 
 export type RootStackScreens = keyof RootStackParamList;
