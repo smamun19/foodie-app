@@ -68,8 +68,15 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
           </View>
 
           <CustomButton
-            onPress={() => console.log('Go to final page')}
+            onPress={() =>
+              navigation.navigate('Checkout', {
+                totalAmount: totalAmount,
+                deliveryFee: deliveryFee,
+                subTotal: subTotal,
+              })
+            }
             containerStyle={styles.btn}
+            textStyle={styles.btnText}
             title="Review payment and address"
           />
         </View>
@@ -165,7 +172,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     borderRadius: 5,
   },
-  footer: {paddingHorizontal: 5},
+  footer: {
+    padding: 5,
+    borderRadius: 5,
+  },
   card: {
     borderColor: '#6b6b6b',
     borderRadius: 1,
@@ -218,6 +228,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     height: 30,
   },
+  btnText: {color: 'white'},
 });
 
 export default Cart;

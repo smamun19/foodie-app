@@ -21,6 +21,7 @@
     "react-native-bootsplash": "^4.0.2",
     "react-native-gesture-handler": "^2.4.2",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-maps": "^0.31.1",
     "react-native-reanimated": "^2.8.0",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.1",
