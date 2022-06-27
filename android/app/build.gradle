@@ -82,6 +82,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: 'local.properties'
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -129,6 +130,10 @@ android {
     ndkVersion rootProject.ext.ndkVersion
 
     compileSdkVersion rootProject.ext.compileSdkVersion
+
+    buildTypes.each {
+        it.buildConfigField "String", "CREDENTIALS_KEY", "\"$credentialsKey\""
+    }
 
     defaultConfig {
         applicationId "com.foddie"

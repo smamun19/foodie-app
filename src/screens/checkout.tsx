@@ -9,6 +9,8 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import Spacer from '../components/Spacer';
 import Divider from '../components/Divider';
+// @ts-ignore
+import BingMapsView from 'react-native-bing-maps';
 
 const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
   const userInfo = useContext(UserContext);
@@ -58,9 +60,13 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
               color="red"
             />
           </View>
-          <View style={styles.map}>
-            <Text> Map view here</Text>
+          <View>
+            <BingMapsView
+              mapLocation={{lat: 12.9010875, long: 77.6095084, zoom: 15}}
+              style={styles.map}
+            />
           </View>
+
           <Text style={styles.bold}>Location address bold</Text>
           <Text>Location address</Text>
         </CardView>
@@ -164,9 +170,6 @@ const styles = StyleSheet.create({
   mapContainer: {},
   map: {
     height: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'red',
   },
   address: {
     flexDirection: 'row',
