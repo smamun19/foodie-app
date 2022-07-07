@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -30,75 +30,89 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
   const [locationDialog, setLocationDialog] = useState(true);
   const [useLocationManager, setUseLocationManager] = useState(false);
   const [location, setLocation] = useState(null);
+  //let hasPermission: Boolean;
 
-  const hasLocationPermission = async () => {
-    if (Platform.OS === 'android' && Platform.Version < 23) {
-      return true;
-    }
+  const hasPermission = useRef<Boolean>();
 
-    const hasPermission = await PermissionsAndroid.check(
+  useEffect(() => {
+    PermissionsAndroid.check(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    );
+    ).then(status => {
+      if (status) {
+        Geolocation.getCurrentPosition(
+          position => {
+            setLocation(position);
+            console.log(position);
+          },
+          error => {
+            Alert.alert(`Code ${error.code}`, error.message);
+            setLocation(null);
+            console.log(error);
+          },
+          {
+            accuracy: {
+              android: 'high',
+              ios: 'best',
+            },
+            enableHighAccuracy: highAccuracy,
+            timeout: 15000,
+            maximumAge: 10000,
+            distanceFilter: 0,
+            forceRequestLocation: forceLocation,
+            forceLocationManager: useLocationManager,
+            showLocationDialog: locationDialog,
+          },
+        );
+        return (hasPermission.current = true);
+      }
+    });
 
-    if (hasPermission) {
-      return true;
+    if (!hasPermission.current) {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      ).then(status => {
+        if (status === PermissionsAndroid.RESULTS.GRANTED) {
+          Geolocation.getCurrentPosition(
+            position => {
+              setLocation(position);
+              console.log(position);
+            },
+            error => {
+              Alert.alert(`Code ${error.code}`, error.message);
+              setLocation(null);
+              console.log(error);
+            },
+            {
+              accuracy: {
+                android: 'high',
+                ios: 'best',
+              },
+              enableHighAccuracy: highAccuracy,
+              timeout: 15000,
+              maximumAge: 10000,
+              distanceFilter: 0,
+              forceRequestLocation: forceLocation,
+              forceLocationManager: useLocationManager,
+              showLocationDialog: locationDialog,
+            },
+          );
+          return (hasPermission.current = true);
+        } else if (status === PermissionsAndroid.RESULTS.DENIED) {
+          ToastAndroid.show(
+            'Location permission denied by user.',
+            ToastAndroid.LONG,
+          );
+          return (hasPermission.current = false);
+        } else if (status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+          ToastAndroid.show(
+            'Location permission revoked by user.',
+            ToastAndroid.LONG,
+          );
+          return (hasPermission.current = false);
+        }
+      });
     }
-
-    const status = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    );
-
-    if (status === PermissionsAndroid.RESULTS.GRANTED) {
-      return true;
-    }
-
-    if (status === PermissionsAndroid.RESULTS.DENIED) {
-      ToastAndroid.show(
-        'Location permission denied by user.',
-        ToastAndroid.LONG,
-      );
-    } else if (status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
-      ToastAndroid.show(
-        'Location permission revoked by user.',
-        ToastAndroid.LONG,
-      );
-    }
-
-    return false;
-  };
-
-  const getLocation = async () => {
-    const hasPermission = await hasLocationPermission();
-
-    if (!hasPermission) {
-      return;
-    }
-
-    Geolocation.getCurrentPosition(
-      position => {
-        setLocation(position);
-        console.log(position);
-      },
-      error => {
-        Alert.alert(`Code ${error.code}`, error.message);
-        setLocation(null);
-        console.log(error);
-      },
-      {
-        accuracy: {
-          android: 'high',
-          ios: 'best',
-        },
-        enableHighAccuracy: highAccuracy,
-        timeout: 15000,
-        maximumAge: 10000,
-        distanceFilter: 0,
-        forceRequestLocation: forceLocation,
-        forceLocationManager: useLocationManager,
-        showLocationDialog: locationDialog,
-      },
-    );
-  };
+  }, []);
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -123,7 +137,6 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
             <Text style={styles.footerText}>Tk {route.params.totalAmount}</Text>
           </View>
           <CustomButton
-            onPress={getLocation}
             containerStyle={styles.btn}
             textStyle={styles.btnText}
             title="Place order"
