@@ -6,7 +6,6 @@ import {
   Switch,
   PermissionsAndroid,
   ToastAndroid,
-  Platform,
   Alert,
 } from 'react-native';
 import CardView from '../components/CardView';
@@ -14,7 +13,7 @@ import Container from '../components/Container';
 import CustomButton from '../components/CustomButton';
 import CustomHeader from '../components/CustomHeader';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import Spacer from '../components/Spacer';
@@ -25,44 +24,43 @@ import BingMapsView from 'react-native-bing-maps';
 const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
   const userInfo = useContext(UserContext);
   const [isEnabled, setIsEnabled] = useState(false);
-  const [forceLocation, setForceLocation] = useState(true);
-  const [highAccuracy, setHighAccuracy] = useState(true);
-  const [locationDialog, setLocationDialog] = useState(true);
-  const [useLocationManager, setUseLocationManager] = useState(false);
-  const [location, setLocation] = useState(null);
-  //let hasPermission: Boolean;
+  const [location, setLocation] = useState<GeoPosition | null>(null);
 
   const hasPermission = useRef<Boolean>();
+
+  const getCurrentPosition = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        setLocation(position);
+        console.log(position);
+      },
+      error => {
+        Alert.alert(`Code ${error.code}`, error.message);
+        setLocation(null);
+        console.log(error);
+      },
+      {
+        accuracy: {
+          android: 'high',
+          ios: 'best',
+        },
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 10000,
+        distanceFilter: 0,
+        forceRequestLocation: true,
+        forceLocationManager: false,
+        showLocationDialog: true,
+      },
+    );
+  };
 
   useEffect(() => {
     PermissionsAndroid.check(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
     ).then(status => {
       if (status) {
-        Geolocation.getCurrentPosition(
-          position => {
-            setLocation(position);
-            console.log(position);
-          },
-          error => {
-            Alert.alert(`Code ${error.code}`, error.message);
-            setLocation(null);
-            console.log(error);
-          },
-          {
-            accuracy: {
-              android: 'high',
-              ios: 'best',
-            },
-            enableHighAccuracy: highAccuracy,
-            timeout: 15000,
-            maximumAge: 10000,
-            distanceFilter: 0,
-            forceRequestLocation: forceLocation,
-            forceLocationManager: useLocationManager,
-            showLocationDialog: locationDialog,
-          },
-        );
+        getCurrentPosition();
         return (hasPermission.current = true);
       }
     });
@@ -72,30 +70,7 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       ).then(status => {
         if (status === PermissionsAndroid.RESULTS.GRANTED) {
-          Geolocation.getCurrentPosition(
-            position => {
-              setLocation(position);
-              console.log(position);
-            },
-            error => {
-              Alert.alert(`Code ${error.code}`, error.message);
-              setLocation(null);
-              console.log(error);
-            },
-            {
-              accuracy: {
-                android: 'high',
-                ios: 'best',
-              },
-              enableHighAccuracy: highAccuracy,
-              timeout: 15000,
-              maximumAge: 10000,
-              distanceFilter: 0,
-              forceRequestLocation: forceLocation,
-              forceLocationManager: useLocationManager,
-              showLocationDialog: locationDialog,
-            },
-          );
+          getCurrentPosition();
           return (hasPermission.current = true);
         } else if (status === PermissionsAndroid.RESULTS.DENIED) {
           ToastAndroid.show(
