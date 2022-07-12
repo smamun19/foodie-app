@@ -7,9 +7,11 @@ buildscript {
         compileSdkVersion = 31
         targetSdkVersion = 31
         ndkVersion = "21.4.7075529"
+        googlePlayServicesVersion = "17.0.0"
     }
     repositories {
         google()
+        jcenter{}
         mavenCentral()
     }
     dependencies {
@@ -33,6 +35,7 @@ allprojects {
         }
 
         google()
+        jcenter()
         maven { url 'https://www.jitpack.io' }
     }
 }

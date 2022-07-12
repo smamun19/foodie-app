@@ -1,18 +1,93 @@
-import React, {useContext, useState} from 'react';
-import {View, Text, StyleSheet, Switch} from 'react-native';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Switch,
+  PermissionsAndroid,
+  ToastAndroid,
+  Alert,
+} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomButton from '../components/CustomButton';
 import CustomHeader from '../components/CustomHeader';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import Spacer from '../components/Spacer';
 import Divider from '../components/Divider';
+// @ts-ignore
+import BingMapsView from 'react-native-bing-maps';
 
 const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
   const userInfo = useContext(UserContext);
   const [isEnabled, setIsEnabled] = useState(false);
+  const [location, setLocation] = useState<GeoPosition | null>(null);
+
+  const hasPermission = useRef<Boolean>();
+
+  const getCurrentPosition = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        setLocation(position);
+        console.log(position);
+      },
+      error => {
+        Alert.alert(`Code ${error.code}`, error.message);
+        setLocation(null);
+        console.log(error);
+      },
+      {
+        accuracy: {
+          android: 'high',
+          ios: 'best',
+        },
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 10000,
+        distanceFilter: 0,
+        forceRequestLocation: true,
+        forceLocationManager: false,
+        showLocationDialog: true,
+      },
+    );
+  };
+
+  useEffect(() => {
+    PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    ).then(status => {
+      if (status) {
+        getCurrentPosition();
+        return (hasPermission.current = true);
+      }
+    });
+
+    if (!hasPermission.current) {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      ).then(status => {
+        if (status === PermissionsAndroid.RESULTS.GRANTED) {
+          getCurrentPosition();
+          return (hasPermission.current = true);
+        } else if (status === PermissionsAndroid.RESULTS.DENIED) {
+          ToastAndroid.show(
+            'Location permission denied by user.',
+            ToastAndroid.LONG,
+          );
+          return (hasPermission.current = false);
+        } else if (status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+          ToastAndroid.show(
+            'Location permission revoked by user.',
+            ToastAndroid.LONG,
+          );
+          return (hasPermission.current = false);
+        }
+      });
+    }
+  }, []);
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -37,7 +112,6 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
             <Text style={styles.footerText}>Tk {route.params.totalAmount}</Text>
           </View>
           <CustomButton
-            onPress={() => console.log('Go to final page')}
             containerStyle={styles.btn}
             textStyle={styles.btnText}
             title="Place order"
@@ -58,9 +132,13 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
               color="red"
             />
           </View>
-          <View style={styles.map}>
-            <Text> Map view here</Text>
+          <View>
+            <BingMapsView
+              mapLocation={{lat: 12.9010875, long: 77.6095084, zoom: 15}}
+              style={styles.map}
+            />
           </View>
+
           <Text style={styles.bold}>Location address bold</Text>
           <Text>Location address</Text>
         </CardView>
@@ -164,9 +242,6 @@ const styles = StyleSheet.create({
   mapContainer: {},
   map: {
     height: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'red',
   },
   address: {
     flexDirection: 'row',
