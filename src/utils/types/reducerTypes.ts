@@ -1,10 +1,10 @@
 export interface CartItemTypes {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
   price: number;
   variation?: string;
   quantity: number;
-  compositeId: string;
+  compositeId?: string;
 }
 
 export interface UserAuthParams {
@@ -41,7 +41,7 @@ export enum ActionType {
 export interface ActionParams {
   type: ActionType;
   payload?: UserAuthParams;
-  item?: CartItemTypes;
+  item: CartItemTypes;
 }
 
 export interface ProviderProps {

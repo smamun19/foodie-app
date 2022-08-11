@@ -36,18 +36,15 @@ const reducer = (
       );
 
       if (isExistIndex !== -1) {
-        // @ts-ignore
         state.cartItem[isExistIndex] = {
           ...action.item,
 
           quantity:
-            // @ts-ignore
-            state.cartItem[isExistIndex].quantity + action.item.quantity,
+            state?.cartItem[isExistIndex]?.quantity + action.item.quantity,
         };
 
         return {...state, cartItem: [...state.cartItem]};
       }
-      // @ts-ignore
       return {...state, cartItem: [...state.cartItem, action.item]};
     }
     case ActionType.REMOVE_FROM_CART: {
@@ -85,19 +82,34 @@ const Provider: FC<ProviderProps> = ({children}) => {
     voucher: state.voucher,
     cartItem: state.cartItem,
     login: (userData: UserAuthParams) => {
-      dispacth({type: ActionType.LOGIN, payload: userData});
+      dispacth({
+        type: ActionType.LOGIN,
+        payload: userData,
+        item: {price: 0, quantity: 0},
+      });
     },
     addVoucher: (userData: UserAuthParams) => {
-      dispacth({type: ActionType.ADD_VOUCHER, payload: userData});
+      dispacth({
+        type: ActionType.ADD_VOUCHER,
+        payload: userData,
+        item: {price: 0, quantity: 0},
+      });
     },
     removeVoucher: () => {
-      dispacth({type: ActionType.REMOVE_VOUCHER});
+      dispacth({
+        type: ActionType.REMOVE_VOUCHER,
+        item: {price: 0, quantity: 0},
+      });
     },
     hydrate: (userData: UserAuthParams) => {
-      dispacth({type: ActionType.HYDRATE, payload: userData});
+      dispacth({
+        type: ActionType.HYDRATE,
+        payload: userData,
+        item: {price: 0, quantity: 0},
+      });
     },
     logout: () => {
-      dispacth({type: ActionType.LOGOUT});
+      dispacth({type: ActionType.LOGOUT, item: {price: 0, quantity: 0}});
     },
     addItem: (item: CartItemTypes) => {
       dispacth({type: ActionType.ADD_TO_CARD, item});
@@ -110,7 +122,11 @@ const Provider: FC<ProviderProps> = ({children}) => {
   useEffect(() => {
     (async () => {
       const result = await getItem('userInfo');
-      dispacth({type: ActionType.HYDRATE, payload: result});
+      dispacth({
+        type: ActionType.HYDRATE,
+        payload: result,
+        item: {price: 0, quantity: 0},
+      });
     })();
   }, []);
 
