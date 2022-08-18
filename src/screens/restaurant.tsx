@@ -22,6 +22,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const userInfo = useContext(UserContext);
   const deliveryFee = 15;
+  const specialOffer = 'undefined';
 
   const voucherValue = userInfo?.voucher?.value ?? 0;
 
@@ -59,7 +60,13 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         scrollEventThrottle={16}
         ref={sectionRef}
         sections={FOOD_DATA}
-        ListHeaderComponent={<FoodItemHeader scrollY={scrollY} />}
+        ListHeaderComponent={
+          <FoodItemHeader
+            sectionRef={sectionRef}
+            specialOffer={specialOffer}
+            scrollY={scrollY}
+          />
+        }
         renderSectionHeader={({section}) => (
           <Text style={styles.headerText}>{section.title}</Text>
         )}
@@ -94,15 +101,16 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           </TouchableOpacity>
         </View>
       </Animated.View>
-      <Animated.View
+      {/* <Animated.View
         style={[
           styles.view5,
+          {top: specialOffer ? 340 : 240},
           {
             transform: [
               {
                 translateY: scrollY.interpolate({
-                  inputRange: [0, 300],
-                  outputRange: [0, -300],
+                  inputRange: [0, 200],
+                  outputRange: [0, -200],
                   extrapolate: 'clamp',
                 }),
               },
@@ -127,7 +135,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
             </View>
           )}
         />
-      </Animated.View>
+      </Animated.View> */}
       <View>
         {userInfo?.cartItem.length !== 0 ? (
           <Pressable
@@ -185,9 +193,10 @@ const styles = StyleSheet.create({
     padding: 5,
     borderBottomWidth: 3,
     borderBottomColor: '#00000033',
-    position: 'absolute',
-    top: 340,
+    position: 'relative',
     width: '100%',
+    marginBottom: 400,
+    backgroundColor: 'red',
   },
   flatListView: {paddingVertical: 10},
   conditionalFooter: {
