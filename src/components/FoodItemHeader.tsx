@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 5,
     backgroundColor: '#e8e795',
+    height: 100,
   },
   view3: {
     flexDirection: 'row',
