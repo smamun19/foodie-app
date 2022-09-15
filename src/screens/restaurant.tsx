@@ -22,6 +22,8 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const userInfo = useContext(UserContext);
   const deliveryFee = 15;
+  const specialOffer = undefined;
+  const range = specialOffer ? 300 : 200;
 
   const voucherValue = userInfo?.voucher?.value ?? 0;
 
@@ -59,7 +61,13 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         scrollEventThrottle={16}
         ref={sectionRef}
         sections={FOOD_DATA}
-        ListHeaderComponent={<FoodItemHeader scrollY={scrollY} />}
+        ListHeaderComponent={
+          <FoodItemHeader
+            sectionRef={sectionRef}
+            specialOffer={specialOffer}
+            scrollY={scrollY}
+          />
+        }
         renderSectionHeader={({section}) => (
           <Text style={styles.headerText}>{section.title}</Text>
         )}
@@ -97,12 +105,13 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       <Animated.View
         style={[
           styles.view5,
+          {top: specialOffer ? 340 : 240},
           {
             transform: [
               {
                 translateY: scrollY.interpolate({
-                  inputRange: [0, 300],
-                  outputRange: [0, -300],
+                  inputRange: [0, range],
+                  outputRange: [0, -range],
                   extrapolate: 'clamp',
                 }),
               },
@@ -186,8 +195,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     borderBottomColor: '#00000033',
     position: 'absolute',
-    top: 340,
     width: '100%',
+    marginBottom: 400,
   },
   flatListView: {paddingVertical: 10},
   conditionalFooter: {

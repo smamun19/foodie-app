@@ -7,6 +7,8 @@ import {
   View,
   Image,
   Animated,
+  SectionList,
+  DefaultSectionT,
 } from 'react-native';
 
 const HEADER_HEIGHT = 400;
@@ -18,13 +20,14 @@ interface HeaderProps {
   specialOffer?: string;
   deliveryTime?: number;
   scrollY: Animated.Value;
+  sectionRef: React.RefObject<SectionList<any, DefaultSectionT>>;
 }
 
 const FoodItemHeader = ({
   title = 'Restaurant name',
   rating = 200,
   distance = '1.2km',
-  specialOffer = 'its working',
+  specialOffer,
   deliveryTime = 25,
   scrollY,
 }: HeaderProps) => {
@@ -32,6 +35,7 @@ const FoodItemHeader = ({
     <Animated.View
       style={[
         styles.container,
+        {height: specialOffer ? HEADER_HEIGHT : 300},
         {
           opacity: scrollY.interpolate({
             inputRange: [280, 290],
@@ -83,6 +87,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 5,
     backgroundColor: '#e8e795',
+    height: 100,
   },
   view3: {
     flexDirection: 'row',
