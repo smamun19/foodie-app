@@ -38,8 +38,8 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       },
       0,
     );
-    // @ts-ignore
-    return subTotal + deliveryFee - voucherValue;
+
+    return subTotal ?? 0 + deliveryFee - voucherValue;
   }, [userInfo?.cartItem, voucherValue]);
 
   return (

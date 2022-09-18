@@ -26,8 +26,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
   }, [userInfo?.cartItem]);
 
   const totalAmount = useMemo(() => {
-    // @ts-ignore
-    return subTotal + deliveryFee - voucherValue;
+    return subTotal ?? 0 + deliveryFee - voucherValue;
   }, [subTotal, voucherValue]);
 
   if (userInfo?.cartItem.length === 0) {

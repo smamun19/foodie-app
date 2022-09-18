@@ -48,9 +48,6 @@ const reducer = (
       return {...state, cartItem: [...state.cartItem, action.item]};
     }
     case ActionType.REMOVE_FROM_CART: {
-      // const filteredItem = state.cartItem.filter(e => {
-      //   e.id !== action.item?.id;
-      // });
       const filteredItem = state.cartItem
         .map(e => {
           if (e.compositeId === action.item?.compositeId) {

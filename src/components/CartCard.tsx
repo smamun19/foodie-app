@@ -2,15 +2,7 @@ import React, {useContext} from 'react';
 import {Alert, Image, StyleSheet, Text, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {UserContext} from '../services/userContext';
-
-interface CartCardProps {
-  quantity: number;
-  name: string;
-  price: number;
-  variation?: string;
-  id: number;
-  compositeId: string;
-}
+import {CartItemTypes} from '../utils/types/reducerTypes';
 
 const CartCard = ({
   name,
@@ -19,7 +11,7 @@ const CartCard = ({
   variation,
   id,
   compositeId,
-}: CartCardProps) => {
+}: CartItemTypes) => {
   const userInfo = useContext(UserContext);
 
   const removeItem = () => {
