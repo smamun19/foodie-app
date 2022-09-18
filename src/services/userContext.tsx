@@ -69,7 +69,16 @@ const reducer = (
   }
 };
 
-export const UserContext = createContext<ValueTypes | null>(null);
+export const UserContext = createContext<ValueTypes>({
+  ...initialState,
+  addItem: () => null,
+  addVoucher: () => null,
+  hydrate: () => null,
+  login: () => null,
+  logout: () => null,
+  removeItem: () => null,
+  removeVoucher: () => null,
+});
 
 const Provider: FC<ProviderProps> = ({children}) => {
   const [state, dispacth] = useReducer(reducer, initialState);
