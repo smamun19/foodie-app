@@ -6,12 +6,20 @@ import {
   CartItemTypes,
   ProviderProps,
   UserAuthParams,
+  UserContextParams,
 } from '../utils/types/reducerTypes';
 import {setItem, getItem} from '../utils/sInfo';
 
 const initialState: UserAuthParams = {
   token: undefined,
   name: undefined,
+  voucher: undefined,
+  cartItem: [],
+};
+
+const contextState: UserContextParams = {
+  name: undefined,
+  token: undefined,
   voucher: undefined,
   cartItem: [],
   addItem: () => null,
@@ -75,11 +83,11 @@ const reducer = (
   }
 };
 
-export const UserContext = createContext<UserAuthParams>(initialState);
+export const UserContext = createContext<UserContextParams>(contextState);
 
 const Provider: FC<ProviderProps> = ({children}) => {
   const [state, dispacth] = useReducer(reducer, initialState);
-  const value: UserAuthParams = {
+  const value: UserContextParams = {
     token: state.token,
     name: state.name,
     voucher: state.voucher,

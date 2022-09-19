@@ -12,6 +12,13 @@ export interface UserAuthParams {
   name?: string;
   voucher?: Record<string, any>;
   cartItem: CartItemTypes[];
+}
+
+export interface UserContextParams {
+  token?: string;
+  name?: string;
+  voucher?: Record<string, any>;
+  cartItem: CartItemTypes[];
   login: (userData: UserAuthParams) => void;
   addVoucher: (userData: UserAuthParams) => void;
   removeVoucher: () => void;

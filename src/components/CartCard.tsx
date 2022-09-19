@@ -16,7 +16,7 @@ const CartCard = ({
 
   const removeItem = () => {
     if (variation) {
-      userInfo?.removeItem({
+      userInfo.removeItem({
         id: id,
         variation: variation,
         price: price,
@@ -27,7 +27,7 @@ const CartCard = ({
       return;
     }
 
-    userInfo?.removeItem({
+    userInfo.removeItem({
       id: id,
       price: price,
       quantity: 1,
@@ -38,7 +38,7 @@ const CartCard = ({
 
   const addQuantity = () => {
     if (variation) {
-      userInfo?.addItem({
+      userInfo.addItem({
         id: id,
         variation: variation,
         price: price,
@@ -49,7 +49,7 @@ const CartCard = ({
       return;
     }
 
-    userInfo?.addItem({
+    userInfo.addItem({
       id: id,
       price: price,
       quantity: 1,

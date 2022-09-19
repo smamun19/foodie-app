@@ -31,7 +31,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
 
   const addToCart = () => {
     if (check.name) {
-      userInfo?.addItem({
+      userInfo.addItem({
         id: foodDetails.id,
         variation: check.name,
         price: check.price,
@@ -42,7 +42,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       return navigation.goBack();
     }
 
-    userInfo?.addItem({
+    userInfo.addItem({
       id: foodDetails.id,
       price: foodDetails.price ?? 0,
       quantity: counter,

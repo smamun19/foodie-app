@@ -23,24 +23,21 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const userInfo = useContext(UserContext);
   const deliveryFee = 15;
 
-  const voucherValue = userInfo?.voucher?.value ?? 0;
+  const voucherValue = userInfo.voucher?.value ?? 0;
 
   const totalItem = useMemo(() => {
-    return userInfo?.cartItem.reduce((previousValue, currentValue) => {
+    return userInfo.cartItem.reduce((previousValue, currentValue) => {
       return previousValue + currentValue.quantity;
     }, 0);
-  }, [userInfo?.cartItem]);
+  }, [userInfo.cartItem]);
 
   const totalAmount = useMemo(() => {
-    const subTotal = userInfo?.cartItem.reduce(
-      (previousValue, currentValue) => {
-        return previousValue + currentValue.price * currentValue.quantity;
-      },
-      0,
-    );
+    const subTotal = userInfo.cartItem.reduce((previousValue, currentValue) => {
+      return previousValue + currentValue.price * currentValue.quantity;
+    }, 0);
 
     return subTotal ?? 0 + deliveryFee - voucherValue;
-  }, [userInfo?.cartItem, voucherValue]);
+  }, [userInfo.cartItem, voucherValue]);
 
   return (
     <View style={styles.container}>
@@ -129,7 +126,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         />
       </Animated.View>
       <View>
-        {userInfo?.cartItem.length !== 0 ? (
+        {userInfo.cartItem.length !== 0 ? (
           <Pressable
             onPress={() => {
               navigation.navigate('Cart');

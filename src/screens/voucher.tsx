@@ -13,14 +13,14 @@ const Voucher = ({navigation}: RootStackScreensProps<'Voucher'>) => {
   const userInfo = useContext(UserContext);
   const onApply = async () => {
     try {
-      const res = await addVoucher(voucher, userInfo?.token);
+      const res = await addVoucher(voucher, userInfo.token);
       if (res.statusCode !== 200) {
         return Alert.alert(
           'Try another voucher',
           'The voucher does not does not exist. Please check if the voucher code was typed in correctly',
         );
       }
-      userInfo?.addVoucher(res.details);
+      userInfo.addVoucher(res.details);
       navigation.navigate('Cart');
     } catch (error) {
       return Alert.alert(
