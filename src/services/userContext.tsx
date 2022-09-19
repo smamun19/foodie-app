@@ -6,7 +6,6 @@ import {
   CartItemTypes,
   ProviderProps,
   UserAuthParams,
-  ValueTypes,
 } from '../utils/types/reducerTypes';
 import {setItem, getItem} from '../utils/sInfo';
 
@@ -15,6 +14,13 @@ const initialState: UserAuthParams = {
   name: undefined,
   voucher: undefined,
   cartItem: [],
+  addItem: () => null,
+  addVoucher: () => null,
+  hydrate: () => null,
+  login: () => null,
+  logout: () => null,
+  removeItem: () => null,
+  removeVoucher: () => null,
 };
 
 const reducer = (
@@ -69,20 +75,11 @@ const reducer = (
   }
 };
 
-export const UserContext = createContext<ValueTypes>({
-  ...initialState,
-  addItem: () => null,
-  addVoucher: () => null,
-  hydrate: () => null,
-  login: () => null,
-  logout: () => null,
-  removeItem: () => null,
-  removeVoucher: () => null,
-});
+export const UserContext = createContext<UserAuthParams>(initialState);
 
 const Provider: FC<ProviderProps> = ({children}) => {
   const [state, dispacth] = useReducer(reducer, initialState);
-  const value: ValueTypes = {
+  const value: UserAuthParams = {
     token: state.token,
     name: state.name,
     voucher: state.voucher,

@@ -12,13 +12,6 @@ export interface UserAuthParams {
   name?: string;
   voucher?: Record<string, any>;
   cartItem: CartItemTypes[];
-}
-
-export interface ValueTypes {
-  token?: string;
-  name?: string;
-  voucher?: Record<string, any>;
-  cartItem: CartItemTypes[];
   login: (userData: UserAuthParams) => void;
   addVoucher: (userData: UserAuthParams) => void;
   removeVoucher: () => void;
@@ -37,13 +30,11 @@ export enum ActionType {
   REMOVE_FROM_CART = 'REMOVE_FROM_CART',
   HYDRATE = 'HYDRATE',
 }
-
 export interface ActionParams {
   type: ActionType;
   payload?: UserAuthParams;
   item: CartItemTypes;
 }
-
 export interface ProviderProps {
   // any props that come into the component
 }
