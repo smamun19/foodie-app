@@ -6,7 +6,7 @@ import {
   CartItemTypes,
   ProviderProps,
   UserAuthParams,
-  ValueTypes,
+  UserContextParams,
 } from '../utils/types/reducerTypes';
 import {setItem, getItem} from '../utils/sInfo';
 
@@ -15,6 +15,20 @@ const initialState: UserAuthParams = {
   name: undefined,
   voucher: undefined,
   cartItem: [],
+};
+
+const contextState: UserContextParams = {
+  name: undefined,
+  token: undefined,
+  voucher: undefined,
+  cartItem: [],
+  addItem: () => null,
+  addVoucher: () => null,
+  hydrate: () => null,
+  login: () => null,
+  logout: () => null,
+  removeItem: () => null,
+  removeVoucher: () => null,
 };
 
 const reducer = (
@@ -36,24 +50,18 @@ const reducer = (
       );
 
       if (isExistIndex !== -1) {
-        // @ts-ignore
         state.cartItem[isExistIndex] = {
           ...action.item,
 
           quantity:
-            // @ts-ignore
-            state.cartItem[isExistIndex].quantity + action.item.quantity,
+            state?.cartItem[isExistIndex]?.quantity + action.item.quantity,
         };
 
         return {...state, cartItem: [...state.cartItem]};
       }
-      // @ts-ignore
       return {...state, cartItem: [...state.cartItem, action.item]};
     }
     case ActionType.REMOVE_FROM_CART: {
-      // const filteredItem = state.cartItem.filter(e => {
-      //   e.id !== action.item?.id;
-      // });
       const filteredItem = state.cartItem
         .map(e => {
           if (e.compositeId === action.item?.compositeId) {
@@ -75,29 +83,44 @@ const reducer = (
   }
 };
 
-export const UserContext = createContext<ValueTypes | null>(null);
+export const UserContext = createContext<UserContextParams>(contextState);
 
 const Provider: FC<ProviderProps> = ({children}) => {
   const [state, dispacth] = useReducer(reducer, initialState);
-  const value: ValueTypes = {
+  const value: UserContextParams = {
     token: state.token,
     name: state.name,
     voucher: state.voucher,
     cartItem: state.cartItem,
     login: (userData: UserAuthParams) => {
-      dispacth({type: ActionType.LOGIN, payload: userData});
+      dispacth({
+        type: ActionType.LOGIN,
+        payload: userData,
+        item: {price: 0, quantity: 0},
+      });
     },
     addVoucher: (userData: UserAuthParams) => {
-      dispacth({type: ActionType.ADD_VOUCHER, payload: userData});
+      dispacth({
+        type: ActionType.ADD_VOUCHER,
+        payload: userData,
+        item: {price: 0, quantity: 0},
+      });
     },
     removeVoucher: () => {
-      dispacth({type: ActionType.REMOVE_VOUCHER});
+      dispacth({
+        type: ActionType.REMOVE_VOUCHER,
+        item: {price: 0, quantity: 0},
+      });
     },
     hydrate: (userData: UserAuthParams) => {
-      dispacth({type: ActionType.HYDRATE, payload: userData});
+      dispacth({
+        type: ActionType.HYDRATE,
+        payload: userData,
+        item: {price: 0, quantity: 0},
+      });
     },
     logout: () => {
-      dispacth({type: ActionType.LOGOUT});
+      dispacth({type: ActionType.LOGOUT, item: {price: 0, quantity: 0}});
     },
     addItem: (item: CartItemTypes) => {
       dispacth({type: ActionType.ADD_TO_CARD, item});
@@ -110,7 +133,11 @@ const Provider: FC<ProviderProps> = ({children}) => {
   useEffect(() => {
     (async () => {
       const result = await getItem('userInfo');
-      dispacth({type: ActionType.HYDRATE, payload: result});
+      dispacth({
+        type: ActionType.HYDRATE,
+        payload: result,
+        item: {price: 0, quantity: 0},
+      });
     })();
   }, []);
 

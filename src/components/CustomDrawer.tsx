@@ -12,7 +12,7 @@ import CustomButton from './CustomButton';
 const CustomDrawer = (props: DrawerContentComponentProps) => {
   const userInfo = useContext(UserContext);
   const logout = () => {
-    userInfo?.logout();
+    userInfo.logout();
     props.navigation.navigate('Login');
   };
   return (
@@ -25,7 +25,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
             source={require('../assets/hisoka-face.png')}
             style={styles.img}
           />
-          {userInfo?.token ? (
+          {userInfo.token ? (
             <Text style={styles.text}>
               {userInfo.name ?? 'Ops! Where is your name?'}
             </Text>
@@ -41,7 +41,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
         </View>
       </DrawerContentScrollView>
       <View style={styles.bottom}>
-        {userInfo?.token ? (
+        {userInfo.token ? (
           <CustomButton title="Logout" onPress={logout} />
         ) : (
           <CustomButton

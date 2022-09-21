@@ -38,7 +38,7 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
         token: res.details.token,
         cartItem: [],
       };
-      userInfo?.login(authInfo);
+      userInfo.login(authInfo);
       setItem('userInfo', authInfo);
       navigation.navigate('Drawer');
     } catch (error) {

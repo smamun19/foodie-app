@@ -182,7 +182,7 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
             <MaterialIcons name="list-alt" size={20} color="red" />
             <Text style={styles.bold}>Order summery</Text>
           </View>
-          {userInfo?.cartItem.map(e => {
+          {userInfo.cartItem.map(e => {
             return (
               <View key={e.compositeId} style={styles.address}>
                 <Text style={styles.bold}>
@@ -202,12 +202,10 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
             <Text style={styles.bold}>Delivery fee</Text>
             <Text style={styles.bold}>Tk {route.params.deliveryFee}</Text>
           </View>
-          {userInfo?.voucher && (
+          {userInfo.voucher && (
             <View style={styles.address}>
-              <Text style={styles.bold}>
-                Voucher: {userInfo?.voucher?.name}
-              </Text>
-              <Text style={styles.bold}>- Tk {userInfo?.voucher?.value}</Text>
+              <Text style={styles.bold}>Voucher: {userInfo.voucher.name}</Text>
+              <Text style={styles.bold}>- Tk {userInfo.voucher.value}</Text>
             </View>
           )}
         </CardView>

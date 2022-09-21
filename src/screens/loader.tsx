@@ -26,7 +26,7 @@ const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
   }, []);
 
   const loaderHandler = () => {
-    if (userInfo?.token) {
+    if (userInfo.token) {
       return navigation.navigate('Drawer');
     }
     return navigation.navigate('Login');

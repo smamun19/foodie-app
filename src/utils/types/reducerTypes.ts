@@ -1,10 +1,10 @@
 export interface CartItemTypes {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
   price: number;
   variation?: string;
   quantity: number;
-  compositeId: string;
+  compositeId?: string;
 }
 
 export interface UserAuthParams {
@@ -14,7 +14,7 @@ export interface UserAuthParams {
   cartItem: CartItemTypes[];
 }
 
-export interface ValueTypes {
+export interface UserContextParams {
   token?: string;
   name?: string;
   voucher?: Record<string, any>;
@@ -37,13 +37,11 @@ export enum ActionType {
   REMOVE_FROM_CART = 'REMOVE_FROM_CART',
   HYDRATE = 'HYDRATE',
 }
-
 export interface ActionParams {
   type: ActionType;
   payload?: UserAuthParams;
-  item?: CartItemTypes;
+  item: CartItemTypes;
 }
-
 export interface ProviderProps {
   // any props that come into the component
 }

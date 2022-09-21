@@ -11,26 +11,25 @@ import {UserContext} from '../services/userContext';
 
 const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
   const userInfo = useContext(UserContext);
-  const voucherValue = userInfo?.voucher?.value ?? 0;
+  const voucherValue = userInfo.voucher?.value ?? 0;
 
   const deliveryFee = 15;
 
   const removeVoucher = () => {
-    userInfo?.removeVoucher();
+    userInfo.removeVoucher();
   };
 
   const subTotal = useMemo(() => {
-    return userInfo?.cartItem.reduce((previousValue, currentValue) => {
+    return userInfo.cartItem.reduce((previousValue, currentValue) => {
       return previousValue + currentValue.price * currentValue.quantity;
     }, 0);
-  }, [userInfo?.cartItem]);
+  }, [userInfo.cartItem]);
 
   const totalAmount = useMemo(() => {
-    // @ts-ignore
     return subTotal + deliveryFee - voucherValue;
   }, [subTotal, voucherValue]);
 
-  if (userInfo?.cartItem.length === 0) {
+  if (userInfo.cartItem.length === 0) {
     return (
       <Container
         header={
@@ -93,7 +92,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
           </View>
         </View>
         <Spacer height={30} />
-        {userInfo?.cartItem.map(e => (
+        {userInfo.cartItem.map(e => (
           <CartCard
             name={e.name}
             id={e.id}
@@ -124,7 +123,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
         </View>
         <Spacer height={10} />
         <View>
-          {!userInfo?.voucher ? (
+          {!userInfo.voucher ? (
             <View style={styles.voucherBody}>
               <MaterialIcons name="redeem" color={'red'} size={20} />
               <Spacer height={0} width={10} />
