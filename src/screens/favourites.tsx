@@ -4,16 +4,16 @@ import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
 import {DrawerScreensProps} from '../navigators/drawer';
 
-const Initial = ({navigation}: DrawerScreensProps<'Initial'>) => {
+const Favourites = ({navigation}: DrawerScreensProps<'Favourites'>) => {
   return (
     <Container
       header={
         <CustomHeader
-          title="Initial"
+          title="Favourites"
           onLeftPress={() => navigation.navigate('Home')}
         />
       }>
-      <Text>hello</Text>
+      <Text>Favourites Page</Text>
     </Container>
   );
 };
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Initial;
+export default Favourites;
