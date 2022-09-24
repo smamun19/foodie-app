@@ -1,10 +1,38 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
 import ProfileCard from '../components/ProfileCard';
 import {DrawerScreensProps} from '../navigators/drawer';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
+interface SocialCardProps {
+  title: string;
+  icon: string;
+  color: string;
+  onPress: () => void;
+}
+
+const SocialCard = ({icon, title, color, onPress}: SocialCardProps) => {
+  return (
+    <CardView cardView={styles.cardView}>
+      <View style={styles.cardViewLeft}>
+        <MaterialIcons
+          style={styles.cardViewTitle}
+          name={icon}
+          color={color}
+          size={30}
+        />
+        <Text>{title}</Text>
+      </View>
+
+      <Pressable onPress={onPress}>
+        <Text style={styles.socialBtnText}>Connect</Text>
+      </Pressable>
+    </CardView>
+  );
+};
 
 const Profile = ({navigation}: DrawerScreensProps<'Profile'>) => {
   return (
@@ -24,18 +52,18 @@ const Profile = ({navigation}: DrawerScreensProps<'Profile'>) => {
         title="Mobile number"
       />
       <Text style={styles.cAccounts}>Connected accounts</Text>
-      <CardView cardView={styles.cardView}>
-        <Text>Facebook</Text>
-        <Pressable onPress={() => console.log('working')}>
-          <Text style={styles.socialBtnText}>Connect</Text>
-        </Pressable>
-      </CardView>
-      <CardView cardView={styles.cardView}>
-        <Text>Google</Text>
-        <Pressable onPress={() => console.log('working')}>
-          <Text style={styles.socialBtnText}>Connect</Text>
-        </Pressable>
-      </CardView>
+      <SocialCard
+        icon="facebook"
+        title="Facebook"
+        color="blue"
+        onPress={() => console.log('working')}
+      />
+      <SocialCard
+        icon="eco"
+        title="Eco"
+        color="green"
+        onPress={() => console.log('working')}
+      />
     </Container>
   );
 };
@@ -65,6 +93,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   socialBtnText: {color: 'red'},
+  cardViewLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  cardViewTitle: {marginRight: 8},
 });
 
 export default Profile;
