@@ -117,7 +117,7 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
         <View style={styles.btnView}>
           <CustomButton
             title="Continue"
-            btnStyle={styles.btn}
+            containerStyle={styles.btn}
             textStyle={styles.btnText}
             onPress={signUpHandler}
           />

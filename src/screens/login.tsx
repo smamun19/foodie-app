@@ -143,7 +143,7 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
         <View style={styles.btnView}>
           <CustomButton
             title="Continue"
-            btnStyle={styles.btn}
+            containerStyle={styles.btn}
             textStyle={styles.btnText}
             onPress={signinHanlder}
           />
@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
   },
   signupBtnContainer: {
     height: 25,
+    width: '100%',
   },
   innerSignUpBtn: {},
   btnText: {
