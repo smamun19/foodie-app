@@ -39,7 +39,6 @@ const CustomButton = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     paddingHorizontal: 15,
     height: 50,
     justifyContent: 'center',
@@ -61,7 +60,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     color: 'black',
-    textTransform: 'uppercase',
   },
 });
 

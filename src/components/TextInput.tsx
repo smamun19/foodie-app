@@ -26,7 +26,7 @@ const CustomInput = ({
 }: InputProps) => {
   return (
     <View style={[styles.container, containerStyle]}>
-      {title ? <Text style={styles.title}>{title} </Text> : null}
+      {title ? <Text style={styles.title}>{title}</Text> : null}
       <View style={[styles.inputOuterContainer, inputStyle]}>
         <TextInput {...rest} style={[styles.text, textStyle]} />
       </View>

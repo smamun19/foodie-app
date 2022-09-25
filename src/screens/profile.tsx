@@ -44,11 +44,20 @@ const Profile = ({navigation}: DrawerScreensProps<'Profile'>) => {
           onLeftPress={() => navigation.navigate('Home')}
         />
       }>
-      <ProfileCard onPress={() => console.log('working')} title="name" />
-      <ProfileCard onPress={() => console.log('working')} title="Email" />
-      <ProfileCard onPress={() => console.log('working')} title="Password" />
       <ProfileCard
-        onPress={() => console.log('working')}
+        onPress={() => navigation.navigate('ProfileEdit', {title: 'Name'})}
+        title="Name"
+      />
+      <ProfileCard
+        onPress={() => navigation.navigate('ProfileEdit', {title: 'Email'})}
+        title="Email"
+      />
+      <ProfileCard
+        onPress={() => navigation.navigate('ProfileEdit', {title: 'Password'})}
+        title="Password"
+      />
+      <ProfileCard
+        onPress={() => navigation.navigate('ProfileEdit', {title: 'Mobile'})}
         title="Mobile number"
       />
       <Text style={styles.cAccounts}>Connected accounts</Text>
@@ -70,14 +79,6 @@ const Profile = ({navigation}: DrawerScreensProps<'Profile'>) => {
 
 const styles = StyleSheet.create({
   containerStyle: {margin: 10},
-  view: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  scrollview: {
-    flex: 1,
-  },
   cAccounts: {
     fontWeight: 'bold',
     color: 'black',
