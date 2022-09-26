@@ -193,7 +193,6 @@ const styles = StyleSheet.create({
     width: '100%',
     margin: 0,
     alignItems: 'center',
-    paddingHorizontal: 0,
     paddingTop: 15,
   },
   input: {height: 100},

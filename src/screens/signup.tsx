@@ -66,12 +66,12 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
           <View>
             <CustomButton
               textStyle={styles.btnText2}
-              btnStyle={styles.google}
+              containerStyle={styles.google}
               title="Continue with Google"
             />
             <Spacer height={20} />
             <CustomButton
-              btnStyle={styles.google}
+              containerStyle={styles.google}
               textStyle={styles.btnText2}
               title="Continue with Facbook"
             />
@@ -131,7 +131,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  KeyboardAwareContainer: {},
+  KeyboardAwareContainer: {
+    margin: 15,
+  },
   inputContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -148,7 +150,6 @@ const styles = StyleSheet.create({
   signUp: {
     flexDirection: 'row',
     alignItems: 'center',
-    margin: 15,
   },
   signUpBtn: {
     width: '20%',
@@ -172,7 +173,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   upperView: {
-    margin: 15,
     marginTop: 50,
   },
   upperView2: {

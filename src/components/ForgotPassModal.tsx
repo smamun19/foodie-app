@@ -63,7 +63,6 @@ const CustomModal = ({modalVisible, setModalVisible, navigation}: Props) => {
             <View style={styles.inputStyle}>
               <CustomInput
                 title="Email"
-                containerStyle={styles.inputContainer}
                 placeholder="Enter Your Email Address"
                 value={email}
                 onChangeText={setEmail}
@@ -146,9 +145,6 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  inputContainer: {
-    paddingHorizontal: 0,
   },
 });
 

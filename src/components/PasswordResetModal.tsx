@@ -36,14 +36,12 @@ const PasswordReset = ({resetPassVisible, setResetPassVisible}: Props) => {
             <View style={styles.inputStyle}>
               <CustomInput
                 title="OTP"
-                containerStyle={styles.inputContainer}
                 placeholder="Enter Your OTP"
                 value={otp}
                 onChangeText={setOtp}
               />
               <CustomInput
                 title="New Password"
-                containerStyle={styles.inputContainer}
                 placeholder="Enter Your new password"
                 value={newpass}
                 onChangeText={setNewPass}
@@ -125,9 +123,6 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  inputContainer: {
-    paddingHorizontal: 0,
   },
 });
 

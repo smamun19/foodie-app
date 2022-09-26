@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     width: '100%',
     margin: 10,
     alignItems: 'center',
-    paddingHorizontal: 15,
   },
   title: {width: '100%', paddingVertical: 5},
   inputOuterContainer: {

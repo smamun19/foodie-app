@@ -46,7 +46,6 @@ const Voucher = ({navigation}: RootStackScreensProps<'Voucher'>) => {
           placeholder="Voucher code"
           onChangeText={setVoucher}
           value={voucher}
-          containerStyle={styles.textInput}
         />
         <CustomButton
           onPress={onApply}
@@ -60,7 +59,6 @@ const Voucher = ({navigation}: RootStackScreensProps<'Voucher'>) => {
 
 const styles = StyleSheet.create({
   container: {justifyContent: 'center', alignItems: 'center', padding: 5},
-  textInput: {paddingHorizontal: 0},
   applyBtn: {backgroundColor: 'red'},
 });
 
