@@ -32,7 +32,8 @@ const ProfileEdit = ({
       footer={
         <CustomButton
           onPress={() => console.log('working')}
-          containerStyle={styles.btn}
+          containerStyle={styles.btnContainer}
+          btnStyle={styles.btn}
           textStyle={styles.btnText}
           title="Update"
         />
@@ -63,11 +64,18 @@ const styles = StyleSheet.create({
   containerStyle: {margin: 10},
   inputStyle: {margin: 0},
   inputStyle1: {margin: 0, marginTop: 10},
+  btnContainer: {
+    padding: 10,
+    height: 60,
+    borderTopWidth: 0.5,
+    borderTopColor: '#6b6b6b',
+    paddingHorizontal: 10,
+  },
   btn: {
     backgroundColor: 'red',
     borderRadius: 5,
-    paddingHorizontal: 0,
-    marginHorizontal: 10,
+    width: '100%',
+    height: '100%',
   },
   btnText: {color: 'white'},
 });

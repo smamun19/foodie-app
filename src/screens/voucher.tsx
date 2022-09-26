@@ -59,7 +59,7 @@ const Voucher = ({navigation}: RootStackScreensProps<'Voucher'>) => {
 
 const styles = StyleSheet.create({
   container: {justifyContent: 'center', alignItems: 'center', padding: 5},
-  applyBtn: {backgroundColor: 'red'},
+  applyBtn: {backgroundColor: 'red', padding: 15, width: '100%'},
 });
 
 export default Voucher;
