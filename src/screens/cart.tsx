@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
   },
   addMoreBtnContainer: {
     height: 25,
-    paddingHorizontal: 0,
     width: 'auto',
     alignItems: 'flex-start',
   },

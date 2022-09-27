@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
   },
   forgotBtn: {},
   forgotBtnContainer: {
-    paddingHorizontal: 0,
     height: 25,
   },
   forgotBtnArea: {

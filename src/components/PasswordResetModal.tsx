@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '35%',
-    paddingHorizontal: 0,
   },
   btnContainer: {
     flexDirection: 'row-reverse',
