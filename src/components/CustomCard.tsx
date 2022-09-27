@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   card: {
-    marginRight: 10,
+    marginRight: 0,
   },
   titleText: {fontWeight: 'bold'},
   leftImg: {justifyContent: 'space-between'},
