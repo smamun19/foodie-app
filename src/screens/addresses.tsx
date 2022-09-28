@@ -55,7 +55,7 @@ const Addresses = ({navigation}: DrawerScreensProps<'Addresses'>) => {
     <Container
       footer={
         <CustomButton
-          onPress={() => console.log('working')}
+          onPress={() => navigation.navigate('AddressEdit', {edit: false})}
           containerStyle={styles.btnContainer}
           btnStyle={styles.btn}
           textStyle={styles.btnText}
