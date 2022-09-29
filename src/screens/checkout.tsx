@@ -134,7 +134,11 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
           </View>
           <View>
             <BingMapsView
-              mapLocation={{lat: 12.9010875, long: 77.6095084, zoom: 15}}
+              mapLocation={{
+                lat: location?.coords.latitude ?? 12.9010875,
+                long: location?.coords.longitude ?? 77.6095084,
+                zoom: 15,
+              }}
               style={styles.map}
             />
           </View>

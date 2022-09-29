@@ -12,12 +12,14 @@ interface AddressCardProps {
   details?: string;
   extDetails?: string;
   label?: string;
+  editOnly?: boolean;
 }
-const AddressCard = ({
+export const AddressCard = ({
   details = 'Address',
   extDetails = 'none',
   name = 'Address name',
   label,
+  editOnly,
 }: AddressCardProps) => {
   return (
     <CardView cardView={styles.cardView}>
@@ -28,7 +30,9 @@ const AddressCard = ({
             {label ?? name}
           </Text>
           <Text numberOfLines={2}>{details}</Text>
-          <Text numberOfLines={2}>Note to rider: {extDetails}</Text>
+          {!editOnly && (
+            <Text numberOfLines={2}>Note to rider: {extDetails}</Text>
+          )}
         </View>
       </View>
       <View style={styles.right}>
@@ -39,12 +43,14 @@ const AddressCard = ({
           color="red"
           onPress={() => console.log('working')}
         />
-        <MaterialIcons
-          onPress={() => console.log('working')}
-          name="delete-outline"
-          size={30}
-          color="red"
-        />
+        {!editOnly && (
+          <MaterialIcons
+            onPress={() => console.log('working')}
+            name="delete-outline"
+            size={30}
+            color="red"
+          />
+        )}
       </View>
     </CardView>
   );
