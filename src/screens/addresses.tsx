@@ -12,12 +12,16 @@ interface AddressCardProps {
   details?: string;
   extDetails?: string;
   label?: string;
+  onEditPress?: () => void;
+  onDeletePress?: () => void;
   editOnly?: boolean;
 }
 export const AddressCard = ({
   details = 'Address',
   extDetails = 'none',
   name = 'Address name',
+  onEditPress,
+  onDeletePress,
   label,
   editOnly,
 }: AddressCardProps) => {
@@ -41,11 +45,11 @@ export const AddressCard = ({
           name="edit"
           size={30}
           color="red"
-          onPress={() => console.log('working')}
+          onPress={onEditPress}
         />
         {!editOnly && (
           <MaterialIcons
-            onPress={() => console.log('working')}
+            onPress={onDeletePress}
             name="delete-outline"
             size={30}
             color="red"
@@ -74,9 +78,15 @@ const Addresses = ({navigation}: DrawerScreensProps<'Addresses'>) => {
           onLeftPress={() => navigation.navigate('Home')}
         />
       }>
-      <AddressCard />
-      <AddressCard />
-      <AddressCard />
+      <AddressCard
+        onEditPress={() => navigation.navigate('AddressEdit', {edit: true})}
+      />
+      <AddressCard
+        onEditPress={() => navigation.navigate('AddressEdit', {edit: true})}
+      />
+      <AddressCard
+        onEditPress={() => navigation.navigate('AddressEdit', {edit: true})}
+      />
     </Container>
   );
 };

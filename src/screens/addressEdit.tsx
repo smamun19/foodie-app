@@ -124,7 +124,7 @@ const AddressEdit = ({
         {!route.params.edit ? (
           <Text style={styles.boldText}>Add a new address</Text>
         ) : (
-          <Text style={styles.boldText}>Edit address</Text>
+          <Text style={styles.boldText}>Edit your address</Text>
         )}
         <AddressCard editOnly={true} />
         <CustomInput
