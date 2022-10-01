@@ -2,6 +2,9 @@ import {baseUrl} from '../constants/api';
 import {requestHandler} from '../utils/request';
 
 const addVoucherUrl = `${baseUrl}/user/addvoucher`;
+const userInfoUrl = `${baseUrl}/user/userinfo`;
+const editInfoUrl = `${baseUrl}/user/editinfo`;
+const changePasswordUrl = `${baseUrl}/user/change-password`;
 
 export const addVoucher = async (name: string, token?: string) => {
   const result = await requestHandler(
@@ -9,6 +12,53 @@ export const addVoucher = async (name: string, token?: string) => {
     'POST',
     {
       name,
+    },
+    token,
+  );
+  const res = await result.json();
+
+  return res;
+};
+
+export const getUserInfo = async (token?: string) => {
+  const result = await requestHandler(userInfoUrl, 'GET', undefined, token);
+  const res = await result.json();
+
+  return res;
+};
+
+export const editInfo = async (
+  name?: string,
+  email?: string,
+  phone?: string,
+  token?: string,
+) => {
+  const result = await requestHandler(
+    editInfoUrl,
+    'POST',
+    {
+      name,
+      email,
+      phone,
+    },
+    token,
+  );
+  const res = await result.json();
+
+  return res;
+};
+
+export const changePassword = async (
+  currentPassword: string,
+  newPassword: string,
+  token?: string,
+) => {
+  const result = await requestHandler(
+    changePasswordUrl,
+    'POST',
+    {
+      currentPassword,
+      newPassword,
     },
     token,
   );
