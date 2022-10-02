@@ -1,3 +1,11 @@
+export type Roles =
+  | 'VENDOR'
+  | 'USER'
+  | 'PREMIUM'
+  | 'ADMIN'
+  | 'MODERATOR'
+  | 'BANNED';
+
 export interface CartItemTypes {
   id?: number;
   name?: string;
@@ -8,25 +16,31 @@ export interface CartItemTypes {
 }
 
 export interface UserAuthParams {
+  id?: string;
+  roles?: Roles[];
   token?: string;
   name?: string;
   phone?: string;
+  email?: string;
   voucher?: Record<string, any>;
   cartItem: CartItemTypes[];
-}
-
-export interface UserInfoParams {
-  token?: string;
-  name?: string;
-  phone?: string;
-  voucher?: Record<string, any>;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface UserContextParams {
+  id?: string;
+  roles?: Roles[];
   token?: string;
   name?: string;
+  phone?: string;
+  email?: string;
   voucher?: Record<string, any>;
   cartItem: CartItemTypes[];
+  createdAt?: string;
+  updatedAt?: string;
+  iat?: string;
+  exp?: string;
   login: (userData: UserAuthParams) => void;
   addVoucher: (userData: UserAuthParams) => void;
   removeVoucher: () => void;

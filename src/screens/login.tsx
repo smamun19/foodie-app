@@ -16,6 +16,7 @@ import CustomModal from '../components/ForgotPassModal';
 import {signin} from '../services/auth';
 import {UserContext} from '../services/userContext';
 import {setItem} from '../utils/sInfo';
+import {UserAuthParams} from '../utils/types/reducerTypes';
 
 const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [password, setPassword] = useState('');
@@ -33,9 +34,15 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
           cancelable: true,
         });
       }
-      const authInfo = {
+      const authInfo: UserAuthParams = {
         name: res.details.name,
         token: res.details.token,
+        id: res.details.id,
+        email: res.details.email,
+        phone: res.details.phone,
+        createdAt: res.details.createdAt,
+        updatedAt: res.details.updatedAt,
+        roles: res.details.roles,
         cartItem: [],
       };
       userInfo.login(authInfo);

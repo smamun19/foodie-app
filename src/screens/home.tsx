@@ -70,6 +70,7 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
               renderItem={({item: i}) => (
                 <CustomCard
                   cardStyle={styles.horizontalScroll}
+                  imgBorderRadius={10}
                   title={i.title}
                   onPress={() => navigation.navigate('Restaurant')}
                 />
@@ -80,6 +81,7 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
               cardStyle={styles.card}
               imgStyle={styles.card}
               title={item.title}
+              imgBorderRadius={10}
             />
           )
         }
