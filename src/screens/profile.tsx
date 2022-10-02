@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
@@ -6,6 +6,7 @@ import CustomHeader from '../components/CustomHeader';
 import ProfileCard from '../components/ProfileCard';
 import {DrawerScreensProps} from '../navigators/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {UserContext} from '../services/userContext';
 
 interface SocialCardProps {
   title: string;
@@ -35,6 +36,8 @@ const SocialCard = ({icon, title, color, onPress}: SocialCardProps) => {
 };
 
 const Profile = ({navigation}: DrawerScreensProps<'Profile'>) => {
+  const userInfo = useContext(UserContext);
+
   return (
     <Container
       containerStyle={styles.containerStyle}
@@ -47,6 +50,7 @@ const Profile = ({navigation}: DrawerScreensProps<'Profile'>) => {
       <ProfileCard
         onPress={() => navigation.navigate('ProfileEdit', {title: 'Name'})}
         title="Name"
+        data={userInfo.name}
       />
       <ProfileCard
         onPress={() => navigation.navigate('ProfileEdit', {title: 'Email'})}

@@ -10,8 +10,16 @@ export interface CartItemTypes {
 export interface UserAuthParams {
   token?: string;
   name?: string;
+  phone?: string;
   voucher?: Record<string, any>;
   cartItem: CartItemTypes[];
+}
+
+export interface UserInfoParams {
+  token?: string;
+  name?: string;
+  phone?: string;
+  voucher?: Record<string, any>;
 }
 
 export interface UserContextParams {

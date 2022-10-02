@@ -13,6 +13,7 @@ import {setItem, getItem} from '../utils/sInfo';
 const initialState: UserAuthParams = {
   token: undefined,
   name: undefined,
+  phone: undefined,
   voucher: undefined,
   cartItem: [],
 };
@@ -39,7 +40,13 @@ const reducer = (
     case ActionType.LOGIN:
       return {...state, ...action.payload};
     case ActionType.LOGOUT:
-      return {...state, name: undefined, token: undefined, voucher: undefined};
+      return {
+        name: undefined,
+        token: undefined,
+        voucher: undefined,
+        cartItem: [],
+        phone: undefined,
+      };
     case ActionType.ADD_VOUCHER:
       return {...state, voucher: action.payload};
     case ActionType.REMOVE_VOUCHER:
@@ -142,8 +149,8 @@ const Provider: FC<ProviderProps> = ({children}) => {
   }, []);
 
   useEffect(() => {
-    const {name, token} = state;
-    setItem('userInfo', {name, token, cartItem: []});
+    const {name, token, voucher, phone, cartItem} = state;
+    setItem('userInfo', {name, token, cartItem: [...cartItem], voucher, phone});
   }, [state]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
