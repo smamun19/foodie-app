@@ -28,18 +28,15 @@ export const getUserInfo = async (token?: string) => {
 };
 
 export const editInfo = async (
-  name?: string,
-  email?: string,
-  phone?: string,
+  data: Record<string, any>,
+
   token?: string,
 ) => {
   const result = await requestHandler(
     editInfoUrl,
     'POST',
     {
-      name,
-      email,
-      phone,
+      ...data,
     },
     token,
   );

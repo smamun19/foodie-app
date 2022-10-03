@@ -21,7 +21,6 @@ const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
 
     init().finally(async () => {
       await RNBootSplash.hide({fade: true});
-      console.log('Bootsplash has been hidden successfully');
     });
   }, []);
 

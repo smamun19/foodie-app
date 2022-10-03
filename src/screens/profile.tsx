@@ -48,21 +48,24 @@ const Profile = ({navigation}: DrawerScreensProps<'Profile'>) => {
         />
       }>
       <ProfileCard
-        onPress={() => navigation.navigate('ProfileEdit', {title: 'Name'})}
+        onPress={() => navigation.navigate('ProfileEdit', {title: 'name'})}
         title="Name"
         data={userInfo.name}
       />
       <ProfileCard
-        onPress={() => navigation.navigate('ProfileEdit', {title: 'Email'})}
+        onPress={() => navigation.navigate('ProfileEdit', {title: 'email'})}
         title="Email"
+        data={userInfo.email}
       />
       <ProfileCard
-        onPress={() => navigation.navigate('ProfileEdit', {title: 'Password'})}
+        onPress={() => navigation.navigate('ProfileEdit', {title: 'password'})}
         title="Password"
+        data="***********"
       />
       <ProfileCard
-        onPress={() => navigation.navigate('ProfileEdit', {title: 'Mobile'})}
+        onPress={() => navigation.navigate('ProfileEdit', {title: 'phone'})}
         title="Mobile number"
+        data={userInfo.phone}
       />
       <Text style={styles.cAccounts}>Connected accounts</Text>
       <SocialCard

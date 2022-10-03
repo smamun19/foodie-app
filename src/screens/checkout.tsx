@@ -32,12 +32,10 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
     Geolocation.getCurrentPosition(
       position => {
         setLocation(position);
-        console.log(position);
       },
       error => {
         Alert.alert(`Code ${error.code}`, error.message);
         setLocation(null);
-        console.log(error);
       },
       {
         accuracy: {

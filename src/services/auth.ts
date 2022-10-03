@@ -14,7 +14,6 @@ export const signin = async (email: string, password: string) => {
     password,
   });
   const res = await result.json();
-  //console.log(res);
 
   return res;
 };
@@ -27,7 +26,6 @@ export const signup = async (email: string, name: string, password: string) => {
   });
 
   const res = await result.json();
-  //console.log(res);
 
   return res;
 };
@@ -37,7 +35,6 @@ export const reqReset = async (email: string) => {
     email,
   });
   const res = await result.json();
-  console.log(res);
 
   return res;
 };
@@ -47,7 +44,6 @@ export const sendOtp = async (email: string) => {
     email,
   });
   const res = await result.json();
-  console.log(res);
 
   return res;
 };
@@ -58,7 +54,6 @@ export const verifyOtp = async (email: string, otp: string) => {
     otp,
   });
   const res = await result.json();
-  console.log(res);
 
   return res;
 };
@@ -69,7 +64,6 @@ export const resetPass = async (email: string, newPassword: string) => {
     newPassword,
   });
   const res = await result.json();
-  console.log(res);
 
   return res;
 };

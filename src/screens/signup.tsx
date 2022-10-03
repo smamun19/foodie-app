@@ -22,7 +22,6 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
   const signUpHandler = async () => {
     try {
       const res = await signup(email, name, password);
-      console.log(res);
 
       if (res.statusCode !== 201) {
         return Alert.alert('Error!', res.message, undefined, {
