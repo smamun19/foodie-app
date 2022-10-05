@@ -21,3 +21,17 @@ export interface Voucher {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Address {
+  id: number;
+  name: string;
+  details: string;
+  label?: string;
+  lat: number;
+  long: number;
+  extDetails?: string;
+  deliveryInstructions?: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+}

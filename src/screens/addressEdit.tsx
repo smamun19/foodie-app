@@ -50,6 +50,7 @@ const AddressEdit = ({
         },
         timeout: 15000,
         distanceFilter: 0,
+        enableHighAccuracy: true,
         forceRequestLocation: true,
         forceLocationManager: false,
         showLocationDialog: true,
@@ -90,6 +91,7 @@ const AddressEdit = ({
       });
     }
   }, []);
+
   return (
     <Container
       containerStyle={styles.containerStyle}
