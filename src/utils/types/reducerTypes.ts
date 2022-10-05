@@ -1,3 +1,5 @@
+import {Voucher} from './user';
+
 export type Roles =
   | 'VENDOR'
   | 'USER'
@@ -22,7 +24,7 @@ export interface UserAuthParams {
   name?: string;
   phone?: string;
   email?: string;
-  voucher?: Record<string, any>;
+  voucher?: Voucher;
   cartItem: CartItemTypes[];
   createdAt?: string;
   updatedAt?: string;
@@ -35,7 +37,7 @@ export interface UserContextParams {
   name?: string;
   phone?: string;
   email?: string;
-  voucher?: Record<string, any>;
+  voucher?: Voucher;
   cartItem: CartItemTypes[];
   createdAt?: string;
   updatedAt?: string;

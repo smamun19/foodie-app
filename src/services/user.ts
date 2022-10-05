@@ -1,6 +1,7 @@
 import {baseUrl} from '../constants/api';
 import {requestHandler} from '../utils/request';
-
+import {FetchDetails, FetchOk} from '../utils/types/api';
+import {User, Voucher} from '../utils/types/user';
 const addVoucherUrl = `${baseUrl}/user/addvoucher`;
 const userInfoUrl = `${baseUrl}/user/userinfo`;
 const editInfoUrl = `${baseUrl}/user/editinfo`;
@@ -15,14 +16,14 @@ export const addVoucher = async (name: string, token?: string) => {
     },
     token,
   );
-  const res = await result.json();
+  const res: FetchDetails<Voucher> = await result.json();
 
   return res;
 };
 
 export const getUserInfo = async (token?: string) => {
   const result = await requestHandler(userInfoUrl, 'GET', undefined, token);
-  const res = await result.json();
+  const res: FetchDetails<User> = await result.json();
 
   return res;
 };
@@ -40,7 +41,7 @@ export const editInfo = async (
     },
     token,
   );
-  const res = await result.json();
+  const res: FetchDetails<User> = await result.json();
 
   return res;
 };
@@ -59,7 +60,7 @@ export const changePassword = async (
     },
     token,
   );
-  const res = await result.json();
+  const res: FetchOk = await result.json();
 
   return res;
 };

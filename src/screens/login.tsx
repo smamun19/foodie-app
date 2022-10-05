@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/TextInput';
-
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
@@ -27,22 +26,22 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
 
   const signinHanlder = async () => {
     try {
-      const res = await signin(email, password);
+      const {statusCode, message, details} = await signin(email, password);
 
-      if (res.statusCode !== 200) {
-        return Alert.alert('Error!', res.message, undefined, {
+      if (statusCode !== 200) {
+        return Alert.alert('Error!', message, undefined, {
           cancelable: true,
         });
       }
       const authInfo: UserAuthParams = {
-        name: res.details.name,
-        token: res.details.token,
-        id: res.details.id,
-        email: res.details.email,
-        phone: res.details.phone,
-        createdAt: res.details.createdAt,
-        updatedAt: res.details.updatedAt,
-        roles: res.details.roles,
+        name: details.name,
+        token: details.token,
+        id: details.id,
+        email: details.email,
+        phone: details.phone,
+        createdAt: details.createdAt,
+        updatedAt: details.updatedAt,
+        roles: details.roles,
         cartItem: [],
       };
       userInfo.login(authInfo);

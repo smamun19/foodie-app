@@ -37,7 +37,7 @@ const reducer = (
         cartItem: [],
       };
     case ActionType.ADD_VOUCHER:
-      return {...state, voucher: action.payload};
+      return {...state, voucher: action.payload?.voucher};
     case ActionType.REMOVE_VOUCHER:
       return {...state, voucher: undefined};
     case ActionType.ADD_TO_CARD: {

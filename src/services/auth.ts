@@ -1,5 +1,7 @@
 import {baseUrl} from '../constants/api';
 import {requestHandler} from '../utils/request';
+import {FetchDetails, FetchOk} from '../utils/types/api';
+import {User} from '../utils/types/user';
 
 const signinUrl = `${baseUrl}/auth/signin`;
 const signupUrl = `${baseUrl}/auth/signup`;
@@ -13,7 +15,8 @@ export const signin = async (email: string, password: string) => {
     email,
     password,
   });
-  const res = await result.json();
+
+  const res: FetchDetails<User> = await result.json();
 
   return res;
 };
@@ -25,7 +28,7 @@ export const signup = async (email: string, name: string, password: string) => {
     password,
   });
 
-  const res = await result.json();
+  const res: FetchOk = await result.json();
 
   return res;
 };
@@ -34,7 +37,7 @@ export const reqReset = async (email: string) => {
   const result = await requestHandler(reqResetUrl, 'POST', {
     email,
   });
-  const res = await result.json();
+  const res: FetchDetails = await result.json();
 
   return res;
 };
@@ -43,7 +46,7 @@ export const sendOtp = async (email: string) => {
   const result = await requestHandler(sendOtpUrl, 'POST', {
     email,
   });
-  const res = await result.json();
+  const res: FetchOk = await result.json();
 
   return res;
 };
@@ -53,7 +56,7 @@ export const verifyOtp = async (email: string, otp: string) => {
     email,
     otp,
   });
-  const res = await result.json();
+  const res: FetchDetails<boolean> = await result.json();
 
   return res;
 };
@@ -63,7 +66,7 @@ export const resetPass = async (email: string, newPassword: string) => {
     email,
     newPassword,
   });
-  const res = await result.json();
+  const res: FetchOk = await result.json();
 
   return res;
 };
