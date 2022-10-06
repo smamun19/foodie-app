@@ -1,7 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   Alert,
+  Modal,
+  ModalProps,
   PermissionsAndroid,
+  Pressable,
   StyleSheet,
   Text,
   ToastAndroid,
@@ -18,19 +21,122 @@ import BingMapsView from 'react-native-bing-maps';
 import {AddressCard} from './addresses';
 import Spacer from '../components/Spacer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {addAddress, editAddress} from '../services/user';
+import {UserContext} from '../services/userContext';
 
-interface AddressCardProps {
-  name?: string;
-  details?: string;
-  extDetails?: string;
-  label?: string;
+export interface Props extends ModalProps {
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  visible: boolean;
+  name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  details: string;
+  setDetails: React.Dispatch<React.SetStateAction<string>>;
 }
+
+const InputModal = ({
+  name,
+  setName,
+  setVisible,
+  visible,
+  details,
+  setDetails,
+}: Props) => {
+  return (
+    <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        onRequestClose={() => {
+          setVisible(!visible);
+        }}>
+        <Pressable
+          onPressOut={() => setVisible(false)}
+          style={styles.centeredView}>
+          <Pressable style={styles.modalView}>
+            <Text style={styles.modalText}>Address Information</Text>
+            <View style={styles.inputStyleModal}>
+              <CustomInput
+                title="Address name"
+                value={name}
+                onChangeText={setName}
+              />
+              <CustomInput
+                title="City"
+                value={details}
+                onChangeText={setDetails}
+              />
+              <View style={styles.btnContainerModal}>
+                <CustomButton
+                  containerStyle={styles.button}
+                  textStyle={styles.textStyle}
+                  title="OKAY"
+                  onPress={() => {
+                    setVisible(!visible);
+                  }}
+                />
+                <CustomButton
+                  containerStyle={styles.button}
+                  textStyle={styles.textStyle}
+                  title="CANCEL"
+                  onPress={() => {
+                    setVisible(!visible);
+                  }}
+                />
+              </View>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
+    </View>
+  );
+};
 
 const AddressEdit = ({
   navigation,
   route,
 }: RootStackScreensProps<'AddressEdit'>) => {
   const [location, setLocation] = useState<GeoPosition | null>(null);
+  const userInfo = useContext(UserContext);
+  const [name, setName] = useState('');
+  const [details, setDetails] = useState('');
+  const [extDetails, setExtDetails] = useState('');
+  const [label, setLabel] = useState(undefined);
+  const [deliveryInstructions, setDeliveryInstructions] = useState('');
+  const [visible, setVisible] = useState(false);
+
+  const upsertLocationHandler = async () => {
+    try {
+      if (!route.params.edit) {
+        const {message, statusCode} = await addAddress(
+          name,
+          details,
+          location?.coords.latitude ?? 12.9010875,
+          location?.coords.longitude ?? 77.6095084,
+          extDetails,
+          label,
+          deliveryInstructions,
+          userInfo.token,
+        );
+        if (statusCode !== 201) {
+          return Alert.alert('Error!', message, undefined, {
+            cancelable: true,
+          });
+        }
+        return navigation.goBack();
+      }
+    } catch (error) {
+      return Alert.alert(
+        'Error!',
+        'Unable to process your request at this moment',
+        undefined,
+        {
+          cancelable: true,
+        },
+      );
+    }
+  };
 
   const hasPermission = useRef<Boolean>();
 
@@ -103,7 +209,7 @@ const AddressEdit = ({
       }
       footer={
         <CustomButton
-          onPress={() => console.log('working')}
+          onPress={upsertLocationHandler}
           containerStyle={styles.btnContainer}
           btnStyle={styles.btn}
           textStyle={styles.btnText}
@@ -126,10 +232,17 @@ const AddressEdit = ({
         ) : (
           <Text style={styles.boldText}>Edit your address</Text>
         )}
-        <AddressCard editOnly={true} />
+        <AddressCard
+          name={name}
+          details={details}
+          editOnly={true}
+          onEditPress={() => setVisible(!visible)}
+        />
         <CustomInput
           placeholder="Apartment"
           containerStyle={styles.inputStyle1}
+          onChangeText={setExtDetails}
+          value={extDetails}
         />
         <Spacer height={20} />
         <Text style={styles.boldText}>Delivery instructions</Text>
@@ -137,6 +250,8 @@ const AddressEdit = ({
         <CustomInput
           placeholder="(Optional) Note to rider"
           containerStyle={styles.inputStyle1}
+          onChangeText={setDeliveryInstructions}
+          value={deliveryInstructions}
         />
         <Spacer height={20} />
         <Text style={styles.boldText}>Add a label</Text>
@@ -169,6 +284,14 @@ const AddressEdit = ({
           </View>
         </View>
       </View>
+      <InputModal
+        details={details}
+        setDetails={setDetails}
+        name={name}
+        setName={setName}
+        visible={visible}
+        setVisible={setVisible}
+      />
     </Container>
   );
 };
@@ -207,6 +330,59 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconView: {alignItems: 'center', justifyContent: 'center'},
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 1,
+    backgroundColor: 'red',
+  },
+  centeredView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.62)',
+  },
+  modalView: {
+    width: '90%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 15,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    width: '35%',
+  },
+  btnContainerModal: {
+    flexDirection: 'row-reverse',
+    width: '100%',
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  textStyle: {
+    color: '#65a6f0',
+    fontWeight: 'bold',
+    alignSelf: 'flex-end',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  inputStyleModal: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default AddressEdit;

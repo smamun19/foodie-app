@@ -11,7 +11,6 @@ import {UserContext} from '../services/userContext';
 
 const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
   const userInfo = useContext(UserContext);
-  console.log(userInfo);
   const voucherValue = userInfo.voucher?.value ?? 0;
 
   const deliveryFee = 15;

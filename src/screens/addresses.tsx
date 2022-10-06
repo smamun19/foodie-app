@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
@@ -6,20 +6,24 @@ import CustomHeader from '../components/CustomHeader';
 import {DrawerScreensProps} from '../navigators/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from '../components/CustomButton';
+import {Address} from '../utils/types/user';
+import {getAddress} from '../services/user';
+import {UserContext} from '../services/userContext';
 
 interface AddressCardProps {
   name?: string;
   details?: string;
   extDetails?: string;
+  deliveryInstructions?: string;
   label?: string;
   onEditPress?: () => void;
   onDeletePress?: () => void;
   editOnly?: boolean;
 }
 export const AddressCard = ({
-  details = 'Address',
-  extDetails = 'none',
-  name = 'Address name',
+  details,
+  deliveryInstructions = 'none',
+  name,
   onEditPress,
   onDeletePress,
   label,
@@ -31,11 +35,14 @@ export const AddressCard = ({
         <MaterialIcons name="location-on" size={30} color="red" />
         <View style={styles.address}>
           <Text numberOfLines={1} style={styles.nameText}>
-            {label ?? name}
+            {label ?? name === '' ? 'Address' : name}
           </Text>
-          <Text numberOfLines={2}>{details}</Text>
+          <Text numberOfLines={2}>{details === '' ? 'City' : details}</Text>
           {!editOnly && (
-            <Text numberOfLines={2}>Note to rider: {extDetails}</Text>
+            <Text numberOfLines={2}>
+              Note to rider:{' '}
+              {deliveryInstructions === '' ? 'none' : deliveryInstructions}
+            </Text>
           )}
         </View>
       </View>
@@ -61,6 +68,11 @@ export const AddressCard = ({
 };
 
 const Addresses = ({navigation}: DrawerScreensProps<'Addresses'>) => {
+  const userInfo = useContext(UserContext);
+  const [addresses, setAddresses] = useState<Address[]>();
+
+  getAddress(userInfo.token).then(result => setAddresses(result.details));
+
   return (
     <Container
       footer={
@@ -78,15 +90,19 @@ const Addresses = ({navigation}: DrawerScreensProps<'Addresses'>) => {
           onLeftPress={() => navigation.navigate('Home')}
         />
       }>
-      <AddressCard
-        onEditPress={() => navigation.navigate('AddressEdit', {edit: true})}
-      />
-      <AddressCard
-        onEditPress={() => navigation.navigate('AddressEdit', {edit: true})}
-      />
-      <AddressCard
-        onEditPress={() => navigation.navigate('AddressEdit', {edit: true})}
-      />
+      {addresses?.map(item => {
+        return (
+          <AddressCard
+            key={item.id}
+            name={item.name}
+            details={item.details}
+            deliveryInstructions={item.deliveryInstructions}
+            extDetails={item.extDetails}
+            label={item.label}
+            onEditPress={() => navigation.navigate('AddressEdit', {edit: true})}
+          />
+        );
+      })}
     </Container>
   );
 };

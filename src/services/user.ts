@@ -70,7 +70,7 @@ export const changePassword = async (
 
 export const addAddress = async (
   name: string,
-  details: string,
+  details: string = 'Dhaka',
   lat: number,
   long: number,
   extDetails?: string,

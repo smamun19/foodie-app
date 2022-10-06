@@ -7,7 +7,7 @@ export interface User {
   name?: string;
   phone?: string;
   email?: string;
-  voucher?: Record<string, any>;
+  voucher?: Voucher;
   createdAt?: string;
   updatedAt?: string;
 }
