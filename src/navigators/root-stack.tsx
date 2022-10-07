@@ -18,6 +18,7 @@ import Voucher from '../screens/voucher';
 import Checkout from '../screens/checkout';
 import ProfileEdit from '../screens/profileEdit';
 import AddressEdit from '../screens/addressEdit';
+import {Address} from '../utils/types/user';
 
 export type RootStackParamList = {
   Loader: undefined;
@@ -32,7 +33,7 @@ export type RootStackParamList = {
   Voucher: undefined;
   Checkout: {totalAmount: number; subTotal?: number; deliveryFee: number};
   ProfileEdit: {title: string};
-  AddressEdit: {edit: boolean};
+  AddressEdit: {edit: boolean; address?: Address};
 };
 
 export type RootStackScreens = keyof RootStackParamList;

@@ -27,10 +27,10 @@ import {UserContext} from '../services/userContext';
 export interface Props extends ModalProps {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
   visible: boolean;
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-  details: string;
-  setDetails: React.Dispatch<React.SetStateAction<string>>;
+  name?: string;
+  setName?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  details?: string;
+  setDetails?: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 const InputModal = ({
@@ -99,11 +99,11 @@ const AddressEdit = ({
 }: RootStackScreensProps<'AddressEdit'>) => {
   const [location, setLocation] = useState<GeoPosition | null>(null);
   const userInfo = useContext(UserContext);
-  const [name, setName] = useState('');
-  const [details, setDetails] = useState('');
-  const [extDetails, setExtDetails] = useState('');
-  const [label, setLabel] = useState(undefined);
-  const [deliveryInstructions, setDeliveryInstructions] = useState('');
+  const [name, setName] = useState<string>();
+  const [details, setDetails] = useState<string>();
+  const [extDetails, setExtDetails] = useState<string>();
+  const [label, setLabel] = useState<string>();
+  const [deliveryInstructions, setDeliveryInstructions] = useState<string>();
   const [visible, setVisible] = useState(false);
 
   const upsertLocationHandler = async () => {
@@ -126,6 +126,23 @@ const AddressEdit = ({
         }
         return navigation.goBack();
       }
+      const {message, statusCode} = await editAddress(
+        route.params.address?.id,
+        name,
+        details,
+        location?.coords.latitude ?? 12.9010875,
+        location?.coords.longitude ?? 77.6095084,
+        extDetails,
+        label,
+        deliveryInstructions,
+        userInfo.token,
+      );
+      if (statusCode !== 200) {
+        return Alert.alert('Error!', message, undefined, {
+          cancelable: true,
+        });
+      }
+      return navigation.goBack();
     } catch (error) {
       return Alert.alert(
         'Error!',
@@ -233,8 +250,8 @@ const AddressEdit = ({
           <Text style={styles.boldText}>Edit your address</Text>
         )}
         <AddressCard
-          name={name}
-          details={details}
+          name={name ?? route.params.address?.name ?? 'Address'}
+          details={details ?? route.params.address?.details ?? 'City'}
           editOnly={true}
           onEditPress={() => setVisible(!visible)}
         />
@@ -242,7 +259,7 @@ const AddressEdit = ({
           placeholder="Apartment"
           containerStyle={styles.inputStyle1}
           onChangeText={setExtDetails}
-          value={extDetails}
+          value={extDetails ?? route.params.address?.extDetails}
         />
         <Spacer height={20} />
         <Text style={styles.boldText}>Delivery instructions</Text>
@@ -251,7 +268,9 @@ const AddressEdit = ({
           placeholder="(Optional) Note to rider"
           containerStyle={styles.inputStyle1}
           onChangeText={setDeliveryInstructions}
-          value={deliveryInstructions}
+          value={
+            deliveryInstructions ?? route.params.address?.deliveryInstructions
+          }
         />
         <Spacer height={20} />
         <Text style={styles.boldText}>Add a label</Text>

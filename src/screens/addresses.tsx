@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useContext, useState} from 'react';
+import {Alert, StyleSheet, Text, View} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
@@ -7,8 +7,9 @@ import {DrawerScreensProps} from '../navigators/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from '../components/CustomButton';
 import {Address} from '../utils/types/user';
-import {getAddress} from '../services/user';
+import {getAddress, removeAddress} from '../services/user';
 import {UserContext} from '../services/userContext';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface AddressCardProps {
   name?: string;
@@ -22,7 +23,7 @@ interface AddressCardProps {
 }
 export const AddressCard = ({
   details,
-  deliveryInstructions = 'none',
+  deliveryInstructions,
   name,
   onEditPress,
   onDeletePress,
@@ -35,13 +36,12 @@ export const AddressCard = ({
         <MaterialIcons name="location-on" size={30} color="red" />
         <View style={styles.address}>
           <Text numberOfLines={1} style={styles.nameText}>
-            {label ?? name === '' ? 'Address' : name}
+            {label ?? name}
           </Text>
-          <Text numberOfLines={2}>{details === '' ? 'City' : details}</Text>
+          <Text numberOfLines={2}>{details}</Text>
           {!editOnly && (
             <Text numberOfLines={2}>
-              Note to rider:{' '}
-              {deliveryInstructions === '' ? 'none' : deliveryInstructions}
+              Note to rider: {deliveryInstructions ?? 'none'}
             </Text>
           )}
         </View>
@@ -71,7 +71,36 @@ const Addresses = ({navigation}: DrawerScreensProps<'Addresses'>) => {
   const userInfo = useContext(UserContext);
   const [addresses, setAddresses] = useState<Address[]>();
 
-  getAddress(userInfo.token).then(result => setAddresses(result.details));
+  const removeAddressHandler = async (id: number) => {
+    try {
+      const {message, statusCode, details} = await removeAddress(
+        id,
+        userInfo.token,
+      );
+      if (statusCode !== 200) {
+        console.log(statusCode);
+        return Alert.alert('Error!', message, undefined, {
+          cancelable: true,
+        });
+      }
+      return setAddresses(details);
+    } catch (error) {
+      return Alert.alert(
+        'Error!',
+        'Unable to process your request at this moment',
+        undefined,
+        {
+          cancelable: true,
+        },
+      );
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getAddress(userInfo.token).then(result => setAddresses(result.details));
+    }, [userInfo.token]),
+  );
 
   return (
     <Container
@@ -99,7 +128,13 @@ const Addresses = ({navigation}: DrawerScreensProps<'Addresses'>) => {
             deliveryInstructions={item.deliveryInstructions}
             extDetails={item.extDetails}
             label={item.label}
-            onEditPress={() => navigation.navigate('AddressEdit', {edit: true})}
+            onDeletePress={() => removeAddressHandler(item.id)}
+            onEditPress={() =>
+              navigation.navigate('AddressEdit', {
+                edit: true,
+                address: {...item},
+              })
+            }
           />
         );
       })}

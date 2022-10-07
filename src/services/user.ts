@@ -8,6 +8,7 @@ const editInfoUrl = `${baseUrl}/user/editinfo`;
 const changePasswordUrl = `${baseUrl}/user/change-password`;
 const addAddressUrl = `${baseUrl}/user/add-address`;
 const editAddressUrl = `${baseUrl}/user/edit-address`;
+const removeAddressUrl = `${baseUrl}/user/remove-address`;
 const getAddressUrl = `${baseUrl}/user/myaddresses`;
 
 export const addVoucher = async (name: string, token?: string) => {
@@ -69,7 +70,7 @@ export const changePassword = async (
 };
 
 export const addAddress = async (
-  name: string,
+  name: string = 'Address',
   details: string = 'Dhaka',
   lat: number,
   long: number,
@@ -98,7 +99,7 @@ export const addAddress = async (
 };
 
 export const editAddress = async (
-  id: number,
+  id?: number,
   name?: string,
   details?: string,
   lat?: number,
@@ -121,6 +122,12 @@ export const editAddress = async (
 
 export const getAddress = async (token?: string) => {
   const result = await requestHandler(getAddressUrl, 'GET', undefined, token);
+  const res: FetchDetails<Address[]> = await result.json();
+  return res;
+};
+
+export const removeAddress = async (id: number, token?: string) => {
+  const result = await requestHandler(removeAddressUrl, 'POST', {id}, token);
   const res: FetchDetails<Address[]> = await result.json();
 
   return res;
