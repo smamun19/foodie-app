@@ -20,7 +20,7 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import BingMapsView from 'react-native-bing-maps';
 import {AddressCard} from './addresses';
 import Spacer from '../components/Spacer';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {addAddress, editAddress} from '../services/user';
 import {UserContext} from '../services/userContext';
 
@@ -32,6 +32,8 @@ export interface Props extends ModalProps {
   details?: string;
   setDetails?: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
+
+type LabelType = 'Home' | 'Work' | 'Partner' | 'Other';
 
 const InputModal = ({
   name,
@@ -102,9 +104,18 @@ const AddressEdit = ({
   const [name, setName] = useState<string>();
   const [details, setDetails] = useState<string>();
   const [extDetails, setExtDetails] = useState<string>();
-  const [label, setLabel] = useState<string>();
+  const [label, setLabel] = useState<LabelType>();
   const [deliveryInstructions, setDeliveryInstructions] = useState<string>();
   const [visible, setVisible] = useState(false);
+
+  const setLabelHandler = (labelData: LabelType) => {
+    setLabel(previousState => {
+      if (previousState === labelData) {
+        return undefined;
+      }
+      return labelData;
+    });
+  };
 
   const upsertLocationHandler = async () => {
     try {
@@ -214,7 +225,7 @@ const AddressEdit = ({
       });
     }
   }, []);
-
+  console.log('1');
   return (
     <Container
       containerStyle={styles.containerStyle}
@@ -276,28 +287,64 @@ const AddressEdit = ({
         <Text style={styles.boldText}>Add a label</Text>
         <View style={styles.label}>
           <View style={styles.iconView}>
-            <View style={styles.icon}>
-              <MaterialIcons name="home" size={30} color="red" />
+            <View
+              style={[
+                styles.icon,
+                label === 'Home' ? styles.onLabelSelect : null,
+              ]}>
+              <MaterialCommunityIcons
+                name="home-outline"
+                size={30}
+                color={label === 'Home' ? 'white' : 'red'}
+                onPress={() => setLabelHandler('Home')}
+              />
             </View>
             <Text>Home</Text>
           </View>
           <View style={styles.iconView}>
-            <View style={styles.icon}>
-              <MaterialIcons name="work" size={30} color="red" />
+            <View
+              style={[
+                styles.icon,
+                label === 'Work' ? styles.onLabelSelect : null,
+              ]}>
+              <MaterialCommunityIcons
+                name="office-building-outline"
+                size={30}
+                color={label === 'Work' ? 'white' : 'red'}
+                onPress={() => setLabelHandler('Work')}
+              />
             </View>
 
             <Text>Work</Text>
           </View>
           <View style={styles.iconView}>
-            <View style={styles.icon}>
-              <MaterialIcons name="favorite-outline" size={30} color="red" />
+            <View
+              style={[
+                styles.icon,
+                label === 'Partner' ? styles.onLabelSelect : null,
+              ]}>
+              <MaterialCommunityIcons
+                name="heart-outline"
+                size={30}
+                color={label === 'Partner' ? 'white' : 'red'}
+                onPress={() => setLabelHandler('Partner')}
+              />
             </View>
 
             <Text>Partner</Text>
           </View>
           <View style={styles.iconView}>
-            <View style={styles.icon}>
-              <MaterialIcons name="add" size={30} color="red" />
+            <View
+              style={[
+                styles.icon,
+                label === 'Other' ? styles.onLabelSelect : null,
+              ]}>
+              <MaterialCommunityIcons
+                name="plus-circle-outline"
+                size={30}
+                color={label === 'Other' ? 'white' : 'red'}
+                onPress={() => setLabelHandler('Other')}
+              />
             </View>
             <Text>Other</Text>
           </View>
@@ -344,7 +391,7 @@ const styles = StyleSheet.create({
   icon: {
     width: 50,
     height: 50,
-    borderRadius: 25,
+
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -402,6 +449,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  onLabelSelect: {backgroundColor: 'red', borderRadius: 25},
 });
 
 export default AddressEdit;
