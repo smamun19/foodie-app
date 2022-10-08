@@ -98,7 +98,18 @@ const Addresses = ({navigation}: DrawerScreensProps<'Addresses'>) => {
 
   useFocusEffect(
     useCallback(() => {
-      getAddress(userInfo.token).then(result => setAddresses(result.details));
+      getAddress(userInfo.token)
+        .then(result => setAddresses(result.details))
+        .catch(() => {
+          Alert.alert(
+            'Error!',
+            'Unable to process your request at this moment',
+            undefined,
+            {
+              cancelable: true,
+            },
+          );
+        });
     }, [userInfo.token]),
   );
 
