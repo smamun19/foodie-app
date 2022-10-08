@@ -195,37 +195,40 @@ const AddressEdit = ({
   useEffect(() => {
     PermissionsAndroid.check(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    ).then(status => {
-      if (status) {
-        getCurrentPosition();
-        return (hasPermission.current = true);
-      }
-    });
-
-    if (!hasPermission.current) {
-      PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      ).then(status => {
-        if (status === PermissionsAndroid.RESULTS.GRANTED) {
+    )
+      .then(status => {
+        if (status) {
           getCurrentPosition();
           return (hasPermission.current = true);
-        } else if (status === PermissionsAndroid.RESULTS.DENIED) {
-          ToastAndroid.show(
-            'Location permission denied by user.',
-            ToastAndroid.LONG,
-          );
-          return (hasPermission.current = false);
-        } else if (status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
-          ToastAndroid.show(
-            'Location permission revoked by user.',
-            ToastAndroid.LONG,
-          );
-          return (hasPermission.current = false);
+        }
+      })
+      .then(() => {
+        if (!hasPermission.current) {
+          PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          ).then(status => {
+            if (status === PermissionsAndroid.RESULTS.GRANTED) {
+              getCurrentPosition();
+
+              return (hasPermission.current = true);
+            } else if (status === PermissionsAndroid.RESULTS.DENIED) {
+              ToastAndroid.show(
+                'Location permission denied by user.',
+                ToastAndroid.LONG,
+              );
+              return (hasPermission.current = false);
+            } else if (status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+              ToastAndroid.show(
+                'Location permission revoked by user.',
+                ToastAndroid.LONG,
+              );
+              return (hasPermission.current = false);
+            }
+          });
         }
       });
-    }
   }, []);
-  console.log('1');
+
   return (
     <Container
       containerStyle={styles.containerStyle}
