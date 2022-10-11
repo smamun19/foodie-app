@@ -35,3 +35,9 @@ export interface Address {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface GeoLocation {
+  country: string;
+  state: string;
+  formattedAddress: string;
+}

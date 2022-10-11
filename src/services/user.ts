@@ -1,7 +1,7 @@
 import {baseUrl} from '../constants/api';
 import {requestHandler} from '../utils/request';
 import {FetchDetails, FetchOk} from '../utils/types/api';
-import {Address, User, Voucher} from '../utils/types/user';
+import {Address, GeoLocation, User, Voucher} from '../utils/types/user';
 const addVoucherUrl = `${baseUrl}/user/addvoucher`;
 const userInfoUrl = `${baseUrl}/user/userinfo`;
 const editInfoUrl = `${baseUrl}/user/editinfo`;
@@ -9,6 +9,7 @@ const changePasswordUrl = `${baseUrl}/user/change-password`;
 const addAddressUrl = `${baseUrl}/user/add-address`;
 const editAddressUrl = `${baseUrl}/user/edit-address`;
 const removeAddressUrl = `${baseUrl}/user/remove-address`;
+const reverseGeocodingUrl = `${baseUrl}/user/get-geo-address`;
 const getAddressUrl = `${baseUrl}/user/myaddresses`;
 
 export const addVoucher = async (name: string, token?: string) => {
@@ -129,6 +130,18 @@ export const getAddress = async (token?: string) => {
 export const removeAddress = async (id: number, token?: string) => {
   const result = await requestHandler(removeAddressUrl, 'POST', {id}, token);
   const res: FetchDetails<Address[]> = await result.json();
+
+  return res;
+};
+
+export const geocoding = async (lat: number, lon: number, token?: string) => {
+  const result = await requestHandler(
+    reverseGeocodingUrl,
+    'POST',
+    {lat, lon},
+    token,
+  );
+  const res: FetchDetails<GeoLocation> = await result.json();
 
   return res;
 };

@@ -21,7 +21,7 @@ import BingMapsView from 'react-native-bing-maps';
 import {AddressCard} from './addresses';
 import Spacer from '../components/Spacer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {addAddress, editAddress} from '../services/user';
+import {addAddress, editAddress, geocoding} from '../services/user';
 import {UserContext} from '../services/userContext';
 
 export interface Props extends ModalProps {
@@ -107,6 +107,7 @@ const AddressEdit = ({
   const [label, setLabel] = useState<LabelType>();
   const [deliveryInstructions, setDeliveryInstructions] = useState<string>();
   const [visible, setVisible] = useState(false);
+  console.log(location);
 
   const setLabelHandler = (labelData: LabelType) => {
     setLabel(previousState => {
@@ -228,6 +229,32 @@ const AddressEdit = ({
         }
       });
   }, []);
+
+  useEffect(() => {
+    if (location?.coords) {
+      geocoding(
+        location?.coords.latitude,
+        location?.coords.longitude,
+        userInfo.token,
+      )
+        .then(result => {
+          if (result.statusCode === 200) {
+            setName(result.details.state);
+            setDetails(result.details.formattedAddress);
+          }
+        })
+        .catch(() => {
+          Alert.alert(
+            'Error!',
+            'Unable to process your request at this moment',
+            undefined,
+            {
+              cancelable: true,
+            },
+          );
+        });
+    }
+  }, [location?.coords, userInfo.token]);
 
   return (
     <Container
