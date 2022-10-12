@@ -32,7 +32,14 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
           </View>
           <View style={styles.rightHeader}>
             <TouchableOpacity style={styles.rightHeaderBtn}>
-              <MaterialIcons name="favorite" size={22} color="red" />
+              <MaterialIcons
+                onPress={() =>
+                  navigation.navigate('Drawer', {screen: 'Favourites'})
+                }
+                name="favorite"
+                size={22}
+                color="red"
+              />
             </TouchableOpacity>
             <TouchableOpacity>
               <MaterialIcons

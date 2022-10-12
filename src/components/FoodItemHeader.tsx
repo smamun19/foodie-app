@@ -35,7 +35,7 @@ const FoodItemHeader = ({
     <Animated.View
       style={[
         styles.container,
-        {height: specialOffer ? HEADER_HEIGHT : 300},
+        specialOffer ? styles.specialOffer : styles.noSpecialOffer,
         {
           opacity: scrollY.interpolate({
             inputRange: [280, 290],
@@ -104,6 +104,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 15,
   },
+  specialOffer: {height: HEADER_HEIGHT},
+  noSpecialOffer: {height: 300},
 });
 
 export default FoodItemHeader;

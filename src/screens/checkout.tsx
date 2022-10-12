@@ -18,7 +18,6 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import Spacer from '../components/Spacer';
 import Divider from '../components/Divider';
-// @ts-ignore
 import BingMapsView from 'react-native-bing-maps';
 
 const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {

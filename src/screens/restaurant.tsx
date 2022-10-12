@@ -87,7 +87,14 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         </View>
         <View style={styles.rightHeader}>
           <TouchableOpacity style={styles.rightHeaderBtn1}>
-            <MaterialIcons name="favorite" size={30} color="red" />
+            <MaterialIcons
+              onPress={() =>
+                navigation.navigate('Drawer', {screen: 'Favourites'})
+              }
+              name="favorite"
+              size={30}
+              color="red"
+            />
           </TouchableOpacity>
           <TouchableOpacity style={styles.rightHeaderBtn2}>
             <MaterialIcons
@@ -102,7 +109,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       <Animated.View
         style={[
           styles.view5,
-          {top: specialOffer ? 340 : 240},
+          specialOffer ? styles.specialOffer : styles.noSpecialOffer,
           {
             transform: [
               {
@@ -214,6 +221,8 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 1,
   },
+  specialOffer: {top: 340},
+  noSpecialOffer: {top: 240},
 });
 
 export default Restaurant;
