@@ -16,7 +16,6 @@ import CustomButton from '../components/CustomButton';
 import CustomHeader from '../components/CustomHeader';
 import CustomInput from '../components/TextInput';
 import {RootStackScreensProps} from '../navigators/root-stack';
-// @ts-ignore
 import BingMapsView from 'react-native-bing-maps';
 import {AddressCard} from './addresses';
 import Spacer from '../components/Spacer';
@@ -411,7 +410,7 @@ const styles = StyleSheet.create({
   },
   btnText: {color: 'white'},
   map: {
-    height: 150,
+    height: 200,
   },
   nonMap: {
     margin: 10,
