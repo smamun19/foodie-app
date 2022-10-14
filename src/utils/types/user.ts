@@ -41,3 +41,22 @@ export interface GeoLocation {
   state: string;
   formattedAddress: string;
 }
+
+export interface HelpCenter {
+  id: number;
+  title: string;
+  icon?: string;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface HelpCenterQuery {
+  id: number;
+  title: string;
+  icon?: string;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  query?: HelpCenter[];
+}

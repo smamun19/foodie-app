@@ -1,10 +1,13 @@
-import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
 import {DrawerScreensProps} from '../navigators/drawer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {HelpCenter} from '../utils/types/user';
+import {useFocusEffect} from '@react-navigation/native';
+import {getHelpCenter} from '../services/public';
 
 interface HelpCardProps {
   title: string;
@@ -12,7 +15,7 @@ interface HelpCardProps {
   onPress?: () => void;
 }
 
-const HelpCard = ({icon, title, onPress}: HelpCardProps) => {
+export const HelpCard = ({icon, title, onPress}: HelpCardProps) => {
   return (
     <Pressable onPress={onPress}>
       <CardView cardView={styles.cardView}>
@@ -33,6 +36,23 @@ const HelpCard = ({icon, title, onPress}: HelpCardProps) => {
 };
 
 const Help = ({navigation}: DrawerScreensProps<'Help'>) => {
+  const [data, setData] = useState<HelpCenter[]>();
+  useFocusEffect(
+    useCallback(() => {
+      getHelpCenter()
+        .then(result => setData(result.details))
+        .catch(() => {
+          Alert.alert(
+            'Error!',
+            'Unable to process your request at this moment',
+            undefined,
+            {
+              cancelable: true,
+            },
+          );
+        });
+    }, []),
+  );
   return (
     <Container
       containerStyle={styles.containerStyle}
@@ -43,21 +63,14 @@ const Help = ({navigation}: DrawerScreensProps<'Help'>) => {
         />
       }>
       <Text style={styles.text}>How can we help?</Text>
-      <HelpCard
-        icon="chart-timeline"
-        onPress={() => console.log('1')}
-        title="How can we help?"
-      />
-      <HelpCard
-        icon="chart-timeline"
-        onPress={() => console.log('1')}
-        title="How can we help?"
-      />
-      <HelpCard
-        icon="chart-timeline"
-        onPress={() => console.log('1')}
-        title="How can we help?"
-      />
+      {data?.map(e => (
+        <HelpCard
+          onPress={() => navigation.navigate('HelpQuery', {id: e.id})}
+          title={e.title}
+          icon={e.icon}
+          key={e.id}
+        />
+      ))}
     </Container>
   );
 };
@@ -70,7 +83,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 20,
     borderLeftWidth: 0,
-
     borderRightWidth: 0,
   },
   text: {color: 'red', fontSize: 25, fontWeight: 'bold', margin: 10},
