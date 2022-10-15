@@ -1,3 +1,13 @@
+import {Voucher} from './user';
+
+export type Roles =
+  | 'VENDOR'
+  | 'USER'
+  | 'PREMIUM'
+  | 'ADMIN'
+  | 'MODERATOR'
+  | 'BANNED';
+
 export interface CartItemTypes {
   id?: number;
   name?: string;
@@ -8,17 +18,31 @@ export interface CartItemTypes {
 }
 
 export interface UserAuthParams {
+  id?: string;
+  roles?: Roles[];
   token?: string;
   name?: string;
-  voucher?: Record<string, any>;
+  phone?: string;
+  email?: string;
+  voucher?: Voucher;
   cartItem: CartItemTypes[];
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface UserContextParams {
+  id?: string;
+  roles?: Roles[];
   token?: string;
   name?: string;
-  voucher?: Record<string, any>;
+  phone?: string;
+  email?: string;
+  voucher?: Voucher;
   cartItem: CartItemTypes[];
+  createdAt?: string;
+  updatedAt?: string;
+  iat?: string;
+  exp?: string;
   login: (userData: UserAuthParams) => void;
   addVoucher: (userData: UserAuthParams) => void;
   removeVoucher: () => void;

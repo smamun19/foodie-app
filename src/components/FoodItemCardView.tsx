@@ -14,13 +14,7 @@ export interface CardProps extends TouchableOpacityProps {
   price: number;
 }
 
-const FoodItem = ({
-  name,
-  description,
-  price,
-
-  ...rest
-}: CardProps) => {
+const FoodItem = ({name, description, price, ...rest}: CardProps) => {
   return (
     <TouchableOpacity {...rest} style={styles.container}>
       <View style={styles.left}>

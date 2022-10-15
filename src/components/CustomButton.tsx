@@ -39,29 +39,24 @@ const CustomButton = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    paddingHorizontal: 15,
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
   btn: {
-    width: '100%',
-    height: '100%',
     borderRadius: 15,
-  },
-  innerView: {
-    width: '100%',
-    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  },
+  innerView: {
     borderRadius: 60,
   },
   text: {
     fontSize: 15,
     fontWeight: 'bold',
     color: 'black',
-    textTransform: 'uppercase',
   },
 });
 

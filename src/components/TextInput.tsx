@@ -26,7 +26,7 @@ const CustomInput = ({
 }: InputProps) => {
   return (
     <View style={[styles.container, containerStyle]}>
-      {title ? <Text style={styles.title}>{title} </Text> : null}
+      {title ? <Text style={styles.title}>{title}</Text> : null}
       <View style={[styles.inputOuterContainer, inputStyle]}>
         <TextInput {...rest} style={[styles.text, textStyle]} />
       </View>
@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     width: '100%',
     margin: 10,
     alignItems: 'center',
-    paddingHorizontal: 15,
   },
   title: {width: '100%', paddingVertical: 5},
   inputOuterContainer: {

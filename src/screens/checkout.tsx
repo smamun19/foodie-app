@@ -18,7 +18,6 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import Spacer from '../components/Spacer';
 import Divider from '../components/Divider';
-// @ts-ignore
 import BingMapsView from 'react-native-bing-maps';
 
 const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
@@ -32,12 +31,10 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
     Geolocation.getCurrentPosition(
       position => {
         setLocation(position);
-        console.log(position);
       },
       error => {
         Alert.alert(`Code ${error.code}`, error.message);
         setLocation(null);
-        console.log(error);
       },
       {
         accuracy: {
@@ -134,7 +131,11 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
           </View>
           <View>
             <BingMapsView
-              mapLocation={{lat: 12.9010875, long: 77.6095084, zoom: 15}}
+              mapLocation={{
+                lat: location?.coords.latitude ?? 12.9010875,
+                long: location?.coords.longitude ?? 77.6095084,
+                zoom: 15,
+              }}
               style={styles.map}
             />
           </View>

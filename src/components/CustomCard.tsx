@@ -14,10 +14,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export interface CardProps extends TouchableOpacityProps {
   title: string;
+  iconName?: string;
   cardStyle?: StyleProp<ViewStyle>;
   imgStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   specialOffer?: string;
+  imgBorderRadius?: number;
 }
 
 const CustomCard = ({
@@ -25,12 +27,15 @@ const CustomCard = ({
   cardStyle,
   imgStyle,
   specialOffer,
+  imgBorderRadius,
+  iconName = 'favorite-border',
   ...rest
 }: CardProps) => {
   return (
     <TouchableOpacity {...rest} style={[styles.card, cardStyle]}>
       <ImageBackground
         style={[styles.imgStyle, imgStyle]}
+        borderRadius={imgBorderRadius}
         resizeMode="cover"
         source={require('../assets/placeholder.jpg')}>
         <View style={styles.leftImg}>
@@ -44,7 +49,7 @@ const CustomCard = ({
         <View style={styles.rightImg}>
           <View>
             <TouchableOpacity>
-              <MaterialIcons name="favorite-border" size={22} color="red" />
+              <MaterialIcons name={iconName} size={22} color="red" />
             </TouchableOpacity>
           </View>
         </View>
@@ -73,7 +78,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   card: {
-    marginRight: 10,
+    marginRight: 0,
   },
   titleText: {fontWeight: 'bold'},
   leftImg: {justifyContent: 'space-between'},
@@ -83,6 +88,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 6,
     borderBottomEndRadius: 6,
     backgroundColor: 'red',
+    marginTop: 8,
   },
   leftImg2: {
     justifyContent: 'center',
@@ -96,6 +102,8 @@ const styles = StyleSheet.create({
   },
   rightImg: {
     justifyContent: 'space-between',
+    marginTop: 8,
+    marginRight: 8,
   },
   cardBottomArea: {flexDirection: 'row'},
   cardBottomArea1: {flex: 1},

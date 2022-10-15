@@ -16,6 +16,10 @@ import {DrawerParamList} from './drawer';
 import Cart from '../screens/cart';
 import Voucher from '../screens/voucher';
 import Checkout from '../screens/checkout';
+import ProfileEdit from '../screens/profileEdit';
+import AddressEdit from '../screens/addressEdit';
+import {Address} from '../utils/types/user';
+import HelpQuery from '../screens/helpQuery';
 
 export type RootStackParamList = {
   Loader: undefined;
@@ -29,6 +33,9 @@ export type RootStackParamList = {
   Cart: undefined;
   Voucher: undefined;
   Checkout: {totalAmount: number; subTotal?: number; deliveryFee: number};
+  ProfileEdit: {title: string};
+  AddressEdit: {edit: boolean; address?: Address};
+  HelpQuery: {id: number};
 };
 
 export type RootStackScreens = keyof RootStackParamList;
@@ -51,6 +58,9 @@ const RootStack = () => (
     <Screen name="Cart" component={Cart} />
     <Screen name="Voucher" component={Voucher} />
     <Screen name="Checkout" component={Checkout} />
+    <Screen name="ProfileEdit" component={ProfileEdit} />
+    <Screen name="AddressEdit" component={AddressEdit} />
+    <Screen name="HelpQuery" component={HelpQuery} />
   </Navigator>
 );
 

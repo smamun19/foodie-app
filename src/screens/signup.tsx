@@ -22,7 +22,6 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
   const signUpHandler = async () => {
     try {
       const res = await signup(email, name, password);
-      console.log(res);
 
       if (res.statusCode !== 201) {
         return Alert.alert('Error!', res.message, undefined, {
@@ -66,12 +65,12 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
           <View>
             <CustomButton
               textStyle={styles.btnText2}
-              btnStyle={styles.google}
+              containerStyle={styles.google}
               title="Continue with Google"
             />
             <Spacer height={20} />
             <CustomButton
-              btnStyle={styles.google}
+              containerStyle={styles.google}
               textStyle={styles.btnText2}
               title="Continue with Facbook"
             />
@@ -117,7 +116,7 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
         <View style={styles.btnView}>
           <CustomButton
             title="Continue"
-            btnStyle={styles.btn}
+            containerStyle={styles.btn}
             textStyle={styles.btnText}
             onPress={signUpHandler}
           />
@@ -131,7 +130,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  KeyboardAwareContainer: {},
+  KeyboardAwareContainer: {
+    margin: 15,
+  },
   inputContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -148,7 +149,6 @@ const styles = StyleSheet.create({
   signUp: {
     flexDirection: 'row',
     alignItems: 'center',
-    margin: 15,
   },
   signUpBtn: {
     width: '20%',
@@ -172,7 +172,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   upperView: {
-    margin: 15,
     marginTop: 50,
   },
   upperView2: {

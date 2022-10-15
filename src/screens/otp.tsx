@@ -83,7 +83,6 @@ const Otp = ({navigation, route}: RootStackScreensProps<'Otp'>) => {
       <View style={styles.inputStyle}>
         <CustomInput
           title="OTP"
-          containerStyle={styles.inputContainer}
           placeholder="Enter your OTP"
           value={otp}
           onChangeText={setOtp}
@@ -131,9 +130,6 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  inputContainer: {
-    paddingHorizontal: 0,
   },
 });
 

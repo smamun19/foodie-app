@@ -53,7 +53,6 @@ const ResetPassword = ({
       <View style={styles.inputStyle}>
         <CustomInput
           title="Password"
-          containerStyle={styles.inputContainer}
           placeholder="Enter your new password here"
           value={newpass}
           onChangeText={setNewPass}
@@ -106,9 +105,6 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  inputContainer: {
-    paddingHorizontal: 0,
   },
 });
 

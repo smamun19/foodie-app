@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/TextInput';
-
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
@@ -16,6 +15,7 @@ import CustomModal from '../components/ForgotPassModal';
 import {signin} from '../services/auth';
 import {UserContext} from '../services/userContext';
 import {setItem} from '../utils/sInfo';
+import {UserAuthParams} from '../utils/types/reducerTypes';
 
 const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [password, setPassword] = useState('');
@@ -26,16 +26,22 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
 
   const signinHanlder = async () => {
     try {
-      const res = await signin(email, password);
+      const {statusCode, message, details} = await signin(email, password);
 
-      if (res.statusCode !== 200) {
-        return Alert.alert('Error!', res.message, undefined, {
+      if (statusCode !== 200) {
+        return Alert.alert('Error!', message, undefined, {
           cancelable: true,
         });
       }
-      const authInfo = {
-        name: res.details.name,
-        token: res.details.token,
+      const authInfo: UserAuthParams = {
+        name: details.name,
+        token: details.token,
+        id: details.id,
+        email: details.email,
+        phone: details.phone,
+        createdAt: details.createdAt,
+        updatedAt: details.updatedAt,
+        roles: details.roles,
         cartItem: [],
       };
       userInfo.login(authInfo);
@@ -76,14 +82,14 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
           <View>
             <CustomButton
               textStyle={styles.btnText2}
-              btnStyle={styles.google}
+              containerStyle={styles.google}
               onPress={() => navigation.navigate('Drawer')}
               title="Continue with Google"
             />
             <Spacer height={20} />
             <CustomButton
               accessibilityRole="button"
-              btnStyle={styles.google}
+              containerStyle={styles.google}
               textStyle={styles.btnText2}
               title="Continue with Facbook"
             />
@@ -143,7 +149,7 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
         <View style={styles.btnView}>
           <CustomButton
             title="Continue"
-            btnStyle={styles.btn}
+            containerStyle={styles.btn}
             textStyle={styles.btnText}
             onPress={signinHanlder}
           />
@@ -157,7 +163,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  KeyboardAwareContainer: {},
+  KeyboardAwareContainer: {
+    margin: 15,
+  },
   inputContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -174,7 +182,6 @@ const styles = StyleSheet.create({
   signUp: {
     flexDirection: 'row',
     alignItems: 'center',
-    margin: 15,
   },
   lower: {},
   signUpBtn: {
@@ -183,6 +190,7 @@ const styles = StyleSheet.create({
   },
   signupBtnContainer: {
     height: 25,
+    width: '100%',
   },
   innerSignUpBtn: {},
   btnText: {
@@ -193,12 +201,10 @@ const styles = StyleSheet.create({
   },
   forgotBtn: {},
   forgotBtnContainer: {
-    paddingHorizontal: 0,
     height: 25,
   },
   forgotBtnArea: {
     alignSelf: 'flex-start',
-    margin: 15,
   },
   text2: {},
   text3: {
@@ -212,7 +218,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   upperView: {
-    margin: 15,
     marginTop: 50,
   },
   upperView2: {
@@ -221,7 +226,6 @@ const styles = StyleSheet.create({
   google: {
     borderRadius: 30,
     borderWidth: 1,
-    width: '100%',
     height: 60,
     borderColor: '#65a6f0',
   },

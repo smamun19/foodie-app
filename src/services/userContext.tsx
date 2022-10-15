@@ -11,16 +11,10 @@ import {
 import {setItem, getItem} from '../utils/sInfo';
 
 const initialState: UserAuthParams = {
-  token: undefined,
-  name: undefined,
-  voucher: undefined,
   cartItem: [],
 };
 
 const contextState: UserContextParams = {
-  name: undefined,
-  token: undefined,
-  voucher: undefined,
   cartItem: [],
   addItem: () => null,
   addVoucher: () => null,
@@ -39,9 +33,11 @@ const reducer = (
     case ActionType.LOGIN:
       return {...state, ...action.payload};
     case ActionType.LOGOUT:
-      return {...state, name: undefined, token: undefined, voucher: undefined};
+      return {
+        cartItem: [],
+      };
     case ActionType.ADD_VOUCHER:
-      return {...state, voucher: action.payload};
+      return {...state, voucher: action.payload?.voucher};
     case ActionType.REMOVE_VOUCHER:
       return {...state, voucher: undefined};
     case ActionType.ADD_TO_CARD: {
@@ -90,6 +86,11 @@ const Provider: FC<ProviderProps> = ({children}) => {
   const value: UserContextParams = {
     token: state.token,
     name: state.name,
+    email: state.email,
+    phone: state.phone,
+    id: state.id,
+    updatedAt: state.updatedAt,
+    roles: state.roles,
     voucher: state.voucher,
     cartItem: state.cartItem,
     login: (userData: UserAuthParams) => {
@@ -142,8 +143,18 @@ const Provider: FC<ProviderProps> = ({children}) => {
   }, []);
 
   useEffect(() => {
-    const {name, token} = state;
-    setItem('userInfo', {name, token, cartItem: []});
+    const {name, token, voucher, phone, cartItem, email, updatedAt, roles} =
+      state;
+    setItem('userInfo', {
+      name,
+      token,
+      cartItem: [...cartItem],
+      voucher,
+      phone,
+      email,
+      updatedAt,
+      roles,
+    });
   }, [state]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

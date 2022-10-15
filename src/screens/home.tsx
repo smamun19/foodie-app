@@ -32,7 +32,14 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
           </View>
           <View style={styles.rightHeader}>
             <TouchableOpacity style={styles.rightHeaderBtn}>
-              <MaterialIcons name="favorite" size={22} color="red" />
+              <MaterialIcons
+                onPress={() =>
+                  navigation.navigate('Drawer', {screen: 'Favourites'})
+                }
+                name="favorite"
+                size={22}
+                color="red"
+              />
             </TouchableOpacity>
             <TouchableOpacity>
               <MaterialIcons
@@ -70,6 +77,7 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
               renderItem={({item: i}) => (
                 <CustomCard
                   cardStyle={styles.horizontalScroll}
+                  imgBorderRadius={10}
                   title={i.title}
                   onPress={() => navigation.navigate('Restaurant')}
                 />
@@ -80,6 +88,7 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
               cardStyle={styles.card}
               imgStyle={styles.card}
               title={item.title}
+              imgBorderRadius={10}
             />
           )
         }
@@ -98,7 +107,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 2,
   },
-  bottomHeader: {marginVertical: 10, margin: 0},
+  bottomHeader: {marginVertical: 10, margin: 0, paddingHorizontal: 5},
   leftHeader: {
     flex: 1,
     flexDirection: 'row',

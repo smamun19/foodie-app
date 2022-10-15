@@ -20,7 +20,7 @@ const Voucher = ({navigation}: RootStackScreensProps<'Voucher'>) => {
           'The voucher does not does not exist. Please check if the voucher code was typed in correctly',
         );
       }
-      userInfo.addVoucher(res.details);
+      userInfo.addVoucher({voucher: {...res.details}, cartItem: []});
       navigation.navigate('Cart');
     } catch (error) {
       return Alert.alert(
@@ -46,7 +46,6 @@ const Voucher = ({navigation}: RootStackScreensProps<'Voucher'>) => {
           placeholder="Voucher code"
           onChangeText={setVoucher}
           value={voucher}
-          containerStyle={styles.textInput}
         />
         <CustomButton
           onPress={onApply}
@@ -60,8 +59,7 @@ const Voucher = ({navigation}: RootStackScreensProps<'Voucher'>) => {
 
 const styles = StyleSheet.create({
   container: {justifyContent: 'center', alignItems: 'center', padding: 5},
-  textInput: {paddingHorizontal: 0},
-  applyBtn: {backgroundColor: 'red'},
+  applyBtn: {backgroundColor: 'red', padding: 15, width: '100%'},
 });
 
 export default Voucher;
