@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -8,13 +8,17 @@ import {
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import CustomButton from '../components/CustomButton';
 import CustomCard from '../components/CustomCard';
 import Spacer from '../components/Spacer';
 import CustomInput from '../components/TextInput';
 import {DrawerScreensProps} from '../navigators/drawer';
+import {UserContext} from '../services/userContext';
 import {DATA} from '../utils/testData';
 
 const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
+  const {address} = useContext(UserContext);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -26,8 +30,29 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
               <MaterialIcons name="menu" size={30} color="red" />
             </TouchableOpacity>
             <View style={styles.leftHeader1}>
-              <Text style={styles.text2}>Location Address</Text>
-              <Text style={styles.text}>Address</Text>
+              {address.length !== 0 ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('AddressEdit', {
+                      address: address[0],
+                      edit: true,
+                    })
+                  }>
+                  <Text style={styles.text2}>
+                    {address[0].label ?? address[0].name}
+                  </Text>
+                  <Text style={styles.text}>{address[0].details}</Text>
+                </TouchableOpacity>
+              ) : (
+                <CustomButton
+                  containerStyle={styles.locationBtn}
+                  textStyle={styles.locationBtnText}
+                  title="Add an address"
+                  onPress={() =>
+                    navigation.navigate('AddressEdit', {edit: false})
+                  }
+                />
+              )}
             </View>
           </View>
           <View style={styles.rightHeader}>
@@ -113,7 +138,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   leftHeader1: {
-    marginLeft: 15,
+    marginHorizontal: 15,
   },
   rightHeader: {
     flexDirection: 'row',
@@ -127,6 +152,8 @@ const styles = StyleSheet.create({
   sectionHeader: {color: 'red', padding: 5},
   card: {width: '100%', marginRight: 0, padding: 5},
   menuBtn: {alignSelf: 'center'},
+  locationBtn: {height: 30},
+  locationBtnText: {color: 'red'},
 });
 
 export default Home;
