@@ -78,11 +78,14 @@ const Addresses = ({navigation}: DrawerScreensProps<'Addresses'>) => {
         userInfo.token,
       );
       if (statusCode !== 200) {
-        console.log(statusCode);
         return Alert.alert('Error!', message, undefined, {
           cancelable: true,
         });
       }
+      await userInfo.hydrate({
+        cartItem: [...userInfo.cartItem],
+        address: [...details],
+      });
       return setAddresses(details);
     } catch (error) {
       return Alert.alert(

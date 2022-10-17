@@ -20,7 +20,11 @@ const Voucher = ({navigation}: RootStackScreensProps<'Voucher'>) => {
           'The voucher does not does not exist. Please check if the voucher code was typed in correctly',
         );
       }
-      userInfo.addVoucher({voucher: {...res.details}, cartItem: []});
+      userInfo.addVoucher({
+        voucher: {...res.details},
+        cartItem: [],
+        address: [],
+      });
       navigation.navigate('Cart');
     } catch (error) {
       return Alert.alert(

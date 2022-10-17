@@ -106,7 +106,6 @@ const AddressEdit = ({
   const [label, setLabel] = useState<LabelType>();
   const [deliveryInstructions, setDeliveryInstructions] = useState<string>();
   const [visible, setVisible] = useState(false);
-  console.log(location);
 
   const setLabelHandler = (labelData: LabelType) => {
     setLabel(previousState => {
@@ -120,7 +119,11 @@ const AddressEdit = ({
   const upsertLocationHandler = async () => {
     try {
       if (!route.params.edit) {
-        const {message, statusCode} = await addAddress(
+        const {
+          message,
+          statusCode,
+          details: addresses,
+        } = await addAddress(
           name,
           details,
           location?.coords.latitude ?? 12.9010875,
@@ -135,9 +138,17 @@ const AddressEdit = ({
             cancelable: true,
           });
         }
+        await userInfo.hydrate({
+          cartItem: [...userInfo.cartItem],
+          address: addresses ? [...addresses] : undefined,
+        });
         return navigation.goBack();
       }
-      const {message, statusCode} = await editAddress(
+      const {
+        message,
+        statusCode,
+        details: addresses,
+      } = await editAddress(
         route.params.address?.id,
         name,
         details,
@@ -153,6 +164,10 @@ const AddressEdit = ({
           cancelable: true,
         });
       }
+      await userInfo.hydrate({
+        cartItem: [...userInfo.cartItem],
+        address: addresses ? [...addresses] : undefined,
+      });
       return navigation.goBack();
     } catch (error) {
       return Alert.alert(

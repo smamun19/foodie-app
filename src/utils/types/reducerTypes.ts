@@ -1,4 +1,4 @@
-import {Voucher} from './user';
+import {Address, Voucher} from './user';
 
 export type Roles =
   | 'VENDOR'
@@ -23,6 +23,7 @@ export interface UserAuthParams {
   token?: string;
   name?: string;
   phone?: string;
+  address: Address[];
   email?: string;
   voucher?: Voucher;
   cartItem: CartItemTypes[];
@@ -36,6 +37,7 @@ export interface UserContextParams {
   token?: string;
   name?: string;
   phone?: string;
+  address: Address[];
   email?: string;
   voucher?: Voucher;
   cartItem: CartItemTypes[];
@@ -57,7 +59,7 @@ export enum ActionType {
   LOGOUT = 'LOGOUT',
   ADD_VOUCHER = 'ADD_VOUCHER',
   REMOVE_VOUCHER = 'REMOVE_VOUCHER',
-  ADD_TO_CARD = 'ADD_TO_CART',
+  ADD_TO_CART = 'ADD_TO_CART',
   REMOVE_FROM_CART = 'REMOVE_FROM_CART',
   HYDRATE = 'HYDRATE',
 }

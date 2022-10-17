@@ -12,10 +12,12 @@ import {setItem, getItem} from '../utils/sInfo';
 
 const initialState: UserAuthParams = {
   cartItem: [],
+  address: [],
 };
 
 const contextState: UserContextParams = {
   cartItem: [],
+  address: [],
   addItem: () => null,
   addVoucher: () => null,
   hydrate: () => null,
@@ -35,12 +37,13 @@ const reducer = (
     case ActionType.LOGOUT:
       return {
         cartItem: [],
+        address: [],
       };
     case ActionType.ADD_VOUCHER:
       return {...state, voucher: action.payload?.voucher};
     case ActionType.REMOVE_VOUCHER:
       return {...state, voucher: undefined};
-    case ActionType.ADD_TO_CARD: {
+    case ActionType.ADD_TO_CART: {
       const isExistIndex = state.cartItem?.findIndex(
         e => e.compositeId === action.item?.compositeId,
       );
@@ -88,6 +91,7 @@ const Provider: FC<ProviderProps> = ({children}) => {
     name: state.name,
     email: state.email,
     phone: state.phone,
+    address: state.address,
     id: state.id,
     updatedAt: state.updatedAt,
     roles: state.roles,
@@ -124,7 +128,7 @@ const Provider: FC<ProviderProps> = ({children}) => {
       dispacth({type: ActionType.LOGOUT, item: {price: 0, quantity: 0}});
     },
     addItem: (item: CartItemTypes) => {
-      dispacth({type: ActionType.ADD_TO_CARD, item});
+      dispacth({type: ActionType.ADD_TO_CART, item});
     },
     removeItem: (item: CartItemTypes) => {
       dispacth({type: ActionType.REMOVE_FROM_CART, item});
@@ -143,8 +147,17 @@ const Provider: FC<ProviderProps> = ({children}) => {
   }, []);
 
   useEffect(() => {
-    const {name, token, voucher, phone, cartItem, email, updatedAt, roles} =
-      state;
+    const {
+      name,
+      token,
+      voucher,
+      phone,
+      cartItem,
+      email,
+      updatedAt,
+      roles,
+      address,
+    } = state;
     setItem('userInfo', {
       name,
       token,
@@ -154,6 +167,7 @@ const Provider: FC<ProviderProps> = ({children}) => {
       email,
       updatedAt,
       roles,
+      address,
     });
   }, [state]);
 

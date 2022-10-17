@@ -1,15 +1,16 @@
 import {Roles} from './reducerTypes';
 
 export interface User {
-  id?: string;
-  roles?: Roles[];
-  token?: string;
-  name?: string;
+  id: string;
+  roles: Roles[];
+  token: string;
+  name: string;
   phone?: string;
-  email?: string;
+  email: string;
+  address: Address[];
   voucher?: Voucher;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Voucher {

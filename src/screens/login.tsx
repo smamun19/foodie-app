@@ -39,6 +39,7 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
         id: details.id,
         email: details.email,
         phone: details.phone,
+        address: details.address,
         createdAt: details.createdAt,
         updatedAt: details.updatedAt,
         roles: details.roles,

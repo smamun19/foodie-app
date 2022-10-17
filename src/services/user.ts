@@ -94,7 +94,7 @@ export const addAddress = async (
     },
     token,
   );
-  const res: FetchOk = await result.json();
+  const res: FetchDetails<Address[]> = await result.json();
 
   return res;
 };
@@ -116,7 +116,7 @@ export const editAddress = async (
     {id, name, details, extDetails, lat, long, label, deliveryInstructions},
     token,
   );
-  const res: FetchOk = await result.json();
+  const res: FetchDetails<Address[]> = await result.json();
 
   return res;
 };
