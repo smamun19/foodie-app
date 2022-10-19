@@ -20,6 +20,7 @@ import ProfileEdit from '../screens/profileEdit';
 import AddressEdit from '../screens/addressEdit';
 import {Address} from '../utils/types/user';
 import HelpQuery from '../screens/helpQuery';
+import OrderTracker from '../screens/orderTracker';
 
 export type RootStackParamList = {
   Loader: undefined;
@@ -36,6 +37,7 @@ export type RootStackParamList = {
   ProfileEdit: {title: string};
   AddressEdit: {edit: boolean; address?: Address};
   HelpQuery: {id: number};
+  OrderTracker: undefined;
 };
 
 export type RootStackScreens = keyof RootStackParamList;
@@ -61,6 +63,7 @@ const RootStack = () => (
     <Screen name="ProfileEdit" component={ProfileEdit} />
     <Screen name="AddressEdit" component={AddressEdit} />
     <Screen name="HelpQuery" component={HelpQuery} />
+    <Screen name="OrderTracker" component={OrderTracker} />
   </Navigator>
 );
 
