@@ -5,6 +5,8 @@ import CustomHeader from '../components/CustomHeader';
 import Spacer from '../components/Spacer';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
+import {Voucher} from '../utils/types/user';
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface OrderDetailsProps {
   id: string;
@@ -13,9 +15,17 @@ interface OrderDetailsProps {
   total: number;
 }
 
+interface ViewDetailsProps {
+  deliveryFee: number;
+  discount?: number;
+  tax: number;
+  voucher?: Voucher;
+  total: number;
+}
+
 const OrderDetails = ({address, id, restaurant, total}: OrderDetailsProps) => {
   return (
-    <View>
+    <View style={styles.od}>
       <View style={styles.odChildren}>
         <Text>Order number</Text>
         <Text>{id}</Text>
@@ -30,6 +40,43 @@ const OrderDetails = ({address, id, restaurant, total}: OrderDetailsProps) => {
       </View>
       <View style={styles.odChildren}>
         <Text>Total</Text>
+        <Text>Tk {total}</Text>
+      </View>
+    </View>
+  );
+};
+
+const ViewDetails = ({
+  deliveryFee,
+  tax,
+  voucher,
+  discount,
+  total,
+}: ViewDetailsProps) => {
+  return (
+    <View style={styles.od}>
+      <View style={styles.odChildren}>
+        <Text>Delivery fee</Text>
+        <Text>Tk {deliveryFee}</Text>
+      </View>
+      {discount ? (
+        <View style={styles.odChildren}>
+          <Text>Discount</Text>
+          <Text>Tk {discount}</Text>
+        </View>
+      ) : null}
+      <View style={styles.odChildren}>
+        <Text>Incl. Tax</Text>
+        <Text>Tk {tax}</Text>
+      </View>
+      {voucher ? (
+        <View style={styles.odChildren}>
+          <Text>Voucher:{voucher.name}</Text>
+          <Text>Tk {voucher.value}</Text>
+        </View>
+      ) : null}
+      <View style={styles.odChildren}>
+        <Text style={styles.boldText}>Total(inc. VAT)</Text>
         <Text>Tk {total}</Text>
       </View>
     </View>
@@ -72,6 +119,36 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
           total={300}
         />
       </View>
+      <Spacer height={20} />
+      <View>
+        <Text style={styles.boldText}>View Details</Text>
+        {userInfo.cartItem.map(e => {
+          return (
+            <View key={e.compositeId} style={styles.odChildren}>
+              <Text>
+                {e.quantity}x {e.name} - {e.variation}
+              </Text>
+              <Text>Tk {e.price * e.quantity}</Text>
+            </View>
+          );
+        })}
+        <Text style={styles.boldText}>Subtotal</Text>
+        <ViewDetails
+          total={300}
+          deliveryFee={15}
+          tax={12}
+          voucher={userInfo.voucher}
+        />
+      </View>
+      <Spacer height={20} />
+      <Text style={styles.boldText}>Paid with</Text>
+      <View style={styles.odChildren}>
+        <View style={styles.odChildren}>
+          <MaterialIcons name="cash" size={18} />
+          <Text style={styles.paidWithText}>Cash on delivery</Text>
+        </View>
+        <Text>Tk 300</Text>
+      </View>
     </Container>
   );
 };
@@ -88,7 +165,14 @@ const styles = StyleSheet.create({
   img: {height: 100, width: 90, margin: 20},
   orderStatusText: {marginBottom: 20},
   boldText: {fontWeight: 'bold', color: 'black'},
-  odChildren: {flexDirection: 'row', justifyContent: 'space-between'},
+  od: {borderBottomWidth: 0.5, borderBottomColor: '#6b6b6b'},
+  odChildren: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+  paidWithText: {marginHorizontal: 30},
 });
 
 export default OrderTracker;
