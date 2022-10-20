@@ -1,15 +1,10 @@
 import React, {useContext, useEffect} from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  Image,
-} from 'react-native';
+import {Text, StyleSheet, SafeAreaView, Image, View} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import {RootStackScreensProps} from '../navigators/root-stack';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {UserContext} from '../services/userContext';
+import CustomButton from '../components/CustomButton';
+import Spacer from '../components/Spacer';
 
 const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
   const userInfo = useContext(UserContext);
@@ -33,16 +28,28 @@ const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <Text style={styles.text2}>Think Food</Text>
-      <Image
-        style={styles.imageStyle}
-        source={require('../assets/foodie.jpeg')}
+      <Text style={styles.foodie}>FOODIE</Text>
+      <View style={styles.mid}>
+        <Image
+          style={styles.imageStyle}
+          source={require('../assets/food.png')}
+        />
+        <Text style={[styles.midText, styles.bigBoldText]}>Your culinary</Text>
+        <Text style={[styles.midText, styles.bigBoldText]}>
+          adventure awaits...
+        </Text>
+        <Spacer height={10} />
+        <Text style={styles.midText}>
+          feel the taste of most authentic foods
+        </Text>
+        <Text style={styles.midText}>from anywhere and anytime.</Text>
+      </View>
+      <CustomButton
+        onPress={loaderHandler}
+        containerStyle={styles.button}
+        textStyle={styles.text}
+        title="Lets Order"
       />
-
-      <TouchableOpacity onPress={loaderHandler} style={styles.button}>
-        <Text style={styles.text}>Lets Order</Text>
-        <MaterialIcons name="arrow-forward-ios" size={22} color="#000" />
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -52,24 +59,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#4846B1',
+    padding: 30,
   },
   button: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: 'yellow',
-    padding: 20,
-    width: '100%',
-    borderRadius: 5,
-    flexDirection: 'row',
+    backgroundColor: 'white',
+    width: '70%',
+    borderRadius: 40,
   },
-  text: {fontSize: 20, fontWeight: 'bold', color: 'black'},
-  text2: {fontSize: 30, fontWeight: 'bold', color: '#e3ac14'},
+  text: {fontSize: 20, fontWeight: 'bold', color: '#4846B1'},
+  foodie: {fontSize: 30, fontWeight: 'bold', color: 'white'},
   imageStyle: {
     width: 200,
     height: 200,
+    marginBottom: 50,
   },
-  imgView: {},
+  mid: {justifyContent: 'center', alignItems: 'center'},
+  midText: {alignSelf: 'flex-start', color: 'white'},
+  bigBoldText: {fontWeight: 'bold', fontSize: 30},
 });
 
 export default Loader;
