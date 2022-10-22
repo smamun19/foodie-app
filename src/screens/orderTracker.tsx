@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {Image, StyleSheet, Text, View, Pressable} from 'react-native';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
 import Spacer from '../components/Spacer';
@@ -85,6 +85,8 @@ const ViewDetails = ({
 
 const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
   const userInfo = useContext(UserContext);
+  const [grow, setGrow] = useState<Boolean>(false);
+
   return (
     <Container
       containerStyle={styles.containerStyle}
@@ -119,36 +121,53 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
           total={300}
         />
       </View>
-      <Spacer height={20} />
-      <View>
-        <Text style={styles.boldText}>View Details</Text>
-        {userInfo.cartItem.map(e => {
-          return (
-            <View key={e.compositeId} style={styles.odChildren}>
-              <Text>
-                {e.quantity}x {e.name} - {e.variation}
-              </Text>
-              <Text>Tk {e.price * e.quantity}</Text>
-            </View>
-          );
-        })}
-        <Text style={styles.boldText}>Subtotal</Text>
-        <ViewDetails
-          total={300}
-          deliveryFee={15}
-          tax={12}
-          voucher={userInfo.voucher}
+      <Spacer height={10} />
+      <Pressable onPress={() => setGrow(!grow)} style={styles.odChildren}>
+        <Text style={styles.boldText}>View details</Text>
+
+        <MaterialIcons
+          name={
+            grow
+              ? 'arrow-up-drop-circle-outline'
+              : 'arrow-down-drop-circle-outline'
+          }
+          size={18}
+          color="red"
         />
-      </View>
-      <Spacer height={20} />
-      <Text style={styles.boldText}>Paid with</Text>
-      <View style={styles.odChildren}>
-        <View style={styles.odChildren}>
-          <MaterialIcons name="cash" size={18} />
-          <Text style={styles.paidWithText}>Cash on delivery</Text>
+      </Pressable>
+      {console.log(grow)}
+      {grow && (
+        <View>
+          <View>
+            {userInfo.cartItem.map(e => {
+              return (
+                <View key={e.compositeId} style={styles.odChildren}>
+                  <Text>
+                    {e.quantity}x {e.name} - {e.variation}
+                  </Text>
+                  <Text>Tk {e.price * e.quantity}</Text>
+                </View>
+              );
+            })}
+            <Text style={styles.boldText}>Subtotal</Text>
+            <ViewDetails
+              total={300}
+              deliveryFee={15}
+              tax={12}
+              voucher={userInfo.voucher}
+            />
+          </View>
+          <Spacer height={20} />
+          <Text style={styles.boldText}>Paid with</Text>
+          <View style={styles.odChildren}>
+            <View style={styles.odChildren}>
+              <MaterialIcons name="cash" size={18} />
+              <Text style={styles.paidWithText}>Cash on delivery</Text>
+            </View>
+            <Text>Tk 300</Text>
+          </View>
         </View>
-        <Text>Tk 300</Text>
-      </View>
+      )}
     </Container>
   );
 };
@@ -173,6 +192,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   paidWithText: {marginHorizontal: 30},
+  btnInnerStyle: {alignSelf: 'flex-start'},
 });
 
 export default OrderTracker;
