@@ -157,7 +157,7 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
         />
       </Pressable>
       {grow && (
-        <View style={{}}>
+        <View>
           <View>
             {userInfo.cartItem.map(e => {
               return (
