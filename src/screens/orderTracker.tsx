@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react';
-import {Image, StyleSheet, Text, View, Pressable} from 'react-native';
+import React, {useContext, useRef, useState} from 'react';
+import {Image, StyleSheet, Text, View, Pressable, Animated} from 'react-native';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
 import Spacer from '../components/Spacer';
@@ -87,6 +87,35 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
   const userInfo = useContext(UserContext);
   const [grow, setGrow] = useState<Boolean>(false);
 
+  const animatedAccordion = useRef(new Animated.Value(0)).current;
+
+  const bodyHeight = animatedAccordion.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 270],
+  });
+
+  const toggleBody = () => {
+    if (grow) {
+      Animated.timing(animatedAccordion, {
+        duration: 100,
+        toValue: 0,
+        useNativeDriver: false,
+      }).start();
+    } else {
+      Animated.timing(animatedAccordion, {
+        duration: 100,
+        toValue: 1,
+        useNativeDriver: false,
+      }).start();
+    }
+    setGrow(!grow);
+  };
+
+  const ViewDetailsHanlder = () => {
+    setGrow(!grow);
+    toggleBody();
+  };
+
   return (
     <Container
       containerStyle={styles.containerStyle}
@@ -122,7 +151,7 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
         />
       </View>
       <Spacer height={10} />
-      <Pressable onPress={() => setGrow(!grow)} style={styles.odChildren}>
+      <Pressable onPress={ViewDetailsHanlder} style={styles.odChildren}>
         <Text style={styles.boldText}>View details</Text>
 
         <MaterialIcons
@@ -135,39 +164,36 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
           color="red"
         />
       </Pressable>
-      {console.log(grow)}
-      {grow && (
+      <Animated.View style={{height: bodyHeight}}>
         <View>
-          <View>
-            {userInfo.cartItem.map(e => {
-              return (
-                <View key={e.compositeId} style={styles.odChildren}>
-                  <Text>
-                    {e.quantity}x {e.name} - {e.variation}
-                  </Text>
-                  <Text>Tk {e.price * e.quantity}</Text>
-                </View>
-              );
-            })}
-            <Text style={styles.boldText}>Subtotal</Text>
-            <ViewDetails
-              total={300}
-              deliveryFee={15}
-              tax={12}
-              voucher={userInfo.voucher}
-            />
-          </View>
-          <Spacer height={20} />
-          <Text style={styles.boldText}>Paid with</Text>
-          <View style={styles.odChildren}>
-            <View style={styles.odChildren}>
-              <MaterialIcons name="cash" size={18} />
-              <Text style={styles.paidWithText}>Cash on delivery</Text>
-            </View>
-            <Text>Tk 300</Text>
-          </View>
+          {userInfo.cartItem.map(e => {
+            return (
+              <View key={e.compositeId} style={styles.odChildren}>
+                <Text>
+                  {e.quantity}x {e.name} - {e.variation}
+                </Text>
+                <Text>Tk {e.price * e.quantity}</Text>
+              </View>
+            );
+          })}
+          <Text style={styles.boldText}>Subtotal</Text>
+          <ViewDetails
+            total={300}
+            deliveryFee={15}
+            tax={12}
+            voucher={userInfo.voucher}
+          />
         </View>
-      )}
+        <Spacer height={20} />
+        <Text style={styles.boldText}>Paid with</Text>
+        <View style={styles.odChildren}>
+          <View style={styles.odChildren}>
+            <MaterialIcons name="cash" size={18} />
+            <Text style={styles.paidWithText}>Cash on delivery</Text>
+          </View>
+          <Text>Tk 300</Text>
+        </View>
+      </Animated.View>
     </Container>
   );
 };
