@@ -13,23 +13,25 @@ interface ContainerProps extends ScrollViewProps {
   containerStyle?: ViewStyle;
 }
 
-const Container = ({
-  children,
-  header,
-  footer,
-  containerStyle,
-  ...rest
-}: ContainerProps) => {
-  return (
-    <View style={styles.view}>
-      {header}
-      <ScrollView {...rest} style={[styles.scrollview, containerStyle]}>
-        {children}
-      </ScrollView>
-      {footer}
-    </View>
-  );
-};
+const Container = React.forwardRef(
+  (
+    {children, header, footer, containerStyle, ...rest}: ContainerProps,
+    ref: React.ForwardedRef<ScrollView>,
+  ) => {
+    return (
+      <View style={styles.view}>
+        {header}
+        <ScrollView
+          ref={ref}
+          {...rest}
+          style={[styles.scrollview, containerStyle]}>
+          {children}
+        </ScrollView>
+        {footer}
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   view: {

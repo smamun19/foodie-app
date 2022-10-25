@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -16,6 +16,7 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import {Voucher} from '../utils/types/user';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {ScrollView} from 'react-native-gesture-handler';
 
 if (
   Platform.OS === 'android' &&
@@ -102,14 +103,17 @@ const ViewDetails = ({
 const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
   const userInfo = useContext(UserContext);
   const [grow, setGrow] = useState<Boolean>(false);
+  const scrollViewRef = useRef<ScrollView>(null);
 
   const ViewDetailsHanlder = () => {
     setGrow(!grow);
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    scrollViewRef.current?.scrollToEnd();
   };
 
   return (
     <Container
+      ref={scrollViewRef}
       containerStyle={styles.containerStyle}
       header={
         <CustomHeader
