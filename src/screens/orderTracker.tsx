@@ -173,7 +173,11 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
                 </View>
               );
             })}
-            <Text style={styles.boldText}>Subtotal</Text>
+            <View style={[styles.odChildren, styles.boldBorderTop]}>
+              <Text style={styles.boldText}>Subtotal</Text>
+              <Text>Tk 300</Text>
+            </View>
+
             <ViewDetails
               total={300}
               deliveryFee={15}
@@ -217,6 +221,11 @@ const styles = StyleSheet.create({
   },
   paidWithText: {marginHorizontal: 30},
   btnInnerStyle: {alignSelf: 'flex-start'},
+  boldBorderTop: {
+    borderTopWidth: 0.5,
+    borderTopColor: '#6b6b6b',
+    paddingTop: 10,
+  },
 });
 
 export default OrderTracker;
