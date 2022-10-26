@@ -7,6 +7,7 @@ import {
   Pressable,
   Platform,
   UIManager,
+  ScrollView,
   LayoutAnimation,
 } from 'react-native';
 import Container from '../components/Container';
@@ -16,7 +17,6 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import {Voucher} from '../utils/types/user';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {ScrollView} from 'react-native-gesture-handler';
 
 if (
   Platform.OS === 'android' &&
