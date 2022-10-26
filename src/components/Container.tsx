@@ -1,29 +1,37 @@
 import React from 'react';
-import {View, ScrollView, StyleSheet, ViewStyle} from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  ViewStyle,
+  ScrollViewProps,
+} from 'react-native';
 
-interface ContainerProps {
+interface ContainerProps extends ScrollViewProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
-  children?: React.ReactNode;
   containerStyle?: ViewStyle;
 }
 
-const Container = ({
-  children,
-  header,
-  footer,
-  containerStyle,
-}: ContainerProps) => {
-  return (
-    <View style={styles.view}>
-      {header}
-      <ScrollView style={[styles.scrollview, containerStyle]}>
-        {children}
-      </ScrollView>
-      {footer}
-    </View>
-  );
-};
+const Container = React.forwardRef(
+  (
+    {children, header, footer, containerStyle, ...rest}: ContainerProps,
+    ref: React.ForwardedRef<ScrollView>,
+  ) => {
+    return (
+      <View style={styles.view}>
+        {header}
+        <ScrollView
+          ref={ref}
+          {...rest}
+          style={[styles.scrollview, containerStyle]}>
+          {children}
+        </ScrollView>
+        {footer}
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   view: {

@@ -1,19 +1,10 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Switch,
-  PermissionsAndroid,
-  ToastAndroid,
-  Alert,
-} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {View, Text, StyleSheet, Switch} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomButton from '../components/CustomButton';
 import CustomHeader from '../components/CustomHeader';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import Spacer from '../components/Spacer';
@@ -23,68 +14,6 @@ import BingMapsView from 'react-native-bing-maps';
 const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
   const userInfo = useContext(UserContext);
   const [isEnabled, setIsEnabled] = useState(false);
-  const [location, setLocation] = useState<GeoPosition | null>(null);
-
-  const hasPermission = useRef<Boolean>();
-
-  const getCurrentPosition = () => {
-    Geolocation.getCurrentPosition(
-      position => {
-        setLocation(position);
-      },
-      error => {
-        Alert.alert(`Code ${error.code}`, error.message);
-        setLocation(null);
-      },
-      {
-        accuracy: {
-          android: 'high',
-          ios: 'best',
-        },
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 10000,
-        distanceFilter: 0,
-        forceRequestLocation: true,
-        forceLocationManager: false,
-        showLocationDialog: true,
-      },
-    );
-  };
-
-  useEffect(() => {
-    PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    ).then(status => {
-      if (status) {
-        getCurrentPosition();
-        return (hasPermission.current = true);
-      }
-    });
-
-    if (!hasPermission.current) {
-      PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      ).then(status => {
-        if (status === PermissionsAndroid.RESULTS.GRANTED) {
-          getCurrentPosition();
-          return (hasPermission.current = true);
-        } else if (status === PermissionsAndroid.RESULTS.DENIED) {
-          ToastAndroid.show(
-            'Location permission denied by user.',
-            ToastAndroid.LONG,
-          );
-          return (hasPermission.current = false);
-        } else if (status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
-          ToastAndroid.show(
-            'Location permission revoked by user.',
-            ToastAndroid.LONG,
-          );
-          return (hasPermission.current = false);
-        }
-      });
-    }
-  }, []);
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -112,6 +41,7 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
             containerStyle={styles.btn}
             textStyle={styles.btnText}
             title="Place order"
+            onPress={() => navigation.navigate('OrderTracker')}
           />
         </View>
       }>
@@ -123,7 +53,9 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
               <Text style={styles.bold}>Delivery address</Text>
             </View>
             <MaterialIcons
-              onPress={() => console.log('edit address')}
+              onPress={() =>
+                navigation.navigate('Drawer', {screen: 'Addresses'})
+              }
               name="mode-edit"
               size={20}
               color="red"
@@ -132,16 +64,18 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
           <View>
             <BingMapsView
               mapLocation={{
-                lat: location?.coords.latitude ?? 12.9010875,
-                long: location?.coords.longitude ?? 77.6095084,
+                lat: userInfo.address[0].lat ?? 12.9010875,
+                long: userInfo.address[0].long ?? 77.6095084,
                 zoom: 15,
               }}
               style={styles.map}
             />
           </View>
 
-          <Text style={styles.bold}>Location address bold</Text>
-          <Text>Location address</Text>
+          <Text style={styles.bold}>
+            {userInfo.address[0].label ?? userInfo.address[0].name}
+          </Text>
+          <Text>{userInfo.address[0].details}</Text>
         </CardView>
         <CardView cardView={styles.contactless}>
           <Text numberOfLines={3} style={styles.textWrap}>
