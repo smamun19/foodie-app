@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {View, Text, StyleSheet, Switch} from 'react-native';
+import {View, Text, StyleSheet, Switch, TouchableOpacity} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomButton from '../components/CustomButton';
@@ -61,21 +61,40 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
               color="red"
             />
           </View>
-          <View>
-            <BingMapsView
-              mapLocation={{
-                lat: userInfo.address[0].lat ?? 12.9010875,
-                long: userInfo.address[0].long ?? 77.6095084,
-                zoom: 15,
-              }}
-              style={styles.map}
-            />
-          </View>
 
-          <Text style={styles.bold}>
-            {userInfo.address[0].label ?? userInfo.address[0].name}
-          </Text>
-          <Text>{userInfo.address[0].details}</Text>
+          {userInfo.address.length !== 0 ? (
+            <View>
+              <View>
+                <BingMapsView
+                  mapLocation={{
+                    lat: userInfo.address[0].lat,
+                    long: userInfo.address[0].long,
+                    zoom: 15,
+                  }}
+                  style={styles.map}
+                />
+              </View>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('AddressEdit', {
+                    address: userInfo.address[0],
+                    edit: true,
+                  })
+                }>
+                <Text style={styles.bold}>
+                  {userInfo.address[0].label ?? userInfo.address[0].name}
+                </Text>
+                <Text>{userInfo.address[0].details}</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <CustomButton
+              containerStyle={styles.locationBtn}
+              textStyle={styles.locationBtnText}
+              title="Add an address"
+              onPress={() => navigation.navigate('AddressEdit', {edit: false})}
+            />
+          )}
         </CardView>
         <CardView cardView={styles.contactless}>
           <Text numberOfLines={3} style={styles.textWrap}>
@@ -187,6 +206,8 @@ const styles = StyleSheet.create({
   textWrap: {flexWrap: 'wrap', width: '70%'},
   tc: {color: 'red'},
   tcBody: {paddingVertical: 20},
+  locationBtn: {height: 30},
+  locationBtnText: {color: 'red'},
 });
 
 export default Checkout;
