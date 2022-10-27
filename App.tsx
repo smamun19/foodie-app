@@ -11,11 +11,7 @@ const App = () => (
         ...DefaultTheme,
         colors: {...DefaultTheme.colors, background: 'white'},
       }}>
-      <StatusBar
-        animated
-        backgroundColor={'transparent'}
-        barStyle={'dark-content'}
-      />
+      <StatusBar animated backgroundColor={'white'} barStyle={'dark-content'} />
       <RootStack />
     </NavigationContainer>
   </Provider>

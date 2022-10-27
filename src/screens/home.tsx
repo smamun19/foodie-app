@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   SectionList,
-  StatusBar,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -22,7 +21,6 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar animated backgroundColor={'white'} barStyle={'dark-content'} />
       <View style={styles.header}>
         <View style={styles.topHeader}>
           <View style={styles.leftHeader}>

@@ -5,6 +5,7 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import CustomButton from '../components/CustomButton';
 import Spacer from '../components/Spacer';
+import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 
 const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
   const userInfo = useContext(UserContext);
@@ -28,6 +29,11 @@ const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <FocusAwareStatusBar
+        animated
+        backgroundColor="#4846B1"
+        barStyle={'light-content'}
+      />
       <Text style={styles.foodie}>FOODIE</Text>
       <View style={styles.mid}>
         <Image

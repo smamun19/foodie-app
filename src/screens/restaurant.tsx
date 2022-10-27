@@ -4,13 +4,13 @@ import {
   StyleSheet,
   Text,
   View,
-  StatusBar,
   Animated,
   TouchableOpacity,
   FlatList,
   Pressable,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import FoodItem from '../components/FoodItemCardView';
 import FoodItemHeader from '../components/FoodItemHeader';
 import {RootStackScreensProps} from '../navigators/root-stack';
@@ -43,10 +43,10 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar
+      <FocusAwareStatusBar
         animated
         translucent
-        backgroundColor={'transparent'}
+        backgroundColor="transparent"
         barStyle={'light-content'}
       />
       <Animated.SectionList
