@@ -4,13 +4,13 @@ import {
   StyleSheet,
   Text,
   View,
-  StatusBar,
   Animated,
   TouchableOpacity,
   FlatList,
   Pressable,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import FoodItem from '../components/FoodItemCardView';
 import FoodItemHeader from '../components/FoodItemHeader';
 import {RootStackScreensProps} from '../navigators/root-stack';
@@ -43,7 +43,12 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar animated />
+      <FocusAwareStatusBar
+        animated
+        translucent
+        backgroundColor="transparent"
+        barStyle={'light-content'}
+      />
       <Animated.SectionList
         onScroll={Animated.event(
           [
@@ -132,6 +137,8 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
                   sectionRef.current?.scrollToLocation({
                     sectionIndex: index,
                     itemIndex: 0,
+                    viewOffset: 90,
+                    animated: true,
                   })
                 }
                 style={styles.flatListView}>
@@ -167,7 +174,7 @@ const styles = StyleSheet.create({
     padding: 5,
     flexDirection: 'row',
     position: 'absolute',
-    top: 0,
+    top: 25,
     left: 0,
     right: 0,
   },
