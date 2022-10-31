@@ -139,7 +139,7 @@ const AddressEdit = ({
           });
         }
         await userInfo.hydrate({
-          cartItem: [...userInfo.cartItem],
+          cartItem: userInfo.cartItem,
           address: addresses,
         });
         return navigation.goBack();
@@ -165,7 +165,7 @@ const AddressEdit = ({
         });
       }
       await userInfo.hydrate({
-        cartItem: [...userInfo.cartItem],
+        cartItem: userInfo.cartItem,
         address: addresses,
       });
       return navigation.goBack();

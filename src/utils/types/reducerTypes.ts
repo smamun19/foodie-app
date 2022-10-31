@@ -27,6 +27,7 @@ export interface UserAuthParams {
   email?: string;
   voucher?: Voucher;
   cartItem: CartItemTypes[];
+  darkMode?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -41,6 +42,7 @@ export interface UserContextParams {
   email?: string;
   voucher?: Voucher;
   cartItem: CartItemTypes[];
+  darkMode?: boolean;
   createdAt?: string;
   updatedAt?: string;
   iat?: string;

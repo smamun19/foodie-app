@@ -83,7 +83,7 @@ const Addresses = ({navigation}: DrawerScreensProps<'Addresses'>) => {
         });
       }
       await userInfo.hydrate({
-        cartItem: [...userInfo.cartItem],
+        cartItem: userInfo.cartItem,
         address: details,
       });
       return setAddresses(details);

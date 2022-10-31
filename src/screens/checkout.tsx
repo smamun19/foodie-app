@@ -29,9 +29,7 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
         <View style={styles.footer}>
           <Text style={styles.tcBody}>
             By completing this order, I agree to all{' '}
-            <Text style={styles.tc} onPress={() => console.log('T&C page')}>
-              terms & conditions
-            </Text>
+            <Text style={styles.tc}>terms & conditions</Text>
           </Text>
           <View style={styles.subTotal}>
             <Text style={styles.footerText}>Total</Text>
@@ -115,12 +113,7 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
               <MaterialIcons name="payment" size={20} color="red" />
               <Text style={styles.bold}>Payment method</Text>
             </View>
-            <MaterialIcons
-              onPress={() => console.log('edit method')}
-              name="mode-edit"
-              size={20}
-              color="red"
-            />
+            <MaterialIcons name="mode-edit" size={20} color="red" />
           </View>
           <View style={styles.address}>
             <View style={styles.addressBody}>

@@ -13,11 +13,13 @@ import {setItem, getItem} from '../utils/sInfo';
 const initialState: UserAuthParams = {
   cartItem: [],
   address: [],
+  darkMode: false,
 };
 
 const contextState: UserContextParams = {
   cartItem: [],
   address: [],
+  darkMode: false,
   addItem: () => null,
   addVoucher: () => null,
   hydrate: () => null,
@@ -95,6 +97,7 @@ const Provider: FC<ProviderProps> = ({children}) => {
     id: state.id,
     updatedAt: state.updatedAt,
     roles: state.roles,
+    darkMode: state.darkMode,
     voucher: state.voucher,
     cartItem: state.cartItem,
     login: (userData: UserAuthParams) => {
@@ -157,6 +160,8 @@ const Provider: FC<ProviderProps> = ({children}) => {
       updatedAt,
       roles,
       address,
+      id,
+      darkMode,
     } = state;
     setItem('userInfo', {
       name,
@@ -168,6 +173,8 @@ const Provider: FC<ProviderProps> = ({children}) => {
       updatedAt,
       roles,
       address,
+      id,
+      darkMode,
     });
   }, [state]);
 
