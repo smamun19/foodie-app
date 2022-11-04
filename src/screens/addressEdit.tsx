@@ -22,6 +22,7 @@ import Spacer from '../components/Spacer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {addAddress, editAddress, geocoding} from '../services/user';
 import {UserContext} from '../services/userContext';
+import {useTheme} from '@react-navigation/native';
 
 export interface Props extends ModalProps {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -42,6 +43,7 @@ const InputModal = ({
   details,
   setDetails,
 }: Props) => {
+  const {colors} = useTheme();
   return (
     <View style={styles.container}>
       <Modal
@@ -56,7 +58,9 @@ const InputModal = ({
           onPressOut={() => setVisible(false)}
           style={styles.centeredView}>
           <Pressable style={styles.modalView}>
-            <Text style={styles.modalText}>Address Information</Text>
+            <Text style={[styles.modalText, {color: colors.text}]}>
+              Address Information
+            </Text>
             <View style={styles.inputStyleModal}>
               <CustomInput
                 title="Address name"
@@ -106,6 +110,7 @@ const AddressEdit = ({
   const [label, setLabel] = useState<LabelType>();
   const [deliveryInstructions, setDeliveryInstructions] = useState<string>();
   const [visible, setVisible] = useState(false);
+  const {colors} = useTheme();
 
   const setLabelHandler = (labelData: LabelType) => {
     setLabel(previousState => {
@@ -300,9 +305,13 @@ const AddressEdit = ({
       </View>
       <View style={styles.nonMap}>
         {!route.params.edit ? (
-          <Text style={styles.boldText}>Add a new address</Text>
+          <Text style={[styles.boldText, {color: colors.text}]}>
+            Add a new address
+          </Text>
         ) : (
-          <Text style={styles.boldText}>Edit your address</Text>
+          <Text style={[styles.boldText, {color: colors.text}]}>
+            Edit your address
+          </Text>
         )}
         <AddressCard
           name={name ?? route.params.address?.name ?? 'Address'}
@@ -317,8 +326,12 @@ const AddressEdit = ({
           value={extDetails ?? route.params.address?.extDetails}
         />
         <Spacer height={20} />
-        <Text style={styles.boldText}>Delivery instructions</Text>
-        <Text>Please give us more information about your address</Text>
+        <Text style={[styles.boldText, {color: colors.text}]}>
+          Delivery instructions
+        </Text>
+        <Text style={{color: colors.text}}>
+          Please give us more information about your address
+        </Text>
         <CustomInput
           placeholder="(Optional) Note to rider"
           containerStyle={styles.inputStyle1}
@@ -328,7 +341,7 @@ const AddressEdit = ({
           }
         />
         <Spacer height={20} />
-        <Text style={styles.boldText}>Add a label</Text>
+        <Text style={[styles.boldText, {color: colors.text}]}>Add a label</Text>
         <View style={styles.label}>
           <View style={styles.iconView}>
             <View
@@ -343,7 +356,7 @@ const AddressEdit = ({
                 onPress={() => setLabelHandler('Home')}
               />
             </View>
-            <Text>Home</Text>
+            <Text style={{color: colors.text}}>Home</Text>
           </View>
           <View style={styles.iconView}>
             <View
@@ -359,7 +372,7 @@ const AddressEdit = ({
               />
             </View>
 
-            <Text>Work</Text>
+            <Text style={{color: colors.text}}>Work</Text>
           </View>
           <View style={styles.iconView}>
             <View
@@ -375,7 +388,7 @@ const AddressEdit = ({
               />
             </View>
 
-            <Text>Partner</Text>
+            <Text style={{color: colors.text}}>Partner</Text>
           </View>
           <View style={styles.iconView}>
             <View
@@ -390,7 +403,7 @@ const AddressEdit = ({
                 onPress={() => setLabelHandler('Other')}
               />
             </View>
-            <Text>Other</Text>
+            <Text style={{color: colors.text}}>Other</Text>
           </View>
         </View>
       </View>
@@ -430,7 +443,7 @@ const styles = StyleSheet.create({
   nonMap: {
     margin: 10,
   },
-  boldText: {fontWeight: 'bold', color: 'black', fontSize: 18},
+  boldText: {fontWeight: 'bold', fontSize: 18},
   label: {flexDirection: 'row', justifyContent: 'space-between', marginTop: 10},
   icon: {
     width: 50,
@@ -486,7 +499,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: 'black',
   },
   inputStyleModal: {
     width: '100%',

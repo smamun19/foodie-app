@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React, {useContext, useMemo, useRef} from 'react';
 import {
   SectionList,
@@ -21,6 +22,8 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const sectionRef = useRef<SectionList>(null);
   const scrollY = useRef(new Animated.Value(0)).current;
   const userInfo = useContext(UserContext);
+  const {colors} = useTheme();
+
   const deliveryFee = 15;
   const specialOffer = undefined;
   const range = specialOffer ? 300 : 200;
@@ -71,7 +74,9 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           />
         }
         renderSectionHeader={({section}) => (
-          <Text style={styles.headerText}>{section.title}</Text>
+          <Text style={[styles.headerText, {color: colors.text}]}>
+            {section.title}
+          </Text>
         )}
         renderItem={({item}) => (
           <FoodItem
@@ -142,7 +147,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
                   })
                 }
                 style={styles.flatListView}>
-                <Text>{item.title}</Text>
+                <Text style={{color: colors.text}}>{item.title}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -169,7 +174,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
 
 const styles = StyleSheet.create({
   container: {flex: 1},
-  headerText: {fontWeight: 'bold', fontSize: 20, color: 'black', padding: 5},
+  headerText: {fontWeight: 'bold', fontSize: 20, padding: 5},
   header: {
     padding: 5,
     flexDirection: 'row',

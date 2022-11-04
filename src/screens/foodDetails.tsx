@@ -9,6 +9,7 @@ import CustomButton from '../components/CustomButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomInput from '../components/TextInput';
 import {UserContext} from '../services/userContext';
+import {useTheme} from '@react-navigation/native';
 
 const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const foodDetails = {
@@ -26,6 +27,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const [check, setCheck] = useState<Record<string, any>>({});
   const [counter, setCounter] = useState<number>(1);
   const [instructions, setInstructions] = useState<string>('');
+  const {colors} = useTheme();
 
   const userInfo = useContext(UserContext);
 
@@ -71,7 +73,9 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
                 color={counter === 1 ? 'grey' : 'red'}
               />
             </Pressable>
-            <Text style={styles.counterText}>{counter}</Text>
+            <Text style={[styles.counterText, {color: colors.text}]}>
+              {counter}
+            </Text>
             <Pressable onPress={() => setCounter(counter + 1)}>
               <MaterialIcons name="add-circle" size={30} color="red" />
             </Pressable>
@@ -101,13 +105,17 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       />
       <View style={styles.view1}>
         <View style={styles.left}>
-          <Text style={styles.titleText}>Food name</Text>
-          <Text numberOfLines={2} style={styles.desText}>
+          <Text style={[styles.titleText, {color: colors.text}]}>
+            Food name
+          </Text>
+          <Text
+            numberOfLines={2}
+            style={[styles.desText, {color: colors.text}]}>
             description
           </Text>
         </View>
         <View style={styles.right}>
-          <Text style={styles.priceText}>
+          <Text style={[styles.priceText, {color: colors.text}]}>
             Tk {check.price ?? foodDetails.price}
           </Text>
         </View>
@@ -118,13 +126,19 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           <View>
             <View style={styles.view1}>
               <View style={styles.left}>
-                <Text style={styles.titleText}>Variation</Text>
-                <Text numberOfLines={2} style={styles.desText}>
+                <Text style={[styles.titleText, {color: colors.text}]}>
+                  Variation
+                </Text>
+                <Text
+                  numberOfLines={2}
+                  style={[styles.desText, {color: colors.text}]}>
                   Select one
                 </Text>
               </View>
               <View style={styles.right}>
-                <Text style={styles.priceText}>1 Required</Text>
+                <Text style={[styles.priceText, {color: colors.text}]}>
+                  1 Required
+                </Text>
               </View>
             </View>
             <View>
@@ -138,8 +152,10 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         )}
       </View>
       <View style={styles.extra}>
-        <Text style={styles.titleText}>Special instructions</Text>
-        <Text>
+        <Text style={[styles.titleText, {color: colors.text}]}>
+          Special instructions
+        </Text>
+        <Text style={{color: colors.text}}>
           Please let us know if you are allergic to anything or if we need to
           avoid anything
         </Text>
@@ -152,7 +168,9 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           onChangeText={setInstructions}
           containerStyle={styles.inputContainer}
         />
-        <Text style={styles.textCounter}>{instructions.length}/200</Text>
+        <Text style={[styles.textCounter, {color: colors.text}]}>
+          {instructions.length}/200
+        </Text>
       </View>
     </Container>
   );
@@ -169,7 +187,7 @@ const styles = StyleSheet.create({
   },
   left: {flex: 1, paddingRight: 10},
   right: {},
-  titleText: {fontWeight: 'bold', color: 'black', fontSize: 15},
+  titleText: {fontWeight: 'bold', fontSize: 15},
   desText: {},
   priceText: {},
   footerContainer: {

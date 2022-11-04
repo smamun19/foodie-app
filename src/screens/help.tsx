@@ -6,7 +6,7 @@ import CustomHeader from '../components/CustomHeader';
 import {DrawerScreensProps} from '../navigators/drawer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {HelpCenter} from '../utils/types/user';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useTheme} from '@react-navigation/native';
 import {getHelpCenter} from '../services/public';
 
 interface HelpCardProps {
@@ -16,6 +16,7 @@ interface HelpCardProps {
 }
 
 export const HelpCard = ({icon, title, onPress}: HelpCardProps) => {
+  const {colors} = useTheme();
   return (
     <Pressable onPress={onPress}>
       <CardView cardView={styles.cardView}>
@@ -25,6 +26,7 @@ export const HelpCard = ({icon, title, onPress}: HelpCardProps) => {
             numberOfLines={1}
             style={[
               icon ? styles.cardTitleWithIcon : styles.cardTitleWithoutIcon,
+              {color: colors.text},
             ]}>
             {title}
           </Text>
@@ -37,6 +39,7 @@ export const HelpCard = ({icon, title, onPress}: HelpCardProps) => {
 
 const Help = ({navigation}: DrawerScreensProps<'Help'>) => {
   const [data, setData] = useState<HelpCenter[]>();
+  const {colors} = useTheme();
   useFocusEffect(
     useCallback(() => {
       getHelpCenter()
@@ -62,7 +65,7 @@ const Help = ({navigation}: DrawerScreensProps<'Help'>) => {
           onLeftPress={() => navigation.navigate('Home')}
         />
       }>
-      <Text style={styles.text}>How can we help?</Text>
+      <Text style={[styles.text, {color: colors.text}]}>How can we help?</Text>
       {data?.map(e => (
         <HelpCard
           onPress={() => navigation.navigate('HelpQuery', {id: e.id})}

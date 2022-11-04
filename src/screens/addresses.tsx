@@ -9,7 +9,7 @@ import CustomButton from '../components/CustomButton';
 import {Address} from '../utils/types/user';
 import {getAddress, removeAddress} from '../services/user';
 import {UserContext} from '../services/userContext';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useTheme} from '@react-navigation/native';
 
 interface AddressCardProps {
   name?: string;
@@ -30,17 +30,22 @@ export const AddressCard = ({
   label,
   editOnly,
 }: AddressCardProps) => {
+  const {colors} = useTheme();
   return (
     <CardView cardView={styles.cardView}>
       <View style={styles.left}>
         <MaterialIcons name="location-on" size={30} color="red" />
         <View style={styles.address}>
-          <Text numberOfLines={1} style={styles.nameText}>
+          <Text
+            numberOfLines={1}
+            style={[styles.nameText, {color: colors.text}]}>
             {label ?? name}
           </Text>
-          <Text numberOfLines={2}>{details}</Text>
+          <Text style={{color: colors.text}} numberOfLines={2}>
+            {details}
+          </Text>
           {!editOnly && (
-            <Text numberOfLines={2}>
+            <Text style={{color: colors.text}} numberOfLines={2}>
               Note to rider: {deliveryInstructions ?? 'none'}
             </Text>
           )}
@@ -191,7 +196,6 @@ const styles = StyleSheet.create({
   btnText: {color: 'white'},
   nameText: {
     fontWeight: 'bold',
-    color: 'black',
   },
 });
 

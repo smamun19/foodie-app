@@ -7,6 +7,7 @@ import Spacer from '../components/Spacer';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {resetPass} from '../services/auth';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useTheme} from '@react-navigation/native';
 
 export interface Props extends ModalProps {
   setResetPassVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,6 +19,7 @@ const ResetPassword = ({
   route,
 }: RootStackScreensProps<'ResetPassword'>) => {
   const [newpass, setNewPass] = useState('');
+  const {colors} = useTheme();
   const {email} = route.params;
 
   const submitHandler = async () => {
@@ -49,7 +51,9 @@ const ResetPassword = ({
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.modalText}>Reset Password</Text>
+      <Text style={[styles.modalText, {color: colors.text}]}>
+        Reset Password
+      </Text>
       <View style={styles.inputStyle}>
         <CustomInput
           title="Password"
@@ -99,7 +103,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: 'black',
   },
   inputStyle: {
     width: '100%',

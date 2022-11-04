@@ -96,13 +96,6 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
               accessibilityRole="button"
               containerStyle={styles.google}
               textStyle={styles.btnText2}
-              onPress={() =>
-                userInfo.hydrate({
-                  address: userInfo.address,
-                  cartItem: userInfo.cartItem,
-                  darkMode: !userInfo.darkMode,
-                })
-              }
               title="Continue with Facbook"
             />
             <Spacer height={30} />

@@ -17,11 +17,19 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
     userInfo.logout();
     props.navigation.navigate('Login');
   };
+
+  const toggleDarkMode = () => {
+    userInfo.hydrate({
+      address: userInfo.address,
+      cartItem: userInfo.cartItem,
+      darkMode: !userInfo.darkMode,
+    });
+  };
   return (
     <View style={styles.container}>
       <DrawerContentScrollView>
         <ImageBackground
-          source={require('../assets/white.jpg')}
+          source={require('../assets/transparent.png')}
           style={styles.imgBackground}>
           <Image
             source={require('../assets/hisoka-face.png')}
@@ -38,11 +46,16 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
             />
           )}
         </ImageBackground>
-        <View style={[styles.item, {backgroundColor: colors.background}]}>
+        <View style={styles.item}>
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
       <View style={styles.bottom}>
+        {userInfo.darkMode ? (
+          <CustomButton title="Disbale dark mode" onPress={toggleDarkMode} />
+        ) : (
+          <CustomButton title="Enable dark mode" onPress={toggleDarkMode} />
+        )}
         {userInfo.token ? (
           <CustomButton title="Logout" onPress={logout} />
         ) : (

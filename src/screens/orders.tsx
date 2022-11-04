@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import CardView from '../components/CardView';
@@ -8,6 +9,7 @@ import Spacer from '../components/Spacer';
 import {DrawerScreensProps} from '../navigators/drawer';
 
 const OrderCard = () => {
+  const {colors} = useTheme();
   return (
     <CardView cardView={styles.cardView}>
       <Pressable>
@@ -18,15 +20,19 @@ const OrderCard = () => {
               source={require('../assets/burger.jpeg')}
             />
             <View style={styles.row1Right}>
-              <Text style={styles.boldText}>Restaurant name</Text>
-              <Text>Food list</Text>
+              <Text style={[styles.boldText, {color: colors.text}]}>
+                Restaurant name
+              </Text>
+              <Text style={{color: colors.text}}>Food list</Text>
             </View>
           </View>
-          <Text>Tk 267</Text>
+          <Text style={{color: colors.text}}>Tk 267</Text>
         </View>
         <Spacer height={10} />
         <View style={styles.row2}>
-          <Text style={styles.row2Left}>Order time</Text>
+          <Text style={[styles.row2Left, {color: colors.text}]}>
+            Order time
+          </Text>
           <CustomButton
             containerStyle={styles.btn}
             textStyle={styles.btnText}
@@ -39,6 +45,7 @@ const OrderCard = () => {
 };
 
 const Orders = ({navigation}: DrawerScreensProps<'Orders'>) => {
+  const {colors} = useTheme();
   return (
     <Container
       containerStyle={styles.containerStyle}
@@ -48,7 +55,7 @@ const Orders = ({navigation}: DrawerScreensProps<'Orders'>) => {
           onLeftPress={() => navigation.navigate('Home')}
         />
       }>
-      <Text style={styles.topText}>Past orders</Text>
+      <Text style={[styles.topText, {color: colors.text}]}>Past orders</Text>
       <OrderCard />
       <OrderCard />
       <OrderCard />
@@ -61,7 +68,7 @@ const Orders = ({navigation}: DrawerScreensProps<'Orders'>) => {
 const styles = StyleSheet.create({
   containerStyle: {margin: 10},
   cardView: {padding: 10, marginBottom: 20},
-  topText: {padding: 10, fontWeight: 'bold', color: 'black', fontSize: 18},
+  topText: {padding: 10, fontWeight: 'bold', fontSize: 18},
   imageStyle: {height: 80, width: 80},
   row1: {flexDirection: 'row'},
   row2: {flexDirection: 'row', alignItems: 'center'},
@@ -75,7 +82,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   btnText: {color: 'white'},
-  boldText: {fontWeight: 'bold', color: 'black'},
+  boldText: {fontWeight: 'bold'},
 });
 
 export default Orders;

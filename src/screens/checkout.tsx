@@ -10,10 +10,12 @@ import {UserContext} from '../services/userContext';
 import Spacer from '../components/Spacer';
 import Divider from '../components/Divider';
 import BingMapsView from 'react-native-bing-maps';
+import {useTheme} from '@react-navigation/native';
 
 const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
   const userInfo = useContext(UserContext);
   const [isEnabled, setIsEnabled] = useState(false);
+  const {colors} = useTheme();
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -27,13 +29,15 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
       }
       footer={
         <View style={styles.footer}>
-          <Text style={styles.tcBody}>
+          <Text style={[styles.tcBody, {color: colors.text}]}>
             By completing this order, I agree to all{' '}
             <Text style={styles.tc}>terms & conditions</Text>
           </Text>
           <View style={styles.subTotal}>
-            <Text style={styles.footerText}>Total</Text>
-            <Text style={styles.footerText}>Tk {route.params.totalAmount}</Text>
+            <Text style={[styles.footerText, {color: colors.text}]}>Total</Text>
+            <Text style={[styles.footerText, {color: colors.text}]}>
+              Tk {route.params.totalAmount}
+            </Text>
           </View>
           <CustomButton
             containerStyle={styles.btn}
@@ -48,7 +52,9 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
           <View style={styles.address}>
             <View style={styles.addressBody}>
               <MaterialIcons name="place" size={20} color="red" />
-              <Text style={styles.bold}>Delivery address</Text>
+              <Text style={[styles.bold, {color: colors.text}]}>
+                Delivery address
+              </Text>
             </View>
             <MaterialIcons
               onPress={() =>
@@ -79,10 +85,12 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
                     edit: true,
                   })
                 }>
-                <Text style={styles.bold}>
+                <Text style={[styles.bold, {color: colors.text}]}>
                   {userInfo.address[0].label ?? userInfo.address[0].name}
                 </Text>
-                <Text>{userInfo.address[0].details}</Text>
+                <Text style={{color: colors.text}}>
+                  {userInfo.address[0].details}
+                </Text>
               </TouchableOpacity>
             </View>
           ) : (
@@ -95,7 +103,9 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
           )}
         </CardView>
         <CardView cardView={styles.contactless}>
-          <Text numberOfLines={3} style={styles.textWrap}>
+          <Text
+            numberOfLines={3}
+            style={[styles.textWrap, {color: colors.text}]}>
             Contactless delivery: switch to online payment for this option
           </Text>
           <Switch
@@ -111,16 +121,20 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
           <View style={styles.address}>
             <View style={styles.addressBody}>
               <MaterialIcons name="payment" size={20} color="red" />
-              <Text style={styles.bold}>Payment method</Text>
+              <Text style={[styles.bold, {color: colors.text}]}>
+                Payment method
+              </Text>
             </View>
             <MaterialIcons name="mode-edit" size={20} color="red" />
           </View>
           <View style={styles.address}>
             <View style={styles.addressBody}>
               <MaterialIcons name="money" size={20} color="red" />
-              <Text style={styles.bold}>Cash</Text>
+              <Text style={[styles.bold, {color: colors.text}]}>Cash</Text>
             </View>
-            <Text style={styles.bold}>Tk {route.params.totalAmount}</Text>
+            <Text style={[styles.bold, {color: colors.text}]}>
+              Tk {route.params.totalAmount}
+            </Text>
           </View>
         </CardView>
         <Spacer height={20} />
@@ -132,27 +146,39 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
           {userInfo.cartItem.map(e => {
             return (
               <View key={e.compositeId} style={styles.address}>
-                <Text style={styles.bold}>
+                <Text style={[styles.bold, {color: colors.text}]}>
                   {e.quantity}x {e.name} - {e.variation}
                 </Text>
-                <Text style={styles.bold}>Tk {e.price * e.quantity}</Text>
+                <Text style={[styles.bold, {color: colors.text}]}>
+                  Tk {e.price * e.quantity}
+                </Text>
               </View>
             );
           })}
 
           <Divider />
           <View style={styles.address}>
-            <Text style={styles.bold}>Subtotal</Text>
-            <Text style={styles.bold}>Tk {route.params.subTotal}</Text>
+            <Text style={[styles.bold, {color: colors.text}]}>Subtotal</Text>
+            <Text style={[styles.bold, {color: colors.text}]}>
+              Tk {route.params.subTotal}
+            </Text>
           </View>
           <View style={styles.address}>
-            <Text style={styles.bold}>Delivery fee</Text>
-            <Text style={styles.bold}>Tk {route.params.deliveryFee}</Text>
+            <Text style={[styles.bold, {color: colors.text}]}>
+              Delivery fee
+            </Text>
+            <Text style={[styles.bold, {color: colors.text}]}>
+              Tk {route.params.deliveryFee}
+            </Text>
           </View>
           {userInfo.voucher && (
             <View style={styles.address}>
-              <Text style={styles.bold}>Voucher: {userInfo.voucher.name}</Text>
-              <Text style={styles.bold}>- Tk {userInfo.voucher.value}</Text>
+              <Text style={[styles.bold, {color: colors.text}]}>
+                Voucher: {userInfo.voucher.name}
+              </Text>
+              <Text style={[styles.bold, {color: colors.text}]}>
+                - Tk {userInfo.voucher.value}
+              </Text>
             </View>
           )}
         </CardView>
@@ -182,7 +208,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  footerText: {fontWeight: 'bold', paddingVertical: 5, color: 'black'},
+  footerText: {fontWeight: 'bold', paddingVertical: 5},
   btnText: {color: 'white'},
   mapContainer: {},
   map: {

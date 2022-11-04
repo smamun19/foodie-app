@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React, {useContext} from 'react';
 import {
   View,
@@ -18,6 +19,7 @@ import {DATA} from '../utils/testData';
 
 const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
   const {address} = useContext(UserContext);
+  const {colors} = useTheme();
 
   return (
     <View style={styles.container}>
@@ -41,7 +43,9 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
                   <Text style={styles.text2}>
                     {address[0].label ?? address[0].name}
                   </Text>
-                  <Text style={styles.text}>{address[0].details}</Text>
+                  <Text style={[styles.text, {color: colors.text}]}>
+                    {address[0].details}
+                  </Text>
                 </TouchableOpacity>
               ) : (
                 <CustomButton
@@ -80,6 +84,7 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
           <CustomInput
             containerStyle={styles.bottomHeader}
             placeholder="Search for restaurants"
+            placeholderTextColor={colors.text}
           />
         </View>
       </View>
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   rightHeaderBtn: {marginHorizontal: 10},
-  text: {color: 'black', fontSize: 10},
+  text: {fontSize: 10},
   text2: {fontWeight: 'bold', color: 'red', fontSize: 13},
   text3: {fontWeight: 'bold', color: 'red', fontSize: 13, padding: 5},
   horizontalScroll: {padding: 5},

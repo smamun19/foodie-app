@@ -31,7 +31,7 @@ const darkTheme = {
 const AppWrapper = () => {
   const {darkMode} = useContext(UserContext);
   return (
-    <NavigationContainer theme={darkMode === true ? DarkTheme : lightTheme}>
+    <NavigationContainer theme={darkMode === true ? darkTheme : lightTheme}>
       <StatusBar
         animated
         backgroundColor={darkMode === true ? 'black' : 'white'}

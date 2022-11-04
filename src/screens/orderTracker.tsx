@@ -17,6 +17,7 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import {Voucher} from '../utils/types/user';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useTheme} from '@react-navigation/native';
 
 if (
   Platform.OS === 'android' &&
@@ -41,23 +42,24 @@ interface ViewDetailsProps {
 }
 
 const OrderDetails = ({address, id, restaurant, total}: OrderDetailsProps) => {
+  const {colors} = useTheme();
   return (
     <View style={styles.od}>
       <View style={styles.odChildren}>
-        <Text>Order number</Text>
-        <Text>{id}</Text>
+        <Text style={{color: colors.text}}>Order number</Text>
+        <Text style={{color: colors.text}}>{id}</Text>
       </View>
       <View style={styles.odChildren}>
-        <Text>Order from</Text>
-        <Text>{restaurant}</Text>
+        <Text style={{color: colors.text}}>Order from</Text>
+        <Text style={{color: colors.text}}>{restaurant}</Text>
       </View>
       <View style={styles.odChildren}>
-        <Text>Delivery address</Text>
-        <Text>{address}</Text>
+        <Text style={{color: colors.text}}>Delivery address</Text>
+        <Text style={{color: colors.text}}>{address}</Text>
       </View>
       <View style={styles.odChildren}>
-        <Text>Total</Text>
-        <Text>Tk {total}</Text>
+        <Text style={{color: colors.text}}>Total</Text>
+        <Text style={{color: colors.text}}>Tk {total}</Text>
       </View>
     </View>
   );
@@ -70,31 +72,34 @@ const ViewDetails = ({
   discount,
   total,
 }: ViewDetailsProps) => {
+  const {colors} = useTheme();
   return (
     <View style={styles.od}>
       <View style={styles.odChildren}>
-        <Text>Delivery fee</Text>
-        <Text>Tk {deliveryFee}</Text>
+        <Text style={{color: colors.text}}>Delivery fee</Text>
+        <Text style={{color: colors.text}}>Tk {deliveryFee}</Text>
       </View>
       {discount ? (
         <View style={styles.odChildren}>
-          <Text>Discount</Text>
-          <Text>Tk {discount}</Text>
+          <Text style={{color: colors.text}}>Discount</Text>
+          <Text style={{color: colors.text}}>Tk {discount}</Text>
         </View>
       ) : null}
       <View style={styles.odChildren}>
-        <Text>Incl. Tax</Text>
-        <Text>Tk {tax}</Text>
+        <Text style={{color: colors.text}}>Incl. Tax</Text>
+        <Text style={{color: colors.text}}>Tk {tax}</Text>
       </View>
       {voucher ? (
         <View style={styles.odChildren}>
-          <Text>Voucher:{voucher.name}</Text>
-          <Text>Tk {voucher.value}</Text>
+          <Text style={{color: colors.text}}>Voucher:{voucher.name}</Text>
+          <Text style={{color: colors.text}}>Tk {voucher.value}</Text>
         </View>
       ) : null}
       <View style={styles.odChildren}>
-        <Text style={styles.boldText}>Total(inc. VAT)</Text>
-        <Text>Tk {total}</Text>
+        <Text style={[styles.boldText, {color: colors.text}]}>
+          Total(inc. VAT)
+        </Text>
+        <Text style={{color: colors.text}}>Tk {total}</Text>
       </View>
     </View>
   );
@@ -104,6 +109,7 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
   const userInfo = useContext(UserContext);
   const [grow, setGrow] = useState<Boolean>(false);
   const scrollViewRef = useRef<ScrollView>(null);
+  const {colors} = useTheme();
 
   const ViewDetailsHanlder = () => {
     setGrow(!grow);
@@ -126,19 +132,21 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
         />
       }>
       <View style={styles.topView}>
-        <Text>Estimated delivery time</Text>
-        <Text style={styles.estText}>25 - 35 mins</Text>
+        <Text style={{color: colors.text}}>Estimated delivery time</Text>
+        <Text style={[styles.estText, {color: colors.text}]}>25 - 35 mins</Text>
         <Image
           source={require('../assets/placeholder.jpg')}
           style={styles.img}
         />
-        <Text style={styles.orderStatusText}>
+        <Text style={[styles.orderStatusText, {color: colors.text}]}>
           Got your order {userInfo.name}!
         </Text>
       </View>
       <Spacer height={20} />
       <View>
-        <Text style={styles.boldText}>Order Details</Text>
+        <Text style={[styles.boldText, {color: colors.text}]}>
+          Order Details
+        </Text>
         <OrderDetails
           address="Delivery address"
           id="das564faf"
@@ -148,7 +156,9 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
       </View>
       <Spacer height={10} />
       <Pressable onPress={ViewDetailsHanlder} style={styles.odChildren}>
-        <Text style={styles.boldText}>View details</Text>
+        <Text style={[styles.boldText, {color: colors.text}]}>
+          View details
+        </Text>
 
         <MaterialIcons
           name={
@@ -166,16 +176,20 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
             {userInfo.cartItem.map(e => {
               return (
                 <View key={e.compositeId} style={styles.odChildren}>
-                  <Text>
+                  <Text style={{color: colors.text}}>
                     {e.quantity}x {e.name} - {e.variation}
                   </Text>
-                  <Text>Tk {e.price * e.quantity}</Text>
+                  <Text style={{color: colors.text}}>
+                    Tk {e.price * e.quantity}
+                  </Text>
                 </View>
               );
             })}
             <View style={[styles.odChildren, styles.boldBorderTop]}>
-              <Text style={styles.boldText}>Subtotal</Text>
-              <Text>Tk 300</Text>
+              <Text style={[styles.boldText, {color: colors.text}]}>
+                Subtotal
+              </Text>
+              <Text style={{color: colors.text}}>Tk 300</Text>
             </View>
 
             <ViewDetails
@@ -186,13 +200,15 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
             />
           </View>
           <Spacer height={20} />
-          <Text style={styles.boldText}>Paid with</Text>
+          <Text style={[styles.boldText, {color: colors.text}]}>Paid with</Text>
           <View style={styles.odChildren}>
             <View style={styles.odChildren}>
               <MaterialIcons name="cash" size={18} />
-              <Text style={styles.paidWithText}>Cash on delivery</Text>
+              <Text style={[styles.paidWithText, {color: colors.text}]}>
+                Cash on delivery
+              </Text>
             </View>
-            <Text>Tk 300</Text>
+            <Text style={{color: colors.text}}>Tk 300</Text>
           </View>
         </View>
       )}
@@ -208,10 +224,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: '#6b6b6b',
   },
-  estText: {fontWeight: 'bold', fontSize: 30, color: 'black'},
+  estText: {fontWeight: 'bold', fontSize: 30},
   img: {height: 100, width: 90, margin: 20},
   orderStatusText: {marginBottom: 20},
-  boldText: {fontWeight: 'bold', color: 'black'},
+  boldText: {fontWeight: 'bold'},
   od: {borderBottomWidth: 0.5, borderBottomColor: '#6b6b6b'},
   odChildren: {
     flexDirection: 'row',

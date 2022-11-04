@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React, {useContext, useMemo} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -12,6 +13,7 @@ import {UserContext} from '../services/userContext';
 const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
   const userInfo = useContext(UserContext);
   const voucherValue = userInfo.voucher?.value ?? 0;
+  const {colors} = useTheme();
 
   const deliveryFee = 15;
 
@@ -39,8 +41,10 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
           />
         }>
         <View style={styles.emptyCart}>
-          <Text>Hungry?</Text>
-          <Text>You havent added anything to your cart!</Text>
+          <Text style={{color: colors.text}}>Hungry?</Text>
+          <Text style={{color: colors.text}}>
+            You havent added anything to your cart!
+          </Text>
           <CustomButton
             onPress={() => navigation.goBack()}
             title="Browse"
@@ -62,8 +66,10 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
       footer={
         <View style={styles.footer}>
           <View style={styles.subTotal}>
-            <Text style={styles.footerText}>Total</Text>
-            <Text style={styles.footerText}>Tk {totalAmount}</Text>
+            <Text style={[styles.footerText, {color: colors.text}]}>Total</Text>
+            <Text style={[styles.footerText, {color: colors.text}]}>
+              Tk {totalAmount}
+            </Text>
           </View>
 
           <CustomButton
@@ -87,8 +93,10 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
             source={require('../assets/food_delivery.png')}
           />
           <View>
-            <Text>Estimated delivery</Text>
-            <Text style={styles.bold}>ASAP (40 min)</Text>
+            <Text style={{color: colors.text}}>Estimated delivery</Text>
+            <Text style={[styles.bold, {color: colors.text}]}>
+              ASAP (40 min)
+            </Text>
           </View>
         </View>
         <Spacer height={30} />
@@ -112,14 +120,14 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
         />
         <Spacer height={30} />
         <View style={styles.subTotal}>
-          <Text style={styles.bold}>Subtotal</Text>
-          <Text style={styles.bold}>Tk {subTotal}</Text>
+          <Text style={[styles.bold, {color: colors.text}]}>Subtotal</Text>
+          <Text style={[styles.bold, {color: colors.text}]}>Tk {subTotal}</Text>
         </View>
         <Spacer height={10} />
 
         <View style={styles.subTotal}>
-          <Text>Delivery fee</Text>
-          <Text>Tk {deliveryFee}</Text>
+          <Text style={{color: colors.text}}>Delivery fee</Text>
+          <Text style={{color: colors.text}}>Tk {deliveryFee}</Text>
         </View>
         <Spacer height={10} />
         <View>
@@ -140,7 +148,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
               <View style={styles.voucherBody}>
                 <MaterialIcons name="loyalty" color={'red'} size={20} />
                 <Spacer height={0} width={10} />
-                <Text style={styles.voucherNameText}>
+                <Text style={[styles.voucherNameText, {color: colors.text}]}>
                   {userInfo.voucher.name}
                 </Text>
                 <Spacer height={0} width={10} />
@@ -190,8 +198,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  bold: {fontWeight: 'bold', color: 'black'},
-  footerText: {fontWeight: 'bold', paddingVertical: 5, color: 'black'},
+  bold: {fontWeight: 'bold'},
+  footerText: {fontWeight: 'bold', paddingVertical: 5},
   addMoreBtnText: {color: 'red'},
   addMoreBtnStyle: {
     width: 'auto',
@@ -211,7 +219,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   voucherBody: {flexDirection: 'row', alignItems: 'center'},
-  voucherNameText: {color: 'black', fontWeight: 'bold'},
+  voucherNameText: {fontWeight: 'bold'},
   voucherValueText: {color: 'red', fontWeight: 'bold'},
   voucherValue: {
     backgroundColor: '#deadad',

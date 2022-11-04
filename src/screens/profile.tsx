@@ -7,6 +7,7 @@ import ProfileCard from '../components/ProfileCard';
 import {DrawerScreensProps} from '../navigators/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {UserContext} from '../services/userContext';
+import {useTheme} from '@react-navigation/native';
 
 interface SocialCardProps {
   title: string;
@@ -16,6 +17,7 @@ interface SocialCardProps {
 }
 
 const SocialCard = ({icon, title, color, onPress}: SocialCardProps) => {
+  const {colors} = useTheme();
   return (
     <CardView cardView={styles.cardView}>
       <View style={styles.cardViewLeft}>
@@ -25,7 +27,7 @@ const SocialCard = ({icon, title, color, onPress}: SocialCardProps) => {
           color={color}
           size={30}
         />
-        <Text>{title}</Text>
+        <Text style={{color: colors.text}}>{title}</Text>
       </View>
 
       <Pressable onPress={onPress}>
@@ -37,6 +39,7 @@ const SocialCard = ({icon, title, color, onPress}: SocialCardProps) => {
 
 const Profile = ({navigation}: DrawerScreensProps<'Profile'>) => {
   const userInfo = useContext(UserContext);
+  const {colors} = useTheme();
 
   return (
     <Container
@@ -67,7 +70,9 @@ const Profile = ({navigation}: DrawerScreensProps<'Profile'>) => {
         title="Mobile number"
         data={userInfo.phone}
       />
-      <Text style={styles.cAccounts}>Connected accounts</Text>
+      <Text style={[styles.cAccounts, {color: colors.text}]}>
+        Connected accounts
+      </Text>
       <SocialCard
         icon="facebook"
         title="Facebook"
@@ -88,7 +93,6 @@ const styles = StyleSheet.create({
   containerStyle: {margin: 10},
   cAccounts: {
     fontWeight: 'bold',
-    color: 'black',
     marginTop: 20,
     marginBottom: 10,
     fontSize: 18,
