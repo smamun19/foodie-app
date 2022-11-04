@@ -40,6 +40,7 @@ const reducer = (
       return {
         cartItem: [],
         address: [],
+        darkMode: state.darkMode,
       };
     case ActionType.ADD_VOUCHER:
       return {...state, voucher: action.payload?.voucher};

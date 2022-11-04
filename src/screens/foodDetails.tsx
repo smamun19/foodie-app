@@ -84,6 +84,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           <CustomButton
             disabled={foodDetails.variation && !check.name}
             onPress={addToCart}
+            textStyle={styles.btnColor}
             containerStyle={[
               styles.btn,
               // eslint-disable-next-line react-native/no-inline-styles
@@ -95,7 +96,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
                   : 'red',
               },
             ]}
-            title="Add to card"
+            title="Add to cart"
           />
         </View>
       }>
@@ -217,6 +218,7 @@ const styles = StyleSheet.create({
   textCounter: {
     alignSelf: 'flex-end',
   },
+  btnColor: {color: 'white'},
 });
 
 export default FoodDetails;

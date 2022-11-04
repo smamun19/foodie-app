@@ -84,7 +84,6 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
           <CustomInput
             containerStyle={styles.bottomHeader}
             placeholder="Search for restaurants"
-            placeholderTextColor={colors.text}
           />
         </View>
       </View>

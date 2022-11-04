@@ -122,13 +122,12 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
         </View>
         <View style={styles.lower}>
           <View style={styles.signUp}>
-            <Text style={{color: colors.text}}>New to Foodie?</Text>
+            <Text style={[styles.signupText, {color: colors.text}]}>
+              New to Foodie?
+            </Text>
             <CustomButton
               title="Sign Up"
-              btnStyle={styles.signUpBtn}
-              btnInnerStyle={styles.innerSignUpBtn}
               textStyle={styles.btnText2}
-              containerStyle={styles.signupBtnContainer}
               onPress={() => navigation.navigate('SignUp')}
             />
           </View>
@@ -189,15 +188,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   lower: {},
-  signUpBtn: {
-    width: '20%',
-    alignSelf: 'flex-start',
-  },
-  signupBtnContainer: {
-    height: 25,
-    width: '100%',
-  },
-  innerSignUpBtn: {},
   btnText: {
     color: 'white',
   },
@@ -239,6 +229,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  signupText: {marginRight: 10},
 });
 
 export default Login;

@@ -1,14 +1,23 @@
 import React, {useContext} from 'react';
-import {View, StyleSheet, Text, ImageBackground, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  ImageBackground,
+  Image,
+  Pressable,
+} from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItemList,
   DrawerContentComponentProps,
 } from '@react-navigation/drawer';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {UserContext} from '../services/userContext';
 import CustomButton from './CustomButton';
 import {useTheme} from '@react-navigation/native';
+import Spacer from './Spacer';
 
 const CustomDrawer = (props: DrawerContentComponentProps) => {
   const userInfo = useContext(UserContext);
@@ -51,18 +60,41 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
         </View>
       </DrawerContentScrollView>
       <View style={styles.bottom}>
-        {userInfo.darkMode ? (
-          <CustomButton title="Disbale dark mode" onPress={toggleDarkMode} />
-        ) : (
-          <CustomButton title="Enable dark mode" onPress={toggleDarkMode} />
-        )}
-        {userInfo.token ? (
-          <CustomButton title="Logout" onPress={logout} />
-        ) : (
-          <CustomButton
-            title="Login / Create account"
-            onPress={() => props.navigation.navigate('Login')}
+        <Pressable onPress={toggleDarkMode} style={styles.bottomFragment}>
+          <MaterialCommunityIcons
+            style={{color: colors.text}}
+            name="theme-light-dark"
+            size={25}
           />
+          <Text style={[styles.bottomFragmentText, {color: colors.text}]}>
+            {userInfo.darkMode ? 'Light Theme' : 'Dark Theme'}
+          </Text>
+        </Pressable>
+        <Spacer />
+        {userInfo.token ? (
+          <Pressable onPress={logout} style={styles.bottomFragment}>
+            <MaterialCommunityIcons
+              style={{color: colors.text}}
+              name="logout"
+              size={25}
+            />
+            <Text style={[styles.bottomFragmentText, {color: colors.text}]}>
+              Log out
+            </Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            onPress={() => props.navigation.navigate('Login')}
+            style={styles.bottomFragment}>
+            <MaterialCommunityIcons
+              style={{color: colors.text}}
+              name="login"
+              size={25}
+            />
+            <Text style={[styles.bottomFragmentText, {color: colors.text}]}>
+              Log in
+            </Text>
+          </Pressable>
         )}
       </View>
     </View>
@@ -83,6 +115,13 @@ const styles = StyleSheet.create({
     padding: 10,
     borderTopWidth: 2,
     borderBottomColor: 'grey',
+  },
+  bottomFragment: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  bottomFragmentText: {
+    marginLeft: 20,
   },
 });
 

@@ -107,10 +107,11 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
           />
         </View>
         <View style={styles.signUp}>
-          <Text style={{color: colors.text}}>Have an Account?</Text>
+          <Text style={[styles.loginText, {color: colors.text}]}>
+            Have an Account?
+          </Text>
           <CustomButton
             title="Log in"
-            btnStyle={styles.signUpBtn}
             textStyle={styles.btnText2}
             onPress={() => navigation.navigate('Login')}
           />
@@ -154,10 +155,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  signUpBtn: {
-    width: '20%',
-    marginEnd: '90%',
-  },
   btnText: {
     color: 'white',
   },
@@ -193,6 +190,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  loginText: {marginRight: 10},
 });
 
 export default SignUp;

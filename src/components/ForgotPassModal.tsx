@@ -60,7 +60,8 @@ const CustomModal = ({modalVisible, setModalVisible, navigation}: Props) => {
         <Pressable
           onPressOut={() => setModalVisible(false)}
           style={styles.centeredView}>
-          <Pressable style={styles.modalView}>
+          <Pressable
+            style={[styles.modalView, {backgroundColor: colors.background}]}>
             <Text style={[styles.modalText, {color: colors.text}]}>
               Forgot your password?
             </Text>
@@ -100,7 +101,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 1,
-    backgroundColor: 'red',
   },
   centeredView: {
     justifyContent: 'center',
@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: '90%',
-    backgroundColor: 'white',
     borderRadius: 20,
     padding: 15,
     alignItems: 'center',
