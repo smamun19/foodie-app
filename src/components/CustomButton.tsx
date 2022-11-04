@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {
   View,
@@ -26,11 +27,14 @@ const CustomButton = ({
   textStyle,
   ...rest
 }: ButtonProps) => {
+  const {colors} = useTheme();
   return (
     <View style={[styles.container, containerStyle]}>
       <TouchableOpacity {...rest} style={[styles.btn, btnStyle]}>
         <View style={[styles.innerView, btnInnerStyle]}>
-          <Text style={(styles.text, textStyle)}>{title}</Text>
+          <Text style={[styles.text, {color: colors.text}, textStyle]}>
+            {title}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -56,7 +60,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: 'black',
   },
 });
 

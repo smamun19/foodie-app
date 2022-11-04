@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React, {useContext} from 'react';
 import {Alert, Image, StyleSheet, Text, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -13,6 +14,7 @@ const CartCard = ({
   compositeId,
 }: CartItemTypes) => {
   const userInfo = useContext(UserContext);
+  const {colors} = useTheme();
 
   const removeItem = () => {
     if (variation) {
@@ -77,7 +79,7 @@ const CartCard = ({
           size={30}
           color="red"
         />
-        <Text style={styles.quantity}>{quantity}</Text>
+        <Text style={[styles.quantity, {color: colors.text}]}>{quantity}</Text>
         <MaterialIcons
           onPress={addQuantity}
           name="add-circle"
@@ -90,12 +92,12 @@ const CartCard = ({
           style={styles.img}
         />
 
-        <Text style={styles.name}>
+        <Text style={[styles.name, {color: colors.text}]}>
           {name} {variation ? ` - ${variation}` : null}
         </Text>
       </View>
 
-      <Text>Tk {price * quantity}</Text>
+      <Text style={{color: colors.text}}>Tk {price * quantity}</Text>
     </View>
   );
 };

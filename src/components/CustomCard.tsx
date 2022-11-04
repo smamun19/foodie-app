@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {
   View,
@@ -31,6 +32,7 @@ const CustomCard = ({
   iconName = 'favorite-border',
   ...rest
 }: CardProps) => {
+  const {colors} = useTheme();
   return (
     <TouchableOpacity {...rest} style={[styles.card, cardStyle]}>
       <ImageBackground
@@ -40,10 +42,12 @@ const CustomCard = ({
         source={require('../assets/placeholder.jpg')}>
         <View style={styles.leftImg}>
           <View style={styles.leftImg1}>
-            {specialOffer ? <Text> {specialOffer}</Text> : null}
+            {specialOffer ? (
+              <Text style={{color: colors.text}}> {specialOffer}</Text>
+            ) : null}
           </View>
           <View style={styles.leftImg2}>
-            <Text>69 min</Text>
+            <Text style={{color: colors.text}}>69 min</Text>
           </View>
         </View>
         <View style={styles.rightImg}>
@@ -57,12 +61,12 @@ const CustomCard = ({
 
       <View style={styles.cardBottomArea}>
         <View style={styles.cardBottomArea1}>
-          <Text style={styles.titleText}>{title}</Text>
-          <Text>type: Bangladeshi</Text>
-          <Text>Tk: 18</Text>
+          <Text style={[styles.titleText, {color: colors.text}]}>{title}</Text>
+          <Text style={{color: colors.text}}>type: Bangladeshi</Text>
+          <Text style={{color: colors.text}}>Tk: 18</Text>
         </View>
         <View>
-          <Text>rating</Text>
+          <Text style={{color: colors.text}}>rating</Text>
         </View>
       </View>
     </TouchableOpacity>

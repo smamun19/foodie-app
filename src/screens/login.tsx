@@ -16,11 +16,13 @@ import {signin} from '../services/auth';
 import {UserContext} from '../services/userContext';
 import {setItem} from '../utils/sInfo';
 import {UserAuthParams} from '../utils/types/reducerTypes';
+import {useTheme} from '@react-navigation/native';
 
 const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const userInfo = useContext(UserContext);
+  const {colors} = useTheme();
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -65,7 +67,9 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
         contentContainerStyle={styles.KeyboardAwareContainer}>
         <View style={styles.upperView2}>
           <View style={styles.upperView}>
-            <Text style={styles.text3}>Log in to Foodie</Text>
+            <Text style={[styles.text3, {color: colors.text}]}>
+              Log in to Foodie
+            </Text>
             <Spacer />
             <Text style={styles.text5}>
               By continuing, you agree to our{' '}
@@ -125,7 +129,7 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
         </View>
         <View style={styles.lower}>
           <View style={styles.signUp}>
-            <Text style={styles.text2}>New to Foodie?</Text>
+            <Text style={{color: colors.text}}>New to Foodie?</Text>
             <CustomButton
               title="Sign Up"
               btnStyle={styles.signUpBtn}

@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -12,6 +13,7 @@ const RadioButton = ({data, check, setCheck}: CheckBoxProps) => {
   const click = (index: number) => {
     setCheck(data[index]);
   };
+  const {colors} = useTheme();
 
   return (
     <View>
@@ -31,10 +33,12 @@ const RadioButton = ({data, check, setCheck}: CheckBoxProps) => {
                 size={20}
                 color={check.name === item.name ? 'red' : 'grey'}
               />
-              <Text style={styles.name}>{item.name}</Text>
+              <Text style={[styles.name, {color: colors.text}]}>
+                {item.name}
+              </Text>
             </View>
             <View>
-              <Text>{item.price} Tk</Text>
+              <Text style={{color: colors.text}}>{item.price} Tk</Text>
             </View>
           </Pressable>
         );

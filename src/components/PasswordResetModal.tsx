@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   Modal,
@@ -18,6 +19,7 @@ export interface Props extends ModalProps {
 const PasswordReset = ({resetPassVisible, setResetPassVisible}: Props) => {
   const [otp, setOtp] = useState('');
   const [newpass, setNewPass] = useState('');
+  const {colors} = useTheme();
   return (
     <View style={styles.container}>
       <Modal
@@ -32,7 +34,9 @@ const PasswordReset = ({resetPassVisible, setResetPassVisible}: Props) => {
           onPressOut={() => setResetPassVisible(false)}
           style={styles.centeredView}>
           <Pressable style={styles.modalView}>
-            <Text style={styles.modalText}>Password Reset</Text>
+            <Text style={[styles.modalText, {color: colors.text}]}>
+              Password Reset
+            </Text>
             <View style={styles.inputStyle}>
               <CustomInput
                 title="OTP"
@@ -116,7 +120,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: 'black',
   },
   inputStyle: {
     width: '100%',

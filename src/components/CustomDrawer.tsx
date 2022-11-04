@@ -8,9 +8,11 @@ import {
 
 import {UserContext} from '../services/userContext';
 import CustomButton from './CustomButton';
+import {useTheme} from '@react-navigation/native';
 
 const CustomDrawer = (props: DrawerContentComponentProps) => {
   const userInfo = useContext(UserContext);
+  const {colors} = useTheme();
   const logout = () => {
     userInfo.logout();
     props.navigation.navigate('Login');
@@ -26,7 +28,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
             style={styles.img}
           />
           {userInfo.token ? (
-            <Text style={styles.text}>
+            <Text style={[styles.text, {color: colors.text}]}>
               {userInfo.name ?? 'Ops! Where is your name?'}
             </Text>
           ) : (
@@ -36,7 +38,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
             />
           )}
         </ImageBackground>
-        <View style={styles.item}>
+        <View style={[styles.item, {backgroundColor: colors.background}]}>
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
@@ -58,9 +60,8 @@ const styles = StyleSheet.create({
   container: {flex: 1},
   imgBackground: {padding: 10},
   img: {height: 50, width: 50, borderRadius: 40, marginBottom: 10},
-  item: {flex: 1, backgroundColor: '#fff', paddingTop: 10},
+  item: {flex: 1, paddingTop: 10},
   text: {
-    color: 'black',
     fontSize: 14,
     fontFamily: 'Roboto-Medium',
     marginBottom: 5,

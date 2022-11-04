@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {View, StyleSheet, Pressable, Text} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -10,15 +11,16 @@ interface ProfileCardProps {
 }
 
 const ProfileCard = ({title, data, onPress, ...rest}: ProfileCardProps) => {
+  const {colors} = useTheme();
   return (
     <CardView cardView={styles.cardView}>
       <View style={styles.top}>
-        <Text>{title}</Text>
+        <Text style={{color: colors.text}}>{title}</Text>
         <Pressable {...rest}>
           <MaterialIcons onPress={onPress} name="edit" size={25} color="red" />
         </Pressable>
       </View>
-      <Text style={styles.dataText}>{data}</Text>
+      <Text style={[styles.dataText, {color: colors.text}]}>{data}</Text>
     </CardView>
   );
 };
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  dataText: {fontWeight: 'bold', color: 'black'},
+  dataText: {fontWeight: 'bold'},
 });
 
 export default ProfileCard;

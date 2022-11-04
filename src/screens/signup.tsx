@@ -13,11 +13,13 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import Spacer from '../components/Spacer';
 import {signup} from '../services/auth';
+import {useTheme} from '@react-navigation/native';
 
 const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const {colors} = useTheme();
 
   const signUpHandler = async () => {
     try {
@@ -48,7 +50,9 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
         contentContainerStyle={styles.KeyboardAwareContainer}>
         <View style={styles.upperView2}>
           <View style={styles.upperView}>
-            <Text style={styles.text3}>Create an account</Text>
+            <Text style={[styles.text3, {color: colors.text}]}>
+              Create an account
+            </Text>
             <Spacer />
             <Text style={styles.text5}>
               By continuing, you agree to our{' '}
@@ -103,7 +107,7 @@ const SignUp = ({navigation}: RootStackScreensProps<'SignUp'>) => {
           />
         </View>
         <View style={styles.signUp}>
-          <Text style={styles.text2}>Have an Account?</Text>
+          <Text style={{color: colors.text}}>Have an Account?</Text>
           <CustomButton
             title="Log in"
             btnStyle={styles.signUpBtn}

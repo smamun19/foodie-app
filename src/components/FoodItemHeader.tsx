@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {
   ImageBackground,
@@ -31,6 +32,7 @@ const FoodItemHeader = ({
   deliveryTime = 25,
   scrollY,
 }: HeaderProps) => {
+  const {colors} = useTheme();
   return (
     <Animated.View
       style={[
@@ -50,7 +52,9 @@ const FoodItemHeader = ({
 
       {specialOffer ? (
         <View style={styles.view2}>
-          <Text style={styles.text1}>{specialOffer}</Text>
+          <Text style={[styles.text1, {color: colors.text}]}>
+            {specialOffer}
+          </Text>
           <Image
             style={styles.imageStyle2}
             resizeMode="cover"
@@ -60,10 +64,10 @@ const FoodItemHeader = ({
       ) : null}
       <View style={styles.view3}>
         <View style={styles.view4}>
-          <Text>{title}</Text>
-          <Text>{distance} away</Text>
-          <Text>{rating}+ ratings</Text>
-          <Text>Delivery: {deliveryTime} min</Text>
+          <Text style={{color: colors.text}}>{title}</Text>
+          <Text style={{color: colors.text}}>{distance} away</Text>
+          <Text style={{color: colors.text}}>{rating}+ ratings</Text>
+          <Text style={{color: colors.text}}>Delivery: {deliveryTime} min</Text>
         </View>
         <TouchableOpacity style={styles.moreInfoBtn}>
           <Text style={styles.text2}>More info</Text>
@@ -97,7 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  text1: {flex: 1, fontSize: 20, color: '#bd06b4', paddingRight: 15},
+  text1: {flex: 1, fontSize: 20, paddingRight: 15},
   text2: {color: 'red'},
   moreInfoBtn: {
     justifyContent: 'center',

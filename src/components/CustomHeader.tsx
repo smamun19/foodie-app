@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {View, StyleSheet, Text, ViewStyle} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -22,6 +23,7 @@ const CustomHeader: React.FC<HeaderProps> = ({
   color,
   headerStyle,
 }) => {
+  const {colors} = useTheme();
   return (
     <View style={[styles.header, headerStyle]}>
       <View style={styles.leftHeader}>
@@ -32,7 +34,7 @@ const CustomHeader: React.FC<HeaderProps> = ({
           color="red"
         />
         <View style={styles.leftHeader1}>
-          <Text style={styles.text}>{title}</Text>
+          <Text style={[styles.text, {color: colors.text}]}>{title}</Text>
         </View>
       </View>
       <View style={styles.rightHeader}>
@@ -65,7 +67,7 @@ const styles = StyleSheet.create({
   },
   rightHeader: {},
   leftHeader1: {marginLeft: 15},
-  text: {fontWeight: 'bold', fontSize: 20, color: 'black'},
+  text: {fontWeight: 'bold', fontSize: 20},
 });
 
 export default CustomHeader;

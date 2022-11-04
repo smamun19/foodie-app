@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {
   View,
@@ -24,9 +25,12 @@ const CustomInput = ({
   textStyle,
   ...rest
 }: InputProps) => {
+  const {colors} = useTheme();
   return (
     <View style={[styles.container, containerStyle]}>
-      {title ? <Text style={styles.title}>{title}</Text> : null}
+      {title ? (
+        <Text style={[styles.title, {color: colors.text}]}>{title}</Text>
+      ) : null}
       <View style={[styles.inputOuterContainer, inputStyle]}>
         <TextInput {...rest} style={[styles.text, textStyle]} />
       </View>

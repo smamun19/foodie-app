@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {
@@ -22,6 +23,7 @@ export interface Props extends ModalProps {
 
 const CustomModal = ({modalVisible, setModalVisible, navigation}: Props) => {
   const [email, setEmail] = useState('');
+  const {colors} = useTheme();
 
   const modalHandler = async () => {
     try {
@@ -59,7 +61,9 @@ const CustomModal = ({modalVisible, setModalVisible, navigation}: Props) => {
           onPressOut={() => setModalVisible(false)}
           style={styles.centeredView}>
           <Pressable style={styles.modalView}>
-            <Text style={styles.modalText}>Forgot your password?</Text>
+            <Text style={[styles.modalText, {color: colors.text}]}>
+              Forgot your password?
+            </Text>
             <View style={styles.inputStyle}>
               <CustomInput
                 title="Email"
@@ -138,7 +142,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: 'black',
   },
   inputStyle: {
     width: '100%',
