@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
@@ -7,7 +7,8 @@ import ProfileCard from '../components/ProfileCard';
 import {DrawerScreensProps} from '../navigators/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {UserContext} from '../services/userContext';
-import {useTheme} from '@react-navigation/native';
+
+import ThemedText from '../components/ThemedText';
 
 interface SocialCardProps {
   title: string;
@@ -17,7 +18,6 @@ interface SocialCardProps {
 }
 
 const SocialCard = ({icon, title, color, onPress}: SocialCardProps) => {
-  const {colors} = useTheme();
   return (
     <CardView cardView={styles.cardView}>
       <View style={styles.cardViewLeft}>
@@ -27,11 +27,11 @@ const SocialCard = ({icon, title, color, onPress}: SocialCardProps) => {
           color={color}
           size={30}
         />
-        <Text style={{color: colors.text}}>{title}</Text>
+        <ThemedText>{title}</ThemedText>
       </View>
 
       <Pressable onPress={onPress}>
-        <Text style={styles.socialBtnText}>Connect</Text>
+        <ThemedText style={styles.socialBtnText}>Connect</ThemedText>
       </Pressable>
     </CardView>
   );
@@ -39,7 +39,6 @@ const SocialCard = ({icon, title, color, onPress}: SocialCardProps) => {
 
 const Profile = ({navigation}: DrawerScreensProps<'Profile'>) => {
   const userInfo = useContext(UserContext);
-  const {colors} = useTheme();
 
   return (
     <Container
@@ -70,9 +69,7 @@ const Profile = ({navigation}: DrawerScreensProps<'Profile'>) => {
         title="Mobile number"
         data={userInfo.phone}
       />
-      <Text style={[styles.cAccounts, {color: colors.text}]}>
-        Connected accounts
-      </Text>
+      <ThemedText style={styles.cAccounts}>Connected accounts</ThemedText>
       <SocialCard
         icon="facebook"
         title="Facebook"

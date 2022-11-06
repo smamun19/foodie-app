@@ -1,8 +1,6 @@
-import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TextInput,
   StyleProp,
@@ -10,6 +8,7 @@ import {
   TextStyle,
   TextInputProps,
 } from 'react-native';
+import ThemedText from './ThemedText';
 
 export interface InputProps extends TextInputProps {
   title?: string;
@@ -25,12 +24,9 @@ const CustomInput = ({
   textStyle,
   ...rest
 }: InputProps) => {
-  const {colors} = useTheme();
   return (
     <View style={[styles.container, containerStyle]}>
-      {title ? (
-        <Text style={[styles.title, {color: colors.text}]}>{title}</Text>
-      ) : null}
+      {title ? <ThemedText style={styles.title}>{title}</ThemedText> : null}
       <View style={[styles.inputOuterContainer, inputStyle]}>
         <TextInput {...rest} style={[styles.text, textStyle]} />
       </View>

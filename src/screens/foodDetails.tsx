@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
+import {StyleSheet, View, Image, Pressable} from 'react-native';
 import RadioButton from '../components/RadioButton';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
@@ -9,7 +9,8 @@ import CustomButton from '../components/CustomButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomInput from '../components/TextInput';
 import {UserContext} from '../services/userContext';
-import {useTheme} from '@react-navigation/native';
+
+import ThemedText from '../components/ThemedText';
 
 const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const foodDetails = {
@@ -27,7 +28,6 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const [check, setCheck] = useState<Record<string, any>>({});
   const [counter, setCounter] = useState<number>(1);
   const [instructions, setInstructions] = useState<string>('');
-  const {colors} = useTheme();
 
   const userInfo = useContext(UserContext);
 
@@ -73,9 +73,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
                 color={counter === 1 ? 'grey' : 'red'}
               />
             </Pressable>
-            <Text style={[styles.counterText, {color: colors.text}]}>
-              {counter}
-            </Text>
+            <ThemedText style={styles.counterText}>{counter}</ThemedText>
             <Pressable onPress={() => setCounter(counter + 1)}>
               <MaterialIcons name="add-circle" size={30} color="red" />
             </Pressable>
@@ -106,19 +104,15 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       />
       <View style={styles.view1}>
         <View style={styles.left}>
-          <Text style={[styles.titleText, {color: colors.text}]}>
-            Food name
-          </Text>
-          <Text
-            numberOfLines={2}
-            style={[styles.desText, {color: colors.text}]}>
+          <ThemedText style={styles.titleText}>Food name</ThemedText>
+          <ThemedText numberOfLines={2} style={styles.desText}>
             description
-          </Text>
+          </ThemedText>
         </View>
         <View style={styles.right}>
-          <Text style={[styles.priceText, {color: colors.text}]}>
+          <ThemedText style={styles.priceText}>
             Tk {check.price ?? foodDetails.price}
-          </Text>
+          </ThemedText>
         </View>
       </View>
       <Spacer />
@@ -127,19 +121,13 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           <View>
             <View style={styles.view1}>
               <View style={styles.left}>
-                <Text style={[styles.titleText, {color: colors.text}]}>
-                  Variation
-                </Text>
-                <Text
-                  numberOfLines={2}
-                  style={[styles.desText, {color: colors.text}]}>
+                <ThemedText style={styles.titleText}>Variation</ThemedText>
+                <ThemedText numberOfLines={2} style={styles.desText}>
                   Select one
-                </Text>
+                </ThemedText>
               </View>
               <View style={styles.right}>
-                <Text style={[styles.priceText, {color: colors.text}]}>
-                  1 Required
-                </Text>
+                <ThemedText style={styles.priceText}>1 Required</ThemedText>
               </View>
             </View>
             <View>
@@ -153,13 +141,11 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         )}
       </View>
       <View style={styles.extra}>
-        <Text style={[styles.titleText, {color: colors.text}]}>
-          Special instructions
-        </Text>
-        <Text style={{color: colors.text}}>
+        <ThemedText style={styles.titleText}>Special instructions</ThemedText>
+        <ThemedText>
           Please let us know if you are allergic to anything or if we need to
           avoid anything
-        </Text>
+        </ThemedText>
         <CustomInput
           placeholder="e.g. no mayo"
           multiline
@@ -169,9 +155,9 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           onChangeText={setInstructions}
           containerStyle={styles.inputContainer}
         />
-        <Text style={[styles.textCounter, {color: colors.text}]}>
+        <ThemedText style={styles.textCounter}>
           {instructions.length}/200
-        </Text>
+        </ThemedText>
       </View>
     </Container>
   );

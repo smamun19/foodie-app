@@ -1,10 +1,10 @@
-import {useTheme} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, ModalProps, Alert} from 'react-native';
+import {StyleSheet, View, ModalProps, Alert} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CustomButton from '../components/CustomButton';
 import Spacer from '../components/Spacer';
 import CustomInput from '../components/TextInput';
+import ThemedText from '../components/ThemedText';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {sendOtp, verifyOtp} from '../services/auth';
 
@@ -15,7 +15,7 @@ export interface Props extends ModalProps {
 
 const Otp = ({navigation, route}: RootStackScreensProps<'Otp'>) => {
   const [otp, setOtp] = useState('');
-  const {colors} = useTheme();
+
   const {email, fromSignup} = route.params;
   const otpHandler = async () => {
     const res = await verifyOtp(email, otp);
@@ -81,9 +81,7 @@ const Otp = ({navigation, route}: RootStackScreensProps<'Otp'>) => {
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <Text style={[styles.modalText, {color: colors.text}]}>
-        Confirmation Code
-      </Text>
+      <ThemedText style={styles.modalText}>Confirmation Code</ThemedText>
       <View style={styles.inputStyle}>
         <CustomInput
           title="OTP"
@@ -99,9 +97,9 @@ const Otp = ({navigation, route}: RootStackScreensProps<'Otp'>) => {
         />
         <Spacer />
         <Spacer />
-        <Text style={[styles.modalText, {color: colors.text}]}>
+        <ThemedText style={styles.modalText}>
           Haven't recieved the OTP yet?
-        </Text>
+        </ThemedText>
         <CustomButton
           containerStyle={styles.button}
           textStyle={styles.textStyle}

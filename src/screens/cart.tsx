@@ -1,19 +1,18 @@
-import {useTheme} from '@react-navigation/native';
 import React, {useContext, useMemo} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CartCard from '../components/CartCard';
 import Container from '../components/Container';
 import CustomButton from '../components/CustomButton';
 import CustomHeader from '../components/CustomHeader';
 import Spacer from '../components/Spacer';
+import ThemedText from '../components/ThemedText';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 
 const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
   const userInfo = useContext(UserContext);
   const voucherValue = userInfo.voucher?.value ?? 0;
-  const {colors} = useTheme();
 
   const deliveryFee = 15;
 
@@ -41,10 +40,8 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
           />
         }>
         <View style={styles.emptyCart}>
-          <Text style={{color: colors.text}}>Hungry?</Text>
-          <Text style={{color: colors.text}}>
-            You havent added anything to your cart!
-          </Text>
+          <ThemedText>Hungry?</ThemedText>
+          <ThemedText>You havent added anything to your cart!</ThemedText>
           <CustomButton
             onPress={() => navigation.goBack()}
             title="Browse"
@@ -66,10 +63,8 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
       footer={
         <View style={styles.footer}>
           <View style={styles.subTotal}>
-            <Text style={[styles.footerText, {color: colors.text}]}>Total</Text>
-            <Text style={[styles.footerText, {color: colors.text}]}>
-              Tk {totalAmount}
-            </Text>
+            <ThemedText style={styles.footerText}>Total</ThemedText>
+            <ThemedText style={styles.footerText}>Tk {totalAmount}</ThemedText>
           </View>
 
           <CustomButton
@@ -93,10 +88,8 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
             source={require('../assets/food_delivery.png')}
           />
           <View>
-            <Text style={{color: colors.text}}>Estimated delivery</Text>
-            <Text style={[styles.bold, {color: colors.text}]}>
-              ASAP (40 min)
-            </Text>
+            <ThemedText>Estimated delivery</ThemedText>
+            <ThemedText style={styles.bold}>ASAP (40 min)</ThemedText>
           </View>
         </View>
         <Spacer height={30} />
@@ -120,14 +113,14 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
         />
         <Spacer height={30} />
         <View style={styles.subTotal}>
-          <Text style={[styles.bold, {color: colors.text}]}>Subtotal</Text>
-          <Text style={[styles.bold, {color: colors.text}]}>Tk {subTotal}</Text>
+          <ThemedText style={styles.bold}>Subtotal</ThemedText>
+          <ThemedText style={styles.bold}>Tk {subTotal}</ThemedText>
         </View>
         <Spacer height={10} />
 
         <View style={styles.subTotal}>
-          <Text style={{color: colors.text}}>Delivery fee</Text>
-          <Text style={{color: colors.text}}>Tk {deliveryFee}</Text>
+          <ThemedText>Delivery fee</ThemedText>
+          <ThemedText>Tk {deliveryFee}</ThemedText>
         </View>
         <Spacer height={10} />
         <View>
@@ -148,9 +141,9 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
               <View style={styles.voucherBody}>
                 <MaterialIcons name="loyalty" color={'red'} size={20} />
                 <Spacer height={0} width={10} />
-                <Text style={[styles.voucherNameText, {color: colors.text}]}>
+                <ThemedText style={styles.voucherNameText}>
                   {userInfo.voucher.name}
-                </Text>
+                </ThemedText>
                 <Spacer height={0} width={10} />
                 <CustomButton
                   btnStyle={styles.addMoreBtnStyle}
@@ -161,9 +154,9 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
                 />
               </View>
               <View style={styles.voucherValue}>
-                <Text style={styles.voucherValueText}>
+                <ThemedText style={styles.voucherValueText}>
                   - Tk {userInfo.voucher.value}
-                </Text>
+                </ThemedText>
               </View>
             </View>
           )}

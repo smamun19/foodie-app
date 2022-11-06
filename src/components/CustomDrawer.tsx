@@ -2,7 +2,6 @@ import React, {useContext} from 'react';
 import {
   View,
   StyleSheet,
-  Text,
   ImageBackground,
   Image,
   Pressable,
@@ -18,6 +17,7 @@ import {UserContext} from '../services/userContext';
 import CustomButton from './CustomButton';
 import {useTheme} from '@react-navigation/native';
 import Spacer from './Spacer';
+import ThemedText from './ThemedText';
 
 const CustomDrawer = (props: DrawerContentComponentProps) => {
   const userInfo = useContext(UserContext);
@@ -45,9 +45,9 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
             style={styles.img}
           />
           {userInfo.token ? (
-            <Text style={[styles.text, {color: colors.text}]}>
+            <ThemedText style={styles.text}>
               {userInfo.name ?? 'Ops! Where is your name?'}
-            </Text>
+            </ThemedText>
           ) : (
             <CustomButton
               title="Login / Create account"
@@ -66,9 +66,9 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
             name="theme-light-dark"
             size={25}
           />
-          <Text style={[styles.bottomFragmentText, {color: colors.text}]}>
+          <ThemedText style={styles.bottomFragmentText}>
             {userInfo.darkMode ? 'Light Theme' : 'Dark Theme'}
-          </Text>
+          </ThemedText>
         </Pressable>
         <Spacer />
         {userInfo.token ? (
@@ -78,9 +78,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
               name="logout"
               size={25}
             />
-            <Text style={[styles.bottomFragmentText, {color: colors.text}]}>
-              Log out
-            </Text>
+            <ThemedText style={styles.bottomFragmentText}>Log out</ThemedText>
           </Pressable>
         ) : (
           <Pressable
@@ -91,9 +89,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
               name="login"
               size={25}
             />
-            <Text style={[styles.bottomFragmentText, {color: colors.text}]}>
-              Log in
-            </Text>
+            <ThemedText style={styles.bottomFragmentText}>Log in</ThemedText>
           </Pressable>
         )}
       </View>

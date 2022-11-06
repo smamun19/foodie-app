@@ -1,15 +1,14 @@
-import {useTheme} from '@react-navigation/native';
 import React from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, View} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomButton from '../components/CustomButton';
 import CustomHeader from '../components/CustomHeader';
 import Spacer from '../components/Spacer';
+import ThemedText from '../components/ThemedText';
 import {DrawerScreensProps} from '../navigators/drawer';
 
 const OrderCard = () => {
-  const {colors} = useTheme();
   return (
     <CardView cardView={styles.cardView}>
       <Pressable>
@@ -20,19 +19,15 @@ const OrderCard = () => {
               source={require('../assets/burger.jpeg')}
             />
             <View style={styles.row1Right}>
-              <Text style={[styles.boldText, {color: colors.text}]}>
-                Restaurant name
-              </Text>
-              <Text style={{color: colors.text}}>Food list</Text>
+              <ThemedText style={styles.boldText}>Restaurant name</ThemedText>
+              <ThemedText>Food list</ThemedText>
             </View>
           </View>
-          <Text style={{color: colors.text}}>Tk 267</Text>
+          <ThemedText>Tk 267</ThemedText>
         </View>
         <Spacer height={10} />
         <View style={styles.row2}>
-          <Text style={[styles.row2Left, {color: colors.text}]}>
-            Order time
-          </Text>
+          <ThemedText style={styles.row2Left}>Order time</ThemedText>
           <CustomButton
             containerStyle={styles.btn}
             textStyle={styles.btnText}
@@ -45,7 +40,6 @@ const OrderCard = () => {
 };
 
 const Orders = ({navigation}: DrawerScreensProps<'Orders'>) => {
-  const {colors} = useTheme();
   return (
     <Container
       containerStyle={styles.containerStyle}
@@ -55,7 +49,7 @@ const Orders = ({navigation}: DrawerScreensProps<'Orders'>) => {
           onLeftPress={() => navigation.navigate('Home')}
         />
       }>
-      <Text style={[styles.topText, {color: colors.text}]}>Past orders</Text>
+      <ThemedText style={styles.topText}>Past orders</ThemedText>
       <OrderCard />
       <OrderCard />
       <OrderCard />

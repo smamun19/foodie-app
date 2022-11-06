@@ -1,25 +1,18 @@
-import {useTheme} from '@react-navigation/native';
 import React, {useContext} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  SectionList,
-} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, SectionList} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from '../components/CustomButton';
 import CustomCard from '../components/CustomCard';
 import Spacer from '../components/Spacer';
 import CustomInput from '../components/TextInput';
+import ThemedText from '../components/ThemedText';
 import {DrawerScreensProps} from '../navigators/drawer';
 import {UserContext} from '../services/userContext';
 import {DATA} from '../utils/testData';
 
 const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
   const {address} = useContext(UserContext);
-  const {colors} = useTheme();
 
   return (
     <View style={styles.container}>
@@ -40,12 +33,12 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
                       edit: true,
                     })
                   }>
-                  <Text style={styles.text2}>
+                  <ThemedText style={styles.text2}>
                     {address[0].label ?? address[0].name}
-                  </Text>
-                  <Text style={[styles.text, {color: colors.text}]}>
+                  </ThemedText>
+                  <ThemedText style={styles.text}>
                     {address[0].details}
-                  </Text>
+                  </ThemedText>
                 </TouchableOpacity>
               ) : (
                 <CustomButton
@@ -92,7 +85,7 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
         sections={DATA}
         keyExtractor={e => e.id}
         renderSectionHeader={({section}) => (
-          <Text style={styles.sectionHeader}>{section.title}</Text>
+          <ThemedText style={styles.sectionHeader}>{section.title}</ThemedText>
         )}
         renderItem={({section, item}) =>
           section.title !== 'ALL' ? (

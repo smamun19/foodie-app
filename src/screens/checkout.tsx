@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {View, Text, StyleSheet, Switch, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Switch, TouchableOpacity} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomButton from '../components/CustomButton';
@@ -10,12 +10,11 @@ import {UserContext} from '../services/userContext';
 import Spacer from '../components/Spacer';
 import Divider from '../components/Divider';
 import BingMapsView from 'react-native-bing-maps';
-import {useTheme} from '@react-navigation/native';
+import ThemedText from '../components/ThemedText';
 
 const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
   const userInfo = useContext(UserContext);
   const [isEnabled, setIsEnabled] = useState(false);
-  const {colors} = useTheme();
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -29,15 +28,15 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
       }
       footer={
         <View style={styles.footer}>
-          <Text style={[styles.tcBody, {color: colors.text}]}>
+          <ThemedText style={styles.tcBody}>
             By completing this order, I agree to all{' '}
-            <Text style={styles.tc}>terms & conditions</Text>
-          </Text>
+            <ThemedText style={styles.tc}>terms & conditions</ThemedText>
+          </ThemedText>
           <View style={styles.subTotal}>
-            <Text style={[styles.footerText, {color: colors.text}]}>Total</Text>
-            <Text style={[styles.footerText, {color: colors.text}]}>
+            <ThemedText style={styles.footerText}>Total</ThemedText>
+            <ThemedText style={styles.footerText}>
               Tk {route.params.totalAmount}
-            </Text>
+            </ThemedText>
           </View>
           <CustomButton
             containerStyle={styles.btn}
@@ -52,9 +51,7 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
           <View style={styles.address}>
             <View style={styles.addressBody}>
               <MaterialIcons name="place" size={20} color="red" />
-              <Text style={[styles.bold, {color: colors.text}]}>
-                Delivery address
-              </Text>
+              <ThemedText style={styles.bold}>Delivery address</ThemedText>
             </View>
             <MaterialIcons
               onPress={() =>
@@ -85,12 +82,10 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
                     edit: true,
                   })
                 }>
-                <Text style={[styles.bold, {color: colors.text}]}>
+                <ThemedText style={styles.bold}>
                   {userInfo.address[0].label ?? userInfo.address[0].name}
-                </Text>
-                <Text style={{color: colors.text}}>
-                  {userInfo.address[0].details}
-                </Text>
+                </ThemedText>
+                <ThemedText>{userInfo.address[0].details}</ThemedText>
               </TouchableOpacity>
             </View>
           ) : (
@@ -103,11 +98,9 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
           )}
         </CardView>
         <CardView cardView={styles.contactless}>
-          <Text
-            numberOfLines={3}
-            style={[styles.textWrap, {color: colors.text}]}>
+          <ThemedText numberOfLines={3} style={styles.textWrap}>
             Contactless delivery: switch to online payment for this option
-          </Text>
+          </ThemedText>
           <Switch
             trackColor={{false: '#767577', true: '#81b0ff'}}
             thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
@@ -121,64 +114,60 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
           <View style={styles.address}>
             <View style={styles.addressBody}>
               <MaterialIcons name="payment" size={20} color="red" />
-              <Text style={[styles.bold, {color: colors.text}]}>
-                Payment method
-              </Text>
+              <ThemedText style={styles.bold}>Payment method</ThemedText>
             </View>
             <MaterialIcons name="mode-edit" size={20} color="red" />
           </View>
           <View style={styles.address}>
             <View style={styles.addressBody}>
               <MaterialIcons name="money" size={20} color="red" />
-              <Text style={[styles.bold, {color: colors.text}]}>Cash</Text>
+              <ThemedText style={styles.bold}>Cash</ThemedText>
             </View>
-            <Text style={[styles.bold, {color: colors.text}]}>
+            <ThemedText style={styles.bold}>
               Tk {route.params.totalAmount}
-            </Text>
+            </ThemedText>
           </View>
         </CardView>
         <Spacer height={20} />
         <CardView>
           <View style={styles.addressBody}>
             <MaterialIcons name="list-alt" size={20} color="red" />
-            <Text style={styles.bold}>Order summery</Text>
+            <ThemedText style={styles.bold}>Order summery</ThemedText>
           </View>
           {userInfo.cartItem.map(e => {
             return (
               <View key={e.compositeId} style={styles.address}>
-                <Text style={[styles.bold, {color: colors.text}]}>
+                <ThemedText style={styles.bold}>
                   {e.quantity}x {e.name} - {e.variation}
-                </Text>
-                <Text style={[styles.bold, {color: colors.text}]}>
+                </ThemedText>
+                <ThemedText style={styles.bold}>
                   Tk {e.price * e.quantity}
-                </Text>
+                </ThemedText>
               </View>
             );
           })}
 
           <Divider />
           <View style={styles.address}>
-            <Text style={[styles.bold, {color: colors.text}]}>Subtotal</Text>
-            <Text style={[styles.bold, {color: colors.text}]}>
+            <ThemedText style={styles.bold}>Subtotal</ThemedText>
+            <ThemedText style={styles.bold}>
               Tk {route.params.subTotal}
-            </Text>
+            </ThemedText>
           </View>
           <View style={styles.address}>
-            <Text style={[styles.bold, {color: colors.text}]}>
-              Delivery fee
-            </Text>
-            <Text style={[styles.bold, {color: colors.text}]}>
+            <ThemedText style={styles.bold}>Delivery fee</ThemedText>
+            <ThemedText style={styles.bold}>
               Tk {route.params.deliveryFee}
-            </Text>
+            </ThemedText>
           </View>
           {userInfo.voucher && (
             <View style={styles.address}>
-              <Text style={[styles.bold, {color: colors.text}]}>
+              <ThemedText style={styles.bold}>
                 Voucher: {userInfo.voucher.name}
-              </Text>
-              <Text style={[styles.bold, {color: colors.text}]}>
+              </ThemedText>
+              <ThemedText style={styles.bold}>
                 - Tk {userInfo.voucher.value}
-              </Text>
+              </ThemedText>
             </View>
           )}
         </CardView>

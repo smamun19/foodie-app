@@ -1,11 +1,11 @@
 import React from 'react';
 import Provider from './src/services/userContext';
-import AppWrapper from './AppWrapper';
+import Main from './Main';
 
 const App = () => {
   return (
     <Provider>
-      <AppWrapper />
+      <Main />
     </Provider>
   );
 };

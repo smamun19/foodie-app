@@ -4,7 +4,6 @@ import React, {useState} from 'react';
 import {
   Modal,
   StyleSheet,
-  Text,
   View,
   ModalProps,
   Pressable,
@@ -14,6 +13,7 @@ import {RootStackParamList} from '../navigators/root-stack';
 import {reqReset} from '../services/auth';
 import CustomButton from './CustomButton';
 import CustomInput from './TextInput';
+import ThemedText from './ThemedText';
 
 export interface Props extends ModalProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -62,9 +62,9 @@ const CustomModal = ({modalVisible, setModalVisible, navigation}: Props) => {
           style={styles.centeredView}>
           <Pressable
             style={[styles.modalView, {backgroundColor: colors.background}]}>
-            <Text style={[styles.modalText, {color: colors.text}]}>
+            <ThemedText style={styles.modalText}>
               Forgot your password?
-            </Text>
+            </ThemedText>
             <View style={styles.inputStyle}>
               <CustomInput
                 title="Email"

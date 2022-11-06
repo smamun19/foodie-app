@@ -1,9 +1,7 @@
-import {useTheme} from '@react-navigation/native';
 import React, {useContext, useMemo, useRef} from 'react';
 import {
   SectionList,
   StyleSheet,
-  Text,
   View,
   Animated,
   TouchableOpacity,
@@ -14,6 +12,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import FoodItem from '../components/FoodItemCardView';
 import FoodItemHeader from '../components/FoodItemHeader';
+import ThemedText from '../components/ThemedText';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import {FOOD_DATA} from '../utils/testData';
@@ -22,7 +21,6 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const sectionRef = useRef<SectionList>(null);
   const scrollY = useRef(new Animated.Value(0)).current;
   const userInfo = useContext(UserContext);
-  const {colors} = useTheme();
 
   const deliveryFee = 15;
   const specialOffer = undefined;
@@ -74,9 +72,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           />
         }
         renderSectionHeader={({section}) => (
-          <Text style={[styles.headerText, {color: colors.text}]}>
-            {section.title}
-          </Text>
+          <ThemedText style={styles.headerText}>{section.title}</ThemedText>
         )}
         renderItem={({item}) => (
           <FoodItem
@@ -147,7 +143,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
                   })
                 }
                 style={styles.flatListView}>
-                <Text style={{color: colors.text}}>{item.title}</Text>
+                <ThemedText>{item.title}</ThemedText>
               </TouchableOpacity>
             </View>
           )}
@@ -161,10 +157,10 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
             }}
             style={styles.conditionalFooter}>
             <View style={styles.footerItemCounter}>
-              <Text style={styles.footerText}>{totalItem}</Text>
+              <ThemedText style={styles.footerText}>{totalItem}</ThemedText>
             </View>
-            <Text style={styles.footerText}>View your cart</Text>
-            <Text style={styles.footerText}>Tk {totalAmount}</Text>
+            <ThemedText style={styles.footerText}>View your cart</ThemedText>
+            <ThemedText style={styles.footerText}>Tk {totalAmount}</ThemedText>
           </Pressable>
         ) : null}
       </View>

@@ -1,15 +1,8 @@
-import {useTheme} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {
-  Modal,
-  StyleSheet,
-  Text,
-  View,
-  ModalProps,
-  Pressable,
-} from 'react-native';
+import {Modal, StyleSheet, View, ModalProps, Pressable} from 'react-native';
 import CustomButton from './CustomButton';
 import CustomInput from './TextInput';
+import ThemedText from './ThemedText';
 
 export interface Props extends ModalProps {
   setResetPassVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,7 +12,7 @@ export interface Props extends ModalProps {
 const PasswordReset = ({resetPassVisible, setResetPassVisible}: Props) => {
   const [otp, setOtp] = useState('');
   const [newpass, setNewPass] = useState('');
-  const {colors} = useTheme();
+
   return (
     <View style={styles.container}>
       <Modal
@@ -34,9 +27,7 @@ const PasswordReset = ({resetPassVisible, setResetPassVisible}: Props) => {
           onPressOut={() => setResetPassVisible(false)}
           style={styles.centeredView}>
           <Pressable style={styles.modalView}>
-            <Text style={[styles.modalText, {color: colors.text}]}>
-              Password Reset
-            </Text>
+            <ThemedText style={styles.modalText}>Password Reset</ThemedText>
             <View style={styles.inputStyle}>
               <CustomInput
                 title="OTP"

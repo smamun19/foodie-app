@@ -1,13 +1,12 @@
-import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   TouchableOpacityProps,
   Image,
 } from 'react-native';
+import ThemedText from './ThemedText';
 
 export interface CardProps extends TouchableOpacityProps {
   name: string;
@@ -16,15 +15,12 @@ export interface CardProps extends TouchableOpacityProps {
 }
 
 const FoodItem = ({name, description, price, ...rest}: CardProps) => {
-  const {colors} = useTheme();
   return (
     <TouchableOpacity {...rest} style={styles.container}>
       <View style={styles.left}>
-        <Text style={[styles.titleText, {color: colors.text}]}>{name}</Text>
-        <Text numberOfLines={2} style={{color: colors.text}}>
-          {description}
-        </Text>
-        <Text style={{color: colors.text}}>{price} tk</Text>
+        <ThemedText style={styles.titleText}>{name}</ThemedText>
+        <ThemedText numberOfLines={2}>{description}</ThemedText>
+        <ThemedText>{price} tk</ThemedText>
       </View>
       <View style={styles.right}>
         <Image

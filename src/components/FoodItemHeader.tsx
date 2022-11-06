@@ -1,9 +1,7 @@
-import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {
   ImageBackground,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   Image,
@@ -11,6 +9,7 @@ import {
   SectionList,
   DefaultSectionT,
 } from 'react-native';
+import ThemedText from './ThemedText';
 
 const HEADER_HEIGHT = 400;
 
@@ -32,7 +31,6 @@ const FoodItemHeader = ({
   deliveryTime = 25,
   scrollY,
 }: HeaderProps) => {
-  const {colors} = useTheme();
   return (
     <Animated.View
       style={[
@@ -52,9 +50,7 @@ const FoodItemHeader = ({
 
       {specialOffer ? (
         <View style={styles.view2}>
-          <Text style={[styles.text1, {color: colors.text}]}>
-            {specialOffer}
-          </Text>
+          <ThemedText style={styles.text1}>{specialOffer}</ThemedText>
           <Image
             style={styles.imageStyle2}
             resizeMode="cover"
@@ -64,13 +60,13 @@ const FoodItemHeader = ({
       ) : null}
       <View style={styles.view3}>
         <View style={styles.view4}>
-          <Text style={{color: colors.text}}>{title}</Text>
-          <Text style={{color: colors.text}}>{distance} away</Text>
-          <Text style={{color: colors.text}}>{rating}+ ratings</Text>
-          <Text style={{color: colors.text}}>Delivery: {deliveryTime} min</Text>
+          <ThemedText>{title}</ThemedText>
+          <ThemedText>{distance} away</ThemedText>
+          <ThemedText>{rating}+ ratings</ThemedText>
+          <ThemedText>Delivery: {deliveryTime} min</ThemedText>
         </View>
         <TouchableOpacity style={styles.moreInfoBtn}>
-          <Text style={styles.text2}>More info</Text>
+          <ThemedText style={styles.text2}>More info</ThemedText>
         </TouchableOpacity>
       </View>
     </Animated.View>

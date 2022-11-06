@@ -6,7 +6,6 @@ import {
   PermissionsAndroid,
   Pressable,
   StyleSheet,
-  Text,
   ToastAndroid,
   View,
 } from 'react-native';
@@ -22,7 +21,7 @@ import Spacer from '../components/Spacer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {addAddress, editAddress, geocoding} from '../services/user';
 import {UserContext} from '../services/userContext';
-import {useTheme} from '@react-navigation/native';
+import ThemedText from '../components/ThemedText';
 
 export interface Props extends ModalProps {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,7 +42,6 @@ const InputModal = ({
   details,
   setDetails,
 }: Props) => {
-  const {colors} = useTheme();
   return (
     <View style={styles.container}>
       <Modal
@@ -58,9 +56,9 @@ const InputModal = ({
           onPressOut={() => setVisible(false)}
           style={styles.centeredView}>
           <Pressable style={styles.modalView}>
-            <Text style={[styles.modalText, {color: colors.text}]}>
+            <ThemedText style={styles.modalText}>
               Address Information
-            </Text>
+            </ThemedText>
             <View style={styles.inputStyleModal}>
               <CustomInput
                 title="Address name"
@@ -110,7 +108,6 @@ const AddressEdit = ({
   const [label, setLabel] = useState<LabelType>();
   const [deliveryInstructions, setDeliveryInstructions] = useState<string>();
   const [visible, setVisible] = useState(false);
-  const {colors} = useTheme();
 
   const setLabelHandler = (labelData: LabelType) => {
     setLabel(previousState => {
@@ -305,13 +302,9 @@ const AddressEdit = ({
       </View>
       <View style={styles.nonMap}>
         {!route.params.edit ? (
-          <Text style={[styles.boldText, {color: colors.text}]}>
-            Add a new address
-          </Text>
+          <ThemedText style={styles.boldText}>Add a new address</ThemedText>
         ) : (
-          <Text style={[styles.boldText, {color: colors.text}]}>
-            Edit your address
-          </Text>
+          <ThemedText style={styles.boldText}>Edit your address</ThemedText>
         )}
         <AddressCard
           name={name ?? route.params.address?.name ?? 'Address'}
@@ -326,12 +319,10 @@ const AddressEdit = ({
           value={extDetails ?? route.params.address?.extDetails}
         />
         <Spacer height={20} />
-        <Text style={[styles.boldText, {color: colors.text}]}>
-          Delivery instructions
-        </Text>
-        <Text style={{color: colors.text}}>
+        <ThemedText style={styles.boldText}>Delivery instructions</ThemedText>
+        <ThemedText>
           Please give us more information about your address
-        </Text>
+        </ThemedText>
         <CustomInput
           placeholder="(Optional) Note to rider"
           containerStyle={styles.inputStyle1}
@@ -341,7 +332,7 @@ const AddressEdit = ({
           }
         />
         <Spacer height={20} />
-        <Text style={[styles.boldText, {color: colors.text}]}>Add a label</Text>
+        <ThemedText style={styles.boldText}>Add a label</ThemedText>
         <View style={styles.label}>
           <View style={styles.iconView}>
             <View
@@ -356,7 +347,7 @@ const AddressEdit = ({
                 onPress={() => setLabelHandler('Home')}
               />
             </View>
-            <Text style={{color: colors.text}}>Home</Text>
+            <ThemedText>Home</ThemedText>
           </View>
           <View style={styles.iconView}>
             <View
@@ -372,7 +363,7 @@ const AddressEdit = ({
               />
             </View>
 
-            <Text style={{color: colors.text}}>Work</Text>
+            <ThemedText>Work</ThemedText>
           </View>
           <View style={styles.iconView}>
             <View
@@ -388,7 +379,7 @@ const AddressEdit = ({
               />
             </View>
 
-            <Text style={{color: colors.text}}>Partner</Text>
+            <ThemedText>Partner</ThemedText>
           </View>
           <View style={styles.iconView}>
             <View
@@ -403,7 +394,7 @@ const AddressEdit = ({
                 onPress={() => setLabelHandler('Other')}
               />
             </View>
-            <Text style={{color: colors.text}}>Other</Text>
+            <ThemedText>Other</ThemedText>
           </View>
         </View>
       </View>
