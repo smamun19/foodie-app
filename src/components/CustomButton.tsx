@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   StyleProp,
@@ -9,6 +8,7 @@ import {
   TextStyle,
   TouchableOpacityProps,
 } from 'react-native';
+import ThemedText from './ThemedText';
 
 export interface ButtonProps extends TouchableOpacityProps {
   title: string;
@@ -30,7 +30,7 @@ const CustomButton = ({
     <View style={[styles.container, containerStyle]}>
       <TouchableOpacity {...rest} style={[styles.btn, btnStyle]}>
         <View style={[styles.innerView, btnInnerStyle]}>
-          <Text style={(styles.text, textStyle)}>{title}</Text>
+          <ThemedText style={[styles.text, textStyle]}>{title}</ThemedText>
         </View>
       </TouchableOpacity>
     </View>
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: 'black',
   },
 });
 

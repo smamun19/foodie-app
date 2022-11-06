@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Text,
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
@@ -11,6 +10,7 @@ import {
   TouchableOpacityProps,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ThemedText from './ThemedText';
 
 export interface CardProps extends TouchableOpacityProps {
   title: string;
@@ -40,10 +40,10 @@ const CustomCard = ({
         source={require('../assets/placeholder.jpg')}>
         <View style={styles.leftImg}>
           <View style={styles.leftImg1}>
-            {specialOffer ? <Text> {specialOffer}</Text> : null}
+            {specialOffer ? <ThemedText> {specialOffer}</ThemedText> : null}
           </View>
           <View style={styles.leftImg2}>
-            <Text>69 min</Text>
+            <ThemedText style={styles.blackText}>69 min</ThemedText>
           </View>
         </View>
         <View style={styles.rightImg}>
@@ -57,12 +57,12 @@ const CustomCard = ({
 
       <View style={styles.cardBottomArea}>
         <View style={styles.cardBottomArea1}>
-          <Text style={styles.titleText}>{title}</Text>
-          <Text>type: Bangladeshi</Text>
-          <Text>Tk: 18</Text>
+          <ThemedText style={styles.titleText}>{title}</ThemedText>
+          <ThemedText>type: Bangladeshi</ThemedText>
+          <ThemedText>Tk: 18</ThemedText>
         </View>
         <View>
-          <Text>rating</Text>
+          <ThemedText>rating</ThemedText>
         </View>
       </View>
     </TouchableOpacity>
@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
   },
   cardBottomArea: {flexDirection: 'row'},
   cardBottomArea1: {flex: 1},
+  blackText: {color: 'black'},
 });
 
 export default CustomCard;

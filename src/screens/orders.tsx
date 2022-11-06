@@ -1,10 +1,11 @@
 import React from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, View} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomButton from '../components/CustomButton';
 import CustomHeader from '../components/CustomHeader';
 import Spacer from '../components/Spacer';
+import ThemedText from '../components/ThemedText';
 import {DrawerScreensProps} from '../navigators/drawer';
 
 const OrderCard = () => {
@@ -18,15 +19,15 @@ const OrderCard = () => {
               source={require('../assets/burger.jpeg')}
             />
             <View style={styles.row1Right}>
-              <Text style={styles.boldText}>Restaurant name</Text>
-              <Text>Food list</Text>
+              <ThemedText style={styles.boldText}>Restaurant name</ThemedText>
+              <ThemedText>Food list</ThemedText>
             </View>
           </View>
-          <Text>Tk 267</Text>
+          <ThemedText>Tk 267</ThemedText>
         </View>
         <Spacer height={10} />
         <View style={styles.row2}>
-          <Text style={styles.row2Left}>Order time</Text>
+          <ThemedText style={styles.row2Left}>Order time</ThemedText>
           <CustomButton
             containerStyle={styles.btn}
             textStyle={styles.btnText}
@@ -48,7 +49,7 @@ const Orders = ({navigation}: DrawerScreensProps<'Orders'>) => {
           onLeftPress={() => navigation.navigate('Home')}
         />
       }>
-      <Text style={styles.topText}>Past orders</Text>
+      <ThemedText style={styles.topText}>Past orders</ThemedText>
       <OrderCard />
       <OrderCard />
       <OrderCard />
@@ -61,7 +62,7 @@ const Orders = ({navigation}: DrawerScreensProps<'Orders'>) => {
 const styles = StyleSheet.create({
   containerStyle: {margin: 10},
   cardView: {padding: 10, marginBottom: 20},
-  topText: {padding: 10, fontWeight: 'bold', color: 'black', fontSize: 18},
+  topText: {padding: 10, fontWeight: 'bold', fontSize: 18},
   imageStyle: {height: 80, width: 80},
   row1: {flexDirection: 'row'},
   row2: {flexDirection: 'row', alignItems: 'center'},
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   btnText: {color: 'white'},
-  boldText: {fontWeight: 'bold', color: 'black'},
+  boldText: {fontWeight: 'bold'},
 });
 
 export default Orders;

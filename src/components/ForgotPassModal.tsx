@@ -1,9 +1,9 @@
+import {useTheme} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {
   Modal,
   StyleSheet,
-  Text,
   View,
   ModalProps,
   Pressable,
@@ -13,6 +13,7 @@ import {RootStackParamList} from '../navigators/root-stack';
 import {reqReset} from '../services/auth';
 import CustomButton from './CustomButton';
 import CustomInput from './TextInput';
+import ThemedText from './ThemedText';
 
 export interface Props extends ModalProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,6 +23,7 @@ export interface Props extends ModalProps {
 
 const CustomModal = ({modalVisible, setModalVisible, navigation}: Props) => {
   const [email, setEmail] = useState('');
+  const {colors} = useTheme();
 
   const modalHandler = async () => {
     try {
@@ -58,8 +60,11 @@ const CustomModal = ({modalVisible, setModalVisible, navigation}: Props) => {
         <Pressable
           onPressOut={() => setModalVisible(false)}
           style={styles.centeredView}>
-          <Pressable style={styles.modalView}>
-            <Text style={styles.modalText}>Forgot your password?</Text>
+          <Pressable
+            style={[styles.modalView, {backgroundColor: colors.background}]}>
+            <ThemedText style={styles.modalText}>
+              Forgot your password?
+            </ThemedText>
             <View style={styles.inputStyle}>
               <CustomInput
                 title="Email"
@@ -96,7 +101,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 1,
-    backgroundColor: 'red',
   },
   centeredView: {
     justifyContent: 'center',
@@ -106,7 +110,6 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: '90%',
-    backgroundColor: 'white',
     borderRadius: 20,
     padding: 15,
     alignItems: 'center',
@@ -138,7 +141,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: 'black',
   },
   inputStyle: {
     width: '100%',

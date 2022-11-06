@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useState} from 'react';
-import {Alert, StyleSheet, Text, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
@@ -10,6 +10,7 @@ import {Address} from '../utils/types/user';
 import {getAddress, removeAddress} from '../services/user';
 import {UserContext} from '../services/userContext';
 import {useFocusEffect} from '@react-navigation/native';
+import ThemedText from '../components/ThemedText';
 
 interface AddressCardProps {
   name?: string;
@@ -35,14 +36,14 @@ export const AddressCard = ({
       <View style={styles.left}>
         <MaterialIcons name="location-on" size={30} color="red" />
         <View style={styles.address}>
-          <Text numberOfLines={1} style={styles.nameText}>
+          <ThemedText numberOfLines={1} style={styles.nameText}>
             {label ?? name}
-          </Text>
-          <Text numberOfLines={2}>{details}</Text>
+          </ThemedText>
+          <ThemedText numberOfLines={2}>{details}</ThemedText>
           {!editOnly && (
-            <Text numberOfLines={2}>
+            <ThemedText numberOfLines={2}>
               Note to rider: {deliveryInstructions ?? 'none'}
-            </Text>
+            </ThemedText>
           )}
         </View>
       </View>
@@ -83,7 +84,7 @@ const Addresses = ({navigation}: DrawerScreensProps<'Addresses'>) => {
         });
       }
       await userInfo.hydrate({
-        cartItem: [...userInfo.cartItem],
+        cartItem: userInfo.cartItem,
         address: details,
       });
       return setAddresses(details);
@@ -191,7 +192,6 @@ const styles = StyleSheet.create({
   btnText: {color: 'white'},
   nameText: {
     fontWeight: 'bold',
-    color: 'black',
   },
 });
 

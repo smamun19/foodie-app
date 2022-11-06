@@ -1,11 +1,12 @@
 import React, {useContext, useEffect} from 'react';
-import {Text, StyleSheet, SafeAreaView, Image, View} from 'react-native';
+import {StyleSheet, SafeAreaView, Image, View} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import CustomButton from '../components/CustomButton';
 import Spacer from '../components/Spacer';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
+import ThemedText from '../components/ThemedText';
 
 const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
   const userInfo = useContext(UserContext);
@@ -34,21 +35,25 @@ const Loader = ({navigation}: RootStackScreensProps<'Loader'>) => {
         backgroundColor="#4846B1"
         barStyle={'light-content'}
       />
-      <Text style={styles.foodie}>FOODIE</Text>
+      <ThemedText style={styles.foodie}>FOODIE</ThemedText>
       <View style={styles.mid}>
         <Image
           style={styles.imageStyle}
           source={require('../assets/food.png')}
         />
-        <Text style={[styles.midText, styles.bigBoldText]}>Your culinary</Text>
-        <Text style={[styles.midText, styles.bigBoldText]}>
+        <ThemedText style={[styles.midText, styles.bigBoldText]}>
+          Your culinary
+        </ThemedText>
+        <ThemedText style={[styles.midText, styles.bigBoldText]}>
           adventure awaits...
-        </Text>
+        </ThemedText>
         <Spacer height={10} />
-        <Text style={styles.midText}>
+        <ThemedText style={styles.midText}>
           feel the taste of most authentic foods
-        </Text>
-        <Text style={styles.midText}>from anywhere and anytime.</Text>
+        </ThemedText>
+        <ThemedText style={styles.midText}>
+          from anywhere and anytime.
+        </ThemedText>
       </View>
       <CustomButton
         onPress={loaderHandler}

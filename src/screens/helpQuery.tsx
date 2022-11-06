@@ -10,6 +10,7 @@ import {RootStackScreensProps} from '../navigators/root-stack';
 
 const HelpQuery = ({navigation, route}: RootStackScreensProps<'HelpQuery'>) => {
   const [data, setData] = useState<HelpCenterQuery>();
+
   useFocusEffect(
     useCallback(() => {
       getHelpCenterQuery(route.params.id)

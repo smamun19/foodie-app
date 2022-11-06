@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
+import {StyleSheet, View, Image, Pressable} from 'react-native';
 import RadioButton from '../components/RadioButton';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
@@ -9,6 +9,8 @@ import CustomButton from '../components/CustomButton';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomInput from '../components/TextInput';
 import {UserContext} from '../services/userContext';
+
+import ThemedText from '../components/ThemedText';
 
 const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const foodDetails = {
@@ -71,7 +73,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
                 color={counter === 1 ? 'grey' : 'red'}
               />
             </Pressable>
-            <Text style={styles.counterText}>{counter}</Text>
+            <ThemedText style={styles.counterText}>{counter}</ThemedText>
             <Pressable onPress={() => setCounter(counter + 1)}>
               <MaterialIcons name="add-circle" size={30} color="red" />
             </Pressable>
@@ -80,6 +82,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           <CustomButton
             disabled={foodDetails.variation && !check.name}
             onPress={addToCart}
+            textStyle={styles.btnColor}
             containerStyle={[
               styles.btn,
               // eslint-disable-next-line react-native/no-inline-styles
@@ -91,7 +94,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
                   : 'red',
               },
             ]}
-            title="Add to card"
+            title="Add to cart"
           />
         </View>
       }>
@@ -101,15 +104,15 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       />
       <View style={styles.view1}>
         <View style={styles.left}>
-          <Text style={styles.titleText}>Food name</Text>
-          <Text numberOfLines={2} style={styles.desText}>
+          <ThemedText style={styles.titleText}>Food name</ThemedText>
+          <ThemedText numberOfLines={2} style={styles.desText}>
             description
-          </Text>
+          </ThemedText>
         </View>
         <View style={styles.right}>
-          <Text style={styles.priceText}>
+          <ThemedText style={styles.priceText}>
             Tk {check.price ?? foodDetails.price}
-          </Text>
+          </ThemedText>
         </View>
       </View>
       <Spacer />
@@ -118,13 +121,13 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           <View>
             <View style={styles.view1}>
               <View style={styles.left}>
-                <Text style={styles.titleText}>Variation</Text>
-                <Text numberOfLines={2} style={styles.desText}>
+                <ThemedText style={styles.titleText}>Variation</ThemedText>
+                <ThemedText numberOfLines={2} style={styles.desText}>
                   Select one
-                </Text>
+                </ThemedText>
               </View>
               <View style={styles.right}>
-                <Text style={styles.priceText}>1 Required</Text>
+                <ThemedText style={styles.priceText}>1 Required</ThemedText>
               </View>
             </View>
             <View>
@@ -138,11 +141,11 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         )}
       </View>
       <View style={styles.extra}>
-        <Text style={styles.titleText}>Special instructions</Text>
-        <Text>
+        <ThemedText style={styles.titleText}>Special instructions</ThemedText>
+        <ThemedText>
           Please let us know if you are allergic to anything or if we need to
           avoid anything
-        </Text>
+        </ThemedText>
         <CustomInput
           placeholder="e.g. no mayo"
           multiline
@@ -152,7 +155,9 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           onChangeText={setInstructions}
           containerStyle={styles.inputContainer}
         />
-        <Text style={styles.textCounter}>{instructions.length}/200</Text>
+        <ThemedText style={styles.textCounter}>
+          {instructions.length}/200
+        </ThemedText>
       </View>
     </Container>
   );
@@ -169,7 +174,7 @@ const styles = StyleSheet.create({
   },
   left: {flex: 1, paddingRight: 10},
   right: {},
-  titleText: {fontWeight: 'bold', color: 'black', fontSize: 15},
+  titleText: {fontWeight: 'bold', fontSize: 15},
   desText: {},
   priceText: {},
   footerContainer: {
@@ -199,6 +204,7 @@ const styles = StyleSheet.create({
   textCounter: {
     alignSelf: 'flex-end',
   },
+  btnColor: {color: 'white'},
 });
 
 export default FoodDetails;

@@ -1,6 +1,7 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ThemedText from './ThemedText';
 
 interface CheckBoxProps {
   data: Record<string, any>[];
@@ -31,10 +32,10 @@ const RadioButton = ({data, check, setCheck}: CheckBoxProps) => {
                 size={20}
                 color={check.name === item.name ? 'red' : 'grey'}
               />
-              <Text style={styles.name}>{item.name}</Text>
+              <ThemedText style={styles.name}>{item.name}</ThemedText>
             </View>
             <View>
-              <Text>{item.price} Tk</Text>
+              <ThemedText>{item.price} Tk</ThemedText>
             </View>
           </Pressable>
         );

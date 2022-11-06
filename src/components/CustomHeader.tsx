@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, Text, ViewStyle} from 'react-native';
+import {View, StyleSheet, ViewStyle} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ThemedText from './ThemedText';
 
 interface HeaderProps {
   title?: string;
@@ -32,7 +33,7 @@ const CustomHeader: React.FC<HeaderProps> = ({
           color="red"
         />
         <View style={styles.leftHeader1}>
-          <Text style={styles.text}>{title}</Text>
+          <ThemedText style={styles.text}>{title}</ThemedText>
         </View>
       </View>
       <View style={styles.rightHeader}>
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
   },
   rightHeader: {},
   leftHeader1: {marginLeft: 15},
-  text: {fontWeight: 'bold', fontSize: 20, color: 'black'},
+  text: {fontWeight: 'bold', fontSize: 20},
 });
 
 export default CustomHeader;

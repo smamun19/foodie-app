@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
@@ -7,6 +7,8 @@ import ProfileCard from '../components/ProfileCard';
 import {DrawerScreensProps} from '../navigators/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {UserContext} from '../services/userContext';
+
+import ThemedText from '../components/ThemedText';
 
 interface SocialCardProps {
   title: string;
@@ -25,11 +27,11 @@ const SocialCard = ({icon, title, color, onPress}: SocialCardProps) => {
           color={color}
           size={30}
         />
-        <Text>{title}</Text>
+        <ThemedText>{title}</ThemedText>
       </View>
 
       <Pressable onPress={onPress}>
-        <Text style={styles.socialBtnText}>Connect</Text>
+        <ThemedText style={styles.socialBtnText}>Connect</ThemedText>
       </Pressable>
     </CardView>
   );
@@ -67,7 +69,7 @@ const Profile = ({navigation}: DrawerScreensProps<'Profile'>) => {
         title="Mobile number"
         data={userInfo.phone}
       />
-      <Text style={styles.cAccounts}>Connected accounts</Text>
+      <ThemedText style={styles.cAccounts}>Connected accounts</ThemedText>
       <SocialCard
         icon="facebook"
         title="Facebook"
@@ -88,7 +90,6 @@ const styles = StyleSheet.create({
   containerStyle: {margin: 10},
   cAccounts: {
     fontWeight: 'bold',
-    color: 'black',
     marginTop: 20,
     marginBottom: 10,
     fontSize: 18,

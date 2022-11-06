@@ -55,6 +55,7 @@ const Voucher = ({navigation}: RootStackScreensProps<'Voucher'>) => {
           onPress={onApply}
           containerStyle={styles.applyBtn}
           title="Apply"
+          textStyle={styles.btnColor}
         />
       </View>
     </Container>
@@ -64,6 +65,7 @@ const Voucher = ({navigation}: RootStackScreensProps<'Voucher'>) => {
 const styles = StyleSheet.create({
   container: {justifyContent: 'center', alignItems: 'center', padding: 5},
   applyBtn: {backgroundColor: 'red', padding: 15, width: '100%'},
+  btnColor: {color: 'white'},
 });
 
 export default Voucher;

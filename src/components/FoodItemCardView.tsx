@@ -1,12 +1,12 @@
 import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   TouchableOpacityProps,
   Image,
 } from 'react-native';
+import ThemedText from './ThemedText';
 
 export interface CardProps extends TouchableOpacityProps {
   name: string;
@@ -18,11 +18,9 @@ const FoodItem = ({name, description, price, ...rest}: CardProps) => {
   return (
     <TouchableOpacity {...rest} style={styles.container}>
       <View style={styles.left}>
-        <Text style={styles.titleText}>{name}</Text>
-        <Text numberOfLines={2} style={styles.desText}>
-          {description}
-        </Text>
-        <Text style={styles.priceText}>{price} tk</Text>
+        <ThemedText style={styles.titleText}>{name}</ThemedText>
+        <ThemedText numberOfLines={2}>{description}</ThemedText>
+        <ThemedText>{price} tk</ThemedText>
       </View>
       <View style={styles.right}>
         <Image
@@ -45,7 +43,7 @@ const styles = StyleSheet.create({
   left: {flex: 1, paddingRight: 10},
   right: {},
   imageStyle: {height: 80, width: 80},
-  titleText: {fontWeight: 'bold', color: 'black', fontSize: 15},
+  titleText: {fontWeight: 'bold', fontSize: 15},
   desText: {},
   priceText: {},
 });

@@ -2,7 +2,6 @@ import React, {useContext, useMemo, useRef} from 'react';
 import {
   SectionList,
   StyleSheet,
-  Text,
   View,
   Animated,
   TouchableOpacity,
@@ -13,6 +12,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import FoodItem from '../components/FoodItemCardView';
 import FoodItemHeader from '../components/FoodItemHeader';
+import ThemedText from '../components/ThemedText';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 import {FOOD_DATA} from '../utils/testData';
@@ -21,6 +21,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   const sectionRef = useRef<SectionList>(null);
   const scrollY = useRef(new Animated.Value(0)).current;
   const userInfo = useContext(UserContext);
+
   const deliveryFee = 15;
   const specialOffer = undefined;
   const range = specialOffer ? 300 : 200;
@@ -71,7 +72,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           />
         }
         renderSectionHeader={({section}) => (
-          <Text style={styles.headerText}>{section.title}</Text>
+          <ThemedText style={styles.headerText}>{section.title}</ThemedText>
         )}
         renderItem={({item}) => (
           <FoodItem
@@ -142,7 +143,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
                   })
                 }
                 style={styles.flatListView}>
-                <Text>{item.title}</Text>
+                <ThemedText>{item.title}</ThemedText>
               </TouchableOpacity>
             </View>
           )}
@@ -156,10 +157,10 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
             }}
             style={styles.conditionalFooter}>
             <View style={styles.footerItemCounter}>
-              <Text style={styles.footerText}>{totalItem}</Text>
+              <ThemedText style={styles.footerText}>{totalItem}</ThemedText>
             </View>
-            <Text style={styles.footerText}>View your cart</Text>
-            <Text style={styles.footerText}>Tk {totalAmount}</Text>
+            <ThemedText style={styles.footerText}>View your cart</ThemedText>
+            <ThemedText style={styles.footerText}>Tk {totalAmount}</ThemedText>
           </Pressable>
         ) : null}
       </View>
@@ -169,7 +170,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
 
 const styles = StyleSheet.create({
   container: {flex: 1},
-  headerText: {fontWeight: 'bold', fontSize: 20, color: 'black', padding: 5},
+  headerText: {fontWeight: 'bold', fontSize: 20, padding: 5},
   header: {
     padding: 5,
     flexDirection: 'row',

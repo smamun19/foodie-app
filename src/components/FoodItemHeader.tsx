@@ -2,7 +2,6 @@ import React from 'react';
 import {
   ImageBackground,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   Image,
@@ -10,6 +9,7 @@ import {
   SectionList,
   DefaultSectionT,
 } from 'react-native';
+import ThemedText from './ThemedText';
 
 const HEADER_HEIGHT = 400;
 
@@ -50,7 +50,7 @@ const FoodItemHeader = ({
 
       {specialOffer ? (
         <View style={styles.view2}>
-          <Text style={styles.text1}>{specialOffer}</Text>
+          <ThemedText style={styles.text1}>{specialOffer}</ThemedText>
           <Image
             style={styles.imageStyle2}
             resizeMode="cover"
@@ -60,13 +60,13 @@ const FoodItemHeader = ({
       ) : null}
       <View style={styles.view3}>
         <View style={styles.view4}>
-          <Text>{title}</Text>
-          <Text>{distance} away</Text>
-          <Text>{rating}+ ratings</Text>
-          <Text>Delivery: {deliveryTime} min</Text>
+          <ThemedText>{title}</ThemedText>
+          <ThemedText>{distance} away</ThemedText>
+          <ThemedText>{rating}+ ratings</ThemedText>
+          <ThemedText>Delivery: {deliveryTime} min</ThemedText>
         </View>
         <TouchableOpacity style={styles.moreInfoBtn}>
-          <Text style={styles.text2}>More info</Text>
+          <ThemedText style={styles.text2}>More info</ThemedText>
         </TouchableOpacity>
       </View>
     </Animated.View>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  text1: {flex: 1, fontSize: 20, color: '#bd06b4', paddingRight: 15},
+  text1: {flex: 1, fontSize: 20, paddingRight: 15},
   text2: {color: 'red'},
   moreInfoBtn: {
     justifyContent: 'center',

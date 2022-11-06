@@ -1,11 +1,12 @@
 import React, {useContext, useMemo} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CartCard from '../components/CartCard';
 import Container from '../components/Container';
 import CustomButton from '../components/CustomButton';
 import CustomHeader from '../components/CustomHeader';
 import Spacer from '../components/Spacer';
+import ThemedText from '../components/ThemedText';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
 
@@ -39,8 +40,8 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
           />
         }>
         <View style={styles.emptyCart}>
-          <Text>Hungry?</Text>
-          <Text>You havent added anything to your cart!</Text>
+          <ThemedText>Hungry?</ThemedText>
+          <ThemedText>You havent added anything to your cart!</ThemedText>
           <CustomButton
             onPress={() => navigation.goBack()}
             title="Browse"
@@ -62,8 +63,8 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
       footer={
         <View style={styles.footer}>
           <View style={styles.subTotal}>
-            <Text style={styles.footerText}>Total</Text>
-            <Text style={styles.footerText}>Tk {totalAmount}</Text>
+            <ThemedText style={styles.footerText}>Total</ThemedText>
+            <ThemedText style={styles.footerText}>Tk {totalAmount}</ThemedText>
           </View>
 
           <CustomButton
@@ -87,8 +88,8 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
             source={require('../assets/food_delivery.png')}
           />
           <View>
-            <Text>Estimated delivery</Text>
-            <Text style={styles.bold}>ASAP (40 min)</Text>
+            <ThemedText>Estimated delivery</ThemedText>
+            <ThemedText style={styles.bold}>ASAP (40 min)</ThemedText>
           </View>
         </View>
         <Spacer height={30} />
@@ -112,14 +113,14 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
         />
         <Spacer height={30} />
         <View style={styles.subTotal}>
-          <Text style={styles.bold}>Subtotal</Text>
-          <Text style={styles.bold}>Tk {subTotal}</Text>
+          <ThemedText style={styles.bold}>Subtotal</ThemedText>
+          <ThemedText style={styles.bold}>Tk {subTotal}</ThemedText>
         </View>
         <Spacer height={10} />
 
         <View style={styles.subTotal}>
-          <Text>Delivery fee</Text>
-          <Text>Tk {deliveryFee}</Text>
+          <ThemedText>Delivery fee</ThemedText>
+          <ThemedText>Tk {deliveryFee}</ThemedText>
         </View>
         <Spacer height={10} />
         <View>
@@ -140,9 +141,9 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
               <View style={styles.voucherBody}>
                 <MaterialIcons name="loyalty" color={'red'} size={20} />
                 <Spacer height={0} width={10} />
-                <Text style={styles.voucherNameText}>
+                <ThemedText style={styles.voucherNameText}>
                   {userInfo.voucher.name}
-                </Text>
+                </ThemedText>
                 <Spacer height={0} width={10} />
                 <CustomButton
                   btnStyle={styles.addMoreBtnStyle}
@@ -153,9 +154,9 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
                 />
               </View>
               <View style={styles.voucherValue}>
-                <Text style={styles.voucherValueText}>
+                <ThemedText style={styles.voucherValueText}>
                   - Tk {userInfo.voucher.value}
-                </Text>
+                </ThemedText>
               </View>
             </View>
           )}
@@ -190,8 +191,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  bold: {fontWeight: 'bold', color: 'black'},
-  footerText: {fontWeight: 'bold', paddingVertical: 5, color: 'black'},
+  bold: {fontWeight: 'bold'},
+  footerText: {fontWeight: 'bold', paddingVertical: 5},
   addMoreBtnText: {color: 'red'},
   addMoreBtnStyle: {
     width: 'auto',
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   voucherBody: {flexDirection: 'row', alignItems: 'center'},
-  voucherNameText: {color: 'black', fontWeight: 'bold'},
+  voucherNameText: {fontWeight: 'bold'},
   voucherValueText: {color: 'red', fontWeight: 'bold'},
   voucherValue: {
     backgroundColor: '#deadad',

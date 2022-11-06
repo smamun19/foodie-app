@@ -1,8 +1,9 @@
 import React, {useContext} from 'react';
-import {Alert, Image, StyleSheet, Text, View} from 'react-native';
+import {Alert, Image, StyleSheet, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {UserContext} from '../services/userContext';
 import {CartItemTypes} from '../utils/types/reducerTypes';
+import ThemedText from './ThemedText';
 
 const CartCard = ({
   name,
@@ -77,7 +78,7 @@ const CartCard = ({
           size={30}
           color="red"
         />
-        <Text style={styles.quantity}>{quantity}</Text>
+        <ThemedText style={styles.quantity}>{quantity}</ThemedText>
         <MaterialIcons
           onPress={addQuantity}
           name="add-circle"
@@ -90,12 +91,12 @@ const CartCard = ({
           style={styles.img}
         />
 
-        <Text style={styles.name}>
+        <ThemedText style={styles.name}>
           {name} {variation ? ` - ${variation}` : null}
-        </Text>
+        </ThemedText>
       </View>
 
-      <Text>Tk {price * quantity}</Text>
+      <ThemedText>Tk {price * quantity}</ThemedText>
     </View>
   );
 };

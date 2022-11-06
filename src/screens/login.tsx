@@ -1,11 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  KeyboardAvoidingView,
-  Alert,
-  Text,
-} from 'react-native';
+import {StyleSheet, View, KeyboardAvoidingView, Alert} from 'react-native';
 import CustomButton from '../components/CustomButton';
 import CustomInput from '../components/TextInput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -16,6 +10,8 @@ import {signin} from '../services/auth';
 import {UserContext} from '../services/userContext';
 import {setItem} from '../utils/sInfo';
 import {UserAuthParams} from '../utils/types/reducerTypes';
+
+import ThemedText from '../components/ThemedText';
 
 const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
   const [password, setPassword] = useState('');
@@ -65,18 +61,18 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
         contentContainerStyle={styles.KeyboardAwareContainer}>
         <View style={styles.upperView2}>
           <View style={styles.upperView}>
-            <Text style={styles.text3}>Log in to Foodie</Text>
+            <ThemedText style={styles.text3}>Log in to Foodie</ThemedText>
             <Spacer />
-            <Text style={styles.text5}>
+            <ThemedText style={styles.text5}>
               By continuing, you agree to our{' '}
-              <Text selectable={true} style={styles.btnText2}>
+              <ThemedText selectable={true} style={styles.btnText2}>
                 User Agreement
-              </Text>{' '}
+              </ThemedText>{' '}
               and{' '}
-              <Text selectable={true} style={styles.btnText2}>
+              <ThemedText selectable={true} style={styles.btnText2}>
                 Privacy Policy
-              </Text>
-            </Text>
+              </ThemedText>
+            </ThemedText>
           </View>
 
           <Spacer height={30} />
@@ -98,7 +94,7 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
           </View>
         </View>
         <View style={styles.orStyle}>
-          <Text style={styles.text4}>OR</Text>
+          <ThemedText style={styles.text4}>OR</ThemedText>
         </View>
 
         <View style={styles.inputContainer}>
@@ -118,13 +114,10 @@ const Login = ({navigation}: RootStackScreensProps<'Login'>) => {
         </View>
         <View style={styles.lower}>
           <View style={styles.signUp}>
-            <Text style={styles.text2}>New to Foodie?</Text>
+            <ThemedText style={styles.signupText}>New to Foodie?</ThemedText>
             <CustomButton
               title="Sign Up"
-              btnStyle={styles.signUpBtn}
-              btnInnerStyle={styles.innerSignUpBtn}
               textStyle={styles.btnText2}
-              containerStyle={styles.signupBtnContainer}
               onPress={() => navigation.navigate('SignUp')}
             />
           </View>
@@ -185,15 +178,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   lower: {},
-  signUpBtn: {
-    width: '20%',
-    alignSelf: 'flex-start',
-  },
-  signupBtnContainer: {
-    height: 25,
-    width: '100%',
-  },
-  innerSignUpBtn: {},
   btnText: {
     color: 'white',
   },
@@ -235,6 +219,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  signupText: {marginRight: 10},
 });
 
 export default Login;
