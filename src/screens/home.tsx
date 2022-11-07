@@ -179,37 +179,26 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
         </View>
       </View>
       <Spacer />
-
       <SectionList
         sections={restaurants}
         renderSectionHeader={({section}) => (
-          <ThemedText style={styles.sectionHeader}>{section.type}</ThemedText>
-        )}
-        renderItem={({section, item}) =>
-          section.type !== 'ALL' ? (
+          <>
+            <ThemedText style={styles.sectionHeader}>{section.type}</ThemedText>
             <FlatList
               data={section.data}
               horizontal={true}
-              keyExtractor={e => e.id}
-              key={item.id}
-              renderItem={({item: i}) => (
+              renderItem={({item}) => (
                 <CustomCard
                   cardStyle={styles.horizontalScroll}
                   imgBorderRadius={10}
-                  title={i.title}
+                  title={item.title}
                   onPress={() => navigation.navigate('Restaurant')}
                 />
               )}
             />
-          ) : (
-            <CustomCard
-              cardStyle={styles.card}
-              imgStyle={styles.card}
-              title={item.title}
-              imgBorderRadius={10}
-            />
-          )
-        }
+          </>
+        )}
+        renderItem={() => null}
       />
     </View>
   );
