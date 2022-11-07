@@ -1,5 +1,12 @@
-import React, {useContext} from 'react';
-import {View, StyleSheet, TouchableOpacity, SectionList} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useCallback, useContext, useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  SectionList,
+  Alert,
+} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from '../components/CustomButton';
@@ -8,11 +15,102 @@ import Spacer from '../components/Spacer';
 import CustomInput from '../components/TextInput';
 import ThemedText from '../components/ThemedText';
 import {DrawerScreensProps} from '../navigators/drawer';
+import {getRestaurants} from '../services/public';
 import {UserContext} from '../services/userContext';
-import {DATA} from '../utils/testData';
+import {Restaurants} from '../utils/types/user';
 
 const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
   const {address} = useContext(UserContext);
+  const [restaurants, setRestaurants] = useState<Restaurants[]>();
+
+  useFocusEffect(
+    useCallback(() => {
+      getRestaurants()
+        .then(result => setRestaurants(result.details))
+        .catch(() => {
+          Alert.alert(
+            'Error!',
+            'Unable to process your request at this moment',
+            undefined,
+            {
+              cancelable: true,
+            },
+          );
+        });
+    }, []),
+  );
+
+  if (!restaurants) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.topHeader}>
+            <View style={styles.leftHeader}>
+              <TouchableOpacity
+                style={styles.menuBtn}
+                onPress={() => navigation.toggleDrawer()}>
+                <MaterialIcons name="menu" size={30} color="red" />
+              </TouchableOpacity>
+              <View style={styles.leftHeader1}>
+                {address.length !== 0 ? (
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('AddressEdit', {
+                        address: address[0],
+                        edit: true,
+                      })
+                    }>
+                    <ThemedText style={styles.text2}>
+                      {address[0].label ?? address[0].name}
+                    </ThemedText>
+                    <ThemedText style={styles.text}>
+                      {address[0].details}
+                    </ThemedText>
+                  </TouchableOpacity>
+                ) : (
+                  <CustomButton
+                    containerStyle={styles.locationBtn}
+                    textStyle={styles.locationBtnText}
+                    title="Add an address"
+                    onPress={() =>
+                      navigation.navigate('AddressEdit', {edit: false})
+                    }
+                  />
+                )}
+              </View>
+            </View>
+            <View style={styles.rightHeader}>
+              <TouchableOpacity style={styles.rightHeaderBtn}>
+                <MaterialIcons
+                  onPress={() =>
+                    navigation.navigate('Drawer', {screen: 'Favourites'})
+                  }
+                  name="favorite"
+                  size={22}
+                  color="red"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <MaterialIcons
+                  onPress={() => navigation.navigate('Cart')}
+                  name="shopping-cart"
+                  size={22}
+                  color="red"
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View>
+            <CustomInput
+              containerStyle={styles.bottomHeader}
+              placeholder="Search for restaurants"
+            />
+          </View>
+        </View>
+        <Spacer />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -81,21 +179,19 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
         </View>
       </View>
       <Spacer />
+
       <SectionList
-        sections={DATA}
-        keyExtractor={e => e.id}
+        sections={restaurants}
         renderSectionHeader={({section}) => (
-          <ThemedText style={styles.sectionHeader}>{section.title}</ThemedText>
+          <ThemedText style={styles.sectionHeader}>{section.type}</ThemedText>
         )}
         renderItem={({section, item}) =>
-          section.title !== 'ALL' ? (
+          section.type !== 'ALL' ? (
             <FlatList
-              //@ts-ignore
-              data={item.data}
+              data={section.data}
               horizontal={true}
               keyExtractor={e => e.id}
-              //@ts-ignore
-              key={item.data.id}
+              key={item.id}
               renderItem={({item: i}) => (
                 <CustomCard
                   cardStyle={styles.horizontalScroll}

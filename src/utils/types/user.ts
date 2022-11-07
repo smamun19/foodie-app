@@ -61,3 +61,35 @@ export interface HelpCenterQuery {
   updatedAt: Date;
   query?: HelpCenter[];
 }
+
+export interface Restaurants {
+  type: string;
+  data: Restaurant[];
+}
+
+export interface Restaurant {
+  id: string;
+  title: string;
+  isActive: boolean;
+  details: string;
+  openingFrom: number;
+  openingTo: number;
+  deliveryTime: number;
+  type: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId?: string;
+  photo?: Photo;
+}
+
+export interface Photo {
+  id: string;
+  name: string;
+  type: string;
+  path: string[];
+  host: string;
+  itemId?: number;
+  restaurantId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

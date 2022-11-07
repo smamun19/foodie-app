@@ -1,6 +1,6 @@
 export const DATA = [
   {
-    title: 'Main dishes',
+    type: 'Main dishes',
     data: [
       {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -23,7 +23,7 @@ export const DATA = [
     ],
   },
   {
-    title: 'XXX',
+    type: 'XXX',
     data: [
       {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -46,7 +46,7 @@ export const DATA = [
     ],
   },
   {
-    title: 'Sides',
+    type: 'Sides',
     data: [
       {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -69,7 +69,7 @@ export const DATA = [
     ],
   },
   {
-    title: 'Drinks',
+    type: 'Drinks',
     data: [
       {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -92,7 +92,7 @@ export const DATA = [
     ],
   },
   {
-    title: 'ALL',
+    type: 'ALL',
     data: [
       {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
