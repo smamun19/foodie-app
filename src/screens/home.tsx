@@ -1,13 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useContext, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  SectionList,
-  Alert,
-} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from '../components/CustomButton';
 import CustomCard from '../components/CustomCard';
@@ -179,27 +173,27 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
         </View>
       </View>
       <Spacer />
-      <SectionList
-        sections={restaurants}
-        renderSectionHeader={({section}) => (
-          <>
-            <ThemedText style={styles.sectionHeader}>{section.type}</ThemedText>
-            <FlatList
-              data={section.data}
-              horizontal={true}
-              renderItem={({item}) => (
-                <CustomCard
-                  cardStyle={styles.horizontalScroll}
-                  imgBorderRadius={10}
-                  title={item.title}
-                  onPress={() => navigation.navigate('Restaurant')}
-                />
-              )}
-            />
-          </>
-        )}
-        renderItem={() => null}
-      />
+      <ScrollView>
+        {restaurants.map(item => {
+          return (
+            <View key={item.type}>
+              <ThemedText>{item.type}</ThemedText>
+              <FlatList
+                data={item.data}
+                horizontal={true}
+                renderItem={({item: i}) => (
+                  <CustomCard
+                    cardStyle={styles.horizontalScroll}
+                    imgBorderRadius={10}
+                    title={i.title}
+                    onPress={() => navigation.navigate('Restaurant')}
+                  />
+                )}
+              />
+            </View>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 };
