@@ -1,5 +1,4 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -21,7 +20,6 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
   const getAllRestaurantsHandler = async () => {
     try {
       const {statusCode, message, details} = await getAllRestaurants();
-
       if (statusCode !== 200) {
         return Alert.alert('Error!', message, undefined, {
           cancelable: true,
@@ -43,8 +41,8 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
+  useEffect(() => {
+    if (!restaurants) {
       getRestaurants()
         .then(result => setRestaurants(result.details))
         .catch(() => {
@@ -57,8 +55,8 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
             },
           );
         });
-    }, []),
-  );
+    }
+  }, [restaurants]);
 
   if (!restaurants) {
     return (
@@ -201,6 +199,7 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
       <Spacer />
       <FlatList
         data={restaurants}
+        keyExtractor={e => e.type}
         onScroll={({nativeEvent}) => {
           if (!allRestaurants) {
             if (
@@ -224,12 +223,14 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
                   imgStyle={styles.card}
                   title={item.title}
                   imgBorderRadius={10}
+                  onPress={() =>
+                    navigation.navigate('Restaurant', {id: item.id})
+                  }
                 />
               )}
             />
           </>
         )}
-        keyExtractor={e => e.type}
         renderItem={({item}) => {
           return (
             <View>
@@ -242,7 +243,9 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
                     cardStyle={styles.horizontalScroll}
                     imgBorderRadius={10}
                     title={i.title}
-                    onPress={() => navigation.navigate('Restaurant')}
+                    onPress={() =>
+                      navigation.navigate('Restaurant', {id: i.id})
+                    }
                   />
                 )}
               />
@@ -279,9 +282,7 @@ const styles = StyleSheet.create({
   rightHeaderBtn: {marginHorizontal: 10},
   text: {fontSize: 10},
   text2: {fontWeight: 'bold', color: 'red', fontSize: 13},
-  text3: {fontWeight: 'bold', color: 'red', fontSize: 13, padding: 5},
   horizontalScroll: {padding: 5},
-  sectionHeader: {color: 'red', padding: 5},
   card: {width: '100%', marginRight: 0, padding: 5},
   menuBtn: {alignSelf: 'center'},
   locationBtn: {height: 30},

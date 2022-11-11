@@ -93,3 +93,35 @@ export interface Photo {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface RestaurantItems {
+  title: string;
+  data: Item[];
+}
+
+export interface RestaurantWithItems {
+  restaurant: Restaurant;
+  restaurantItems: RestaurantItems[];
+}
+
+export interface Item {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  isActive: boolean;
+  details: string;
+  createdAt: Date;
+  updatedAt: Date;
+  restaurantId: string;
+  photo?: Photo;
+}
+
+export interface Variation {
+  id: number;
+  name: string;
+  price: number;
+  itemId: number;
+  createdAt: Date;
+  updatedAt: Date;
+}

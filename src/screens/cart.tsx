@@ -34,10 +34,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
     return (
       <Container
         header={
-          <CustomHeader
-            title="Cart"
-            onLeftPress={() => navigation.navigate('Restaurant')}
-          />
+          <CustomHeader title="Cart" onLeftPress={() => navigation.goBack()} />
         }>
         <View style={styles.emptyCart}>
           <ThemedText>Hungry?</ThemedText>
@@ -55,10 +52,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
   return (
     <Container
       header={
-        <CustomHeader
-          title="Cart"
-          onLeftPress={() => navigation.navigate('Restaurant')}
-        />
+        <CustomHeader title="Cart" onLeftPress={() => navigation.goBack()} />
       }
       footer={
         <View style={styles.footer}>

@@ -56,10 +56,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
   return (
     <Container
       header={
-        <CustomHeader
-          title="Details"
-          onLeftPress={() => navigation.navigate('Restaurant')}
-        />
+        <CustomHeader title="Details" onLeftPress={() => navigation.goBack()} />
       }
       footer={
         <View style={styles.footerContainer}>

@@ -29,7 +29,7 @@ export type RootStackParamList = {
   SignUp: undefined;
   Otp: {email: string; fromSignup?: Boolean};
   ResetPassword: {email: string};
-  Restaurant: undefined;
+  Restaurant: {id: string};
   FoodDetails: undefined;
   Cart: undefined;
   Voucher: undefined;

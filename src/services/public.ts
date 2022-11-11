@@ -6,6 +6,7 @@ import {
   HelpCenterQuery,
   Restaurant,
   Restaurants,
+  RestaurantWithItems,
 } from '../utils/types/user';
 
 const getHelpCenterUrl = `${baseUrl}/public/help-center`;
@@ -46,13 +47,13 @@ export const getAllRestaurants = async () => {
   return res;
 };
 
-export const getRestaurantItem = async (id: number) => {
+export const getRestaurantItems = async (id: string) => {
   const result = await requestHandler(
     `${getRestaurantItemUrl}?id=${id}`,
     'GET',
     undefined,
   );
-  const res: FetchDetails<HelpCenterQuery> = await result.json();
+  const res: FetchDetails<RestaurantWithItems> = await result.json();
 
   return res;
 };

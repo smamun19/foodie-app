@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useRef} from 'react';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {
   SectionList,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   Pressable,
+  Alert,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
@@ -14,19 +15,43 @@ import FoodItem from '../components/FoodItemCardView';
 import FoodItemHeader from '../components/FoodItemHeader';
 import ThemedText from '../components/ThemedText';
 import {RootStackScreensProps} from '../navigators/root-stack';
+import {getRestaurantItems} from '../services/public';
 import {UserContext} from '../services/userContext';
 import {FOOD_DATA} from '../utils/testData';
+import {RestaurantWithItems} from '../utils/types/user';
 
-const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
+const Restaurant = ({
+  navigation,
+  route,
+}: RootStackScreensProps<'Restaurant'>) => {
   const sectionRef = useRef<SectionList>(null);
   const scrollY = useRef(new Animated.Value(0)).current;
   const userInfo = useContext(UserContext);
+  const [restaurantWithItems, setRestaurantWithItems] =
+    useState<RestaurantWithItems>();
 
   const deliveryFee = 15;
   const specialOffer = undefined;
   const range = specialOffer ? 300 : 200;
 
   const voucherValue = userInfo.voucher?.value ?? 0;
+
+  useEffect(() => {
+    if (!restaurantWithItems) {
+      getRestaurantItems(route.params.id)
+        .then(result => setRestaurantWithItems(result.details))
+        .catch(() => {
+          Alert.alert(
+            'Error!',
+            'Unable to process your request at this moment',
+            undefined,
+            {
+              cancelable: true,
+            },
+          );
+        });
+    }
+  }, [restaurantWithItems, route.params.id]);
 
   const totalItem = useMemo(() => {
     return userInfo.cartItem.reduce((previousValue, currentValue) => {
@@ -63,14 +88,16 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         )}
         scrollEventThrottle={16}
         ref={sectionRef}
-        sections={FOOD_DATA}
-        ListHeaderComponent={
+        sections={restaurantWithItems?.restaurantItems ?? FOOD_DATA}
+        ListHeaderComponent={({}) => (
           <FoodItemHeader
             sectionRef={sectionRef}
             specialOffer={specialOffer}
             scrollY={scrollY}
+            title={restaurantWithItems?.restaurant.title}
+            deliveryTime={restaurantWithItems?.restaurant.deliveryTime}
           />
-        }
+        )}
         renderSectionHeader={({section}) => (
           <ThemedText style={styles.headerText}>{section.title}</ThemedText>
         )}
@@ -78,7 +105,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           <FoodItem
             price={item.price}
             name={item.name}
-            description={item.description}
+            description={item.details}
             onPress={() => navigation.navigate('FoodDetails')}
           />
         )}
@@ -130,7 +157,7 @@ const Restaurant = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
         ]}>
         <FlatList
           horizontal={true}
-          data={FOOD_DATA}
+          data={restaurantWithItems?.restaurantItems}
           renderItem={({item, index}) => (
             <View style={styles.view6}>
               <TouchableOpacity
