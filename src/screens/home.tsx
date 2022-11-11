@@ -1,7 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useCallback, useContext, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
-import {FlatList, ScrollView} from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from '../components/CustomButton';
 import CustomCard from '../components/CustomCard';
@@ -9,13 +9,39 @@ import Spacer from '../components/Spacer';
 import CustomInput from '../components/TextInput';
 import ThemedText from '../components/ThemedText';
 import {DrawerScreensProps} from '../navigators/drawer';
-import {getRestaurants} from '../services/public';
+import {getAllRestaurants, getRestaurants} from '../services/public';
 import {UserContext} from '../services/userContext';
-import {Restaurants} from '../utils/types/user';
+import {Restaurant, Restaurants} from '../utils/types/user';
 
 const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
   const {address} = useContext(UserContext);
   const [restaurants, setRestaurants] = useState<Restaurants[]>();
+  const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>();
+
+  const getAllRestaurantsHandler = async () => {
+    try {
+      const {statusCode, message, details} = await getAllRestaurants();
+
+      if (statusCode !== 200) {
+        return Alert.alert('Error!', message, undefined, {
+          cancelable: true,
+        });
+      }
+      if (!details || details.length === 0) {
+        return null;
+      }
+      setAllRestaurants(details);
+    } catch (error) {
+      return Alert.alert(
+        'Error!',
+        'Unable to process your request at this moment',
+        undefined,
+        {
+          cancelable: true,
+        },
+      );
+    }
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -173,11 +199,41 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
         </View>
       </View>
       <Spacer />
-      <ScrollView>
-        {restaurants.map(item => {
+      <FlatList
+        data={restaurants}
+        onScroll={({nativeEvent}) => {
+          if (!allRestaurants) {
+            if (
+              nativeEvent.contentSize.height -
+                nativeEvent.layoutMeasurement.height -
+                nativeEvent.contentOffset.y <
+              250
+            ) {
+              getAllRestaurantsHandler();
+            }
+          }
+        }}
+        ListFooterComponent={() => (
+          <>
+            <ThemedText style={styles.headerText}>All Restaurants</ThemedText>
+            <FlatList
+              data={allRestaurants}
+              renderItem={({item}) => (
+                <CustomCard
+                  cardStyle={styles.card}
+                  imgStyle={styles.card}
+                  title={item.title}
+                  imgBorderRadius={10}
+                />
+              )}
+            />
+          </>
+        )}
+        keyExtractor={e => e.type}
+        renderItem={({item}) => {
           return (
-            <View key={item.type}>
-              <ThemedText>{item.type}</ThemedText>
+            <View>
+              <ThemedText style={styles.headerText}>{item.type}</ThemedText>
               <FlatList
                 data={item.data}
                 horizontal={true}
@@ -192,8 +248,8 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
               />
             </View>
           );
-        })}
-      </ScrollView>
+        }}
+      />
     </View>
   );
 };
@@ -230,6 +286,7 @@ const styles = StyleSheet.create({
   menuBtn: {alignSelf: 'center'},
   locationBtn: {height: 30},
   locationBtnText: {color: 'red'},
+  headerText: {padding: 5, color: 'red'},
 });
 
 export default Home;
