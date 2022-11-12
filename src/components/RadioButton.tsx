@@ -1,15 +1,19 @@
 import React from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {Variation} from '../utils/types/user';
 import ThemedText from './ThemedText';
 
 interface CheckBoxProps {
-  data: Record<string, any>[];
-  setCheck: React.Dispatch<React.SetStateAction<Record<string, any>>>;
-  check: Record<string, any>;
+  data: Variation[];
+  setCheck: React.Dispatch<React.SetStateAction<Variation | undefined>>;
+  check?: Variation;
 }
 
 const RadioButton = ({data, check, setCheck}: CheckBoxProps) => {
+  if (data.length === 0 || !setCheck) {
+    return null;
+  }
   const click = (index: number) => {
     setCheck(data[index]);
   };
@@ -25,12 +29,12 @@ const RadioButton = ({data, check, setCheck}: CheckBoxProps) => {
             <View style={styles.lebel}>
               <MaterialIcons
                 name={
-                  check.name === item.name
+                  check?.name === item.name
                     ? 'check-circle'
                     : 'check-circle-outline'
                 }
                 size={20}
-                color={check.name === item.name ? 'red' : 'grey'}
+                color={check?.name === item.name ? 'red' : 'grey'}
               />
               <ThemedText style={styles.name}>{item.name}</ThemedText>
             </View>

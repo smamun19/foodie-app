@@ -20,7 +20,7 @@ const FoodItem = ({name, description, price, ...rest}: CardProps) => {
       <View style={styles.left}>
         <ThemedText style={styles.titleText}>{name}</ThemedText>
         <ThemedText numberOfLines={2}>{description}</ThemedText>
-        <ThemedText>{price} tk</ThemedText>
+        <ThemedText>Tk {price}</ThemedText>
       </View>
       <View style={styles.right}>
         <Image
@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 5,
+    borderBottomColor: '#dedddc',
+    borderBottomWidth: 1,
   },
   left: {flex: 1, paddingRight: 10},
   right: {},

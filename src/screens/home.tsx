@@ -59,75 +59,7 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
   }, [restaurants]);
 
   if (!restaurants) {
-    return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.topHeader}>
-            <View style={styles.leftHeader}>
-              <TouchableOpacity
-                style={styles.menuBtn}
-                onPress={() => navigation.toggleDrawer()}>
-                <MaterialIcons name="menu" size={30} color="red" />
-              </TouchableOpacity>
-              <View style={styles.leftHeader1}>
-                {address.length !== 0 ? (
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('AddressEdit', {
-                        address: address[0],
-                        edit: true,
-                      })
-                    }>
-                    <ThemedText style={styles.text2}>
-                      {address[0].label ?? address[0].name}
-                    </ThemedText>
-                    <ThemedText style={styles.text}>
-                      {address[0].details}
-                    </ThemedText>
-                  </TouchableOpacity>
-                ) : (
-                  <CustomButton
-                    containerStyle={styles.locationBtn}
-                    textStyle={styles.locationBtnText}
-                    title="Add an address"
-                    onPress={() =>
-                      navigation.navigate('AddressEdit', {edit: false})
-                    }
-                  />
-                )}
-              </View>
-            </View>
-            <View style={styles.rightHeader}>
-              <TouchableOpacity style={styles.rightHeaderBtn}>
-                <MaterialIcons
-                  onPress={() =>
-                    navigation.navigate('Drawer', {screen: 'Favourites'})
-                  }
-                  name="favorite"
-                  size={22}
-                  color="red"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <MaterialIcons
-                  onPress={() => navigation.navigate('Cart')}
-                  name="shopping-cart"
-                  size={22}
-                  color="red"
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View>
-            <CustomInput
-              containerStyle={styles.bottomHeader}
-              placeholder="Search for restaurants"
-            />
-          </View>
-        </View>
-        <Spacer />
-      </View>
-    );
+    return null;
   }
 
   return (

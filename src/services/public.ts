@@ -4,6 +4,7 @@ import {FetchDetails} from '../utils/types/api';
 import {
   HelpCenter,
   HelpCenterQuery,
+  Item,
   Restaurant,
   Restaurants,
   RestaurantWithItems,
@@ -13,7 +14,8 @@ const getHelpCenterUrl = `${baseUrl}/public/help-center`;
 const getHelpCenterQueryUrl = `${baseUrl}/public/help-center-query`;
 const getRestaurantsUrl = `${baseUrl}/public/restaurants`;
 const getAllRestaurantsUrl = `${baseUrl}/public/all-restaurants`;
-const getRestaurantItemUrl = `${baseUrl}/public/restaurant/items`;
+const getRestaurantItemsUrl = `${baseUrl}/public/restaurant/items`;
+const getRestaurantItemUrl = `${baseUrl}/public/restaurant/item`;
 
 export const getHelpCenter = async () => {
   const result = await requestHandler(getHelpCenterUrl, 'GET', undefined);
@@ -49,11 +51,22 @@ export const getAllRestaurants = async () => {
 
 export const getRestaurantItems = async (id: string) => {
   const result = await requestHandler(
-    `${getRestaurantItemUrl}?id=${id}`,
+    `${getRestaurantItemsUrl}?id=${id}`,
     'GET',
     undefined,
   );
   const res: FetchDetails<RestaurantWithItems> = await result.json();
+
+  return res;
+};
+
+export const getRestaurantItem = async (id: number) => {
+  const result = await requestHandler(
+    `${getRestaurantItemUrl}?id=${id}`,
+    'GET',
+    undefined,
+  );
+  const res: FetchDetails<Item> = await result.json();
 
   return res;
 };

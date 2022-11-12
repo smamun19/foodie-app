@@ -115,6 +115,7 @@ export interface Item {
   updatedAt: Date;
   restaurantId: string;
   photo?: Photo;
+  variation: Variation[];
 }
 
 export interface Variation {

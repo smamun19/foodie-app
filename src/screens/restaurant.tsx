@@ -17,7 +17,6 @@ import ThemedText from '../components/ThemedText';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {getRestaurantItems} from '../services/public';
 import {UserContext} from '../services/userContext';
-import {FOOD_DATA} from '../utils/testData';
 import {RestaurantWithItems} from '../utils/types/user';
 
 const Restaurant = ({
@@ -67,6 +66,10 @@ const Restaurant = ({
     return subTotal ?? 0 + deliveryFee - voucherValue;
   }, [userInfo.cartItem, voucherValue]);
 
+  if (!restaurantWithItems) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <FocusAwareStatusBar
@@ -88,7 +91,8 @@ const Restaurant = ({
         )}
         scrollEventThrottle={16}
         ref={sectionRef}
-        sections={restaurantWithItems?.restaurantItems ?? FOOD_DATA}
+        sections={restaurantWithItems?.restaurantItems}
+        renderSectionFooter={() => <View style={styles.sectionFooter} />}
         ListHeaderComponent={({}) => (
           <FoodItemHeader
             sectionRef={sectionRef}
@@ -106,7 +110,7 @@ const Restaurant = ({
             price={item.price}
             name={item.name}
             description={item.details}
-            onPress={() => navigation.navigate('FoodDetails')}
+            onPress={() => navigation.navigate('FoodDetails', {id: item.id})}
           />
         )}
       />
@@ -258,6 +262,7 @@ const styles = StyleSheet.create({
   },
   specialOffer: {top: 340},
   noSpecialOffer: {top: 240},
+  sectionFooter: {backgroundColor: '#f5f4f2', height: 15},
 });
 
 export default Restaurant;

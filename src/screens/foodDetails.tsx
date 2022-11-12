@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react';
-import {StyleSheet, View, Image, Pressable} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {StyleSheet, View, Image, Pressable, Alert} from 'react-native';
 import RadioButton from '../components/RadioButton';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
@@ -11,28 +11,43 @@ import CustomInput from '../components/TextInput';
 import {UserContext} from '../services/userContext';
 
 import ThemedText from '../components/ThemedText';
+import {Item, Variation} from '../utils/types/user';
+import {getRestaurantItem} from '../services/public';
 
-const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
-  const foodDetails = {
-    id: 1,
-    name: 'Burger',
-    variation: [
-      {name: 'small', price: 100},
-      {name: 'medium', price: 150},
-      {name: 'large', price: 200},
-      {name: ' extra large', price: 300},
-    ],
-    price: undefined,
-  };
-
-  const [check, setCheck] = useState<Record<string, any>>({});
+const FoodDetails = ({
+  navigation,
+  route,
+}: RootStackScreensProps<'FoodDetails'>) => {
+  const [check, setCheck] = useState<Variation | undefined>();
   const [counter, setCounter] = useState<number>(1);
   const [instructions, setInstructions] = useState<string>('');
+  const [foodDetails, setFoodDetails] = useState<Item>();
 
   const userInfo = useContext(UserContext);
 
+  useEffect(() => {
+    if (!foodDetails) {
+      getRestaurantItem(route.params.id)
+        .then(result => setFoodDetails(result.details))
+        .catch(() => {
+          Alert.alert(
+            'Error!',
+            'Unable to process your request at this moment',
+            undefined,
+            {
+              cancelable: true,
+            },
+          );
+        });
+    }
+  }, [foodDetails, route.params.id]);
+
+  if (!foodDetails) {
+    return null;
+  }
+
   const addToCart = () => {
-    if (check.name) {
+    if (check?.name) {
       userInfo.addItem({
         id: foodDetails.id,
         variation: check.name,
@@ -53,6 +68,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
     });
     navigation.goBack();
   };
+
   return (
     <Container
       header={
@@ -77,18 +93,25 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
           </View>
 
           <CustomButton
-            disabled={foodDetails.variation && !check.name}
+            disabled={
+              !check?.name && foodDetails.variation.length === 0
+                ? false
+                : foodDetails.variation.length !== 0 && !!check?.name
+                ? false
+                : true
+            }
             onPress={addToCart}
             textStyle={styles.btnColor}
             containerStyle={[
               styles.btn,
               // eslint-disable-next-line react-native/no-inline-styles
               {
-                backgroundColor: !foodDetails.variation
-                  ? 'red'
-                  : !check.name
-                  ? 'grey'
-                  : 'red',
+                backgroundColor:
+                  foodDetails.variation.length === 0
+                    ? 'red'
+                    : !check?.name
+                    ? 'grey'
+                    : 'red',
               },
             ]}
             title="Add to cart"
@@ -101,20 +124,20 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
       />
       <View style={styles.view1}>
         <View style={styles.left}>
-          <ThemedText style={styles.titleText}>Food name</ThemedText>
+          <ThemedText style={styles.titleText}>{foodDetails.name}</ThemedText>
           <ThemedText numberOfLines={2} style={styles.desText}>
-            description
+            {foodDetails.details}
           </ThemedText>
         </View>
         <View style={styles.right}>
           <ThemedText style={styles.priceText}>
-            Tk {check.price ?? foodDetails.price}
+            Tk {check?.price ?? foodDetails.price}
           </ThemedText>
         </View>
       </View>
       <Spacer />
       <View>
-        {foodDetails.variation && (
+        {foodDetails.variation.length !== 0 ? (
           <View>
             <View style={styles.view1}>
               <View style={styles.left}>
@@ -135,7 +158,7 @@ const FoodDetails = ({navigation}: RootStackScreensProps<'Restaurant'>) => {
               />
             </View>
           </View>
-        )}
+        ) : null}
       </View>
       <View style={styles.extra}>
         <ThemedText style={styles.titleText}>Special instructions</ThemedText>
