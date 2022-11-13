@@ -1,7 +1,7 @@
 import {baseUrl} from '../constants/api';
 import {requestHandler} from '../utils/request';
 import {FetchDetails, FetchOk} from '../utils/types/api';
-import {Address, GeoLocation, User, Voucher} from '../utils/types/user';
+import {Address, GeoLocation, Order, User, Voucher} from '../utils/types/user';
 const addVoucherUrl = `${baseUrl}/user/addvoucher`;
 const userInfoUrl = `${baseUrl}/user/userinfo`;
 const editInfoUrl = `${baseUrl}/user/editinfo`;
@@ -11,6 +11,7 @@ const editAddressUrl = `${baseUrl}/user/edit-address`;
 const removeAddressUrl = `${baseUrl}/user/remove-address`;
 const reverseGeocodingUrl = `${baseUrl}/user/get-geo-address`;
 const getAddressUrl = `${baseUrl}/user/myaddresses`;
+const orderItemUrl = `${baseUrl}/user/order-item`;
 
 export const addVoucher = async (name: string, token?: string) => {
   const result = await requestHandler(
@@ -130,6 +131,21 @@ export const getAddress = async (token?: string) => {
 export const removeAddress = async (id: number, token?: string) => {
   const result = await requestHandler(removeAddressUrl, 'POST', {id}, token);
   const res: FetchDetails<Address[]> = await result.json();
+
+  return res;
+};
+
+export const orderItem = async (
+  {data, restaurantId}: Order,
+  token?: string,
+) => {
+  const result = await requestHandler(
+    orderItemUrl,
+    'POST',
+    {data, restaurantId},
+    token,
+  );
+  const res: FetchOk = await result.json();
 
   return res;
 };

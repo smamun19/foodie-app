@@ -168,7 +168,8 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
               return (
                 <View key={e.compositeId} style={styles.odChildren}>
                   <ThemedText>
-                    {e.quantity}x {e.name} - {e.variation}
+                    {e.quantity}x {e.name}
+                    {e.variation ? `- ${e.variation}` : null}
                   </ThemedText>
                   <ThemedText>Tk {e.price * e.quantity}</ThemedText>
                 </View>

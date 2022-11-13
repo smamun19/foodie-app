@@ -90,7 +90,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
         {userInfo.cartItem.map(e => (
           <CartCard
             name={e.name}
-            id={e.id}
+            itemId={e.itemId}
             price={e.price}
             quantity={e.quantity}
             variation={e.variation}

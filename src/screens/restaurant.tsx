@@ -110,7 +110,12 @@ const Restaurant = ({
             price={item.price}
             name={item.name}
             description={item.details}
-            onPress={() => navigation.navigate('FoodDetails', {id: item.id})}
+            onPress={() =>
+              navigation.navigate('FoodDetails', {
+                id: item.id,
+                restaurantId: route.params.id,
+              })
+            }
           />
         )}
       />

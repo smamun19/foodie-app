@@ -126,3 +126,15 @@ export interface Variation {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface Order {
+  restaurantId: string;
+  data: OrderItem[];
+}
+
+export interface OrderItem {
+  itemId?: number;
+  price: number;
+  variation?: string;
+  quantity: number;
+}

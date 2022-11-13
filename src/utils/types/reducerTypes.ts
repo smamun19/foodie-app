@@ -9,7 +9,7 @@ export type Roles =
   | 'BANNED';
 
 export interface CartItemTypes {
-  id?: number;
+  itemId?: number;
   name?: string;
   price: number;
   variation?: string;
@@ -23,6 +23,7 @@ export interface UserAuthParams {
   token?: string;
   name?: string;
   phone?: string;
+  restaurantId?: string;
   address: Address[];
   email?: string;
   voucher?: Voucher;
@@ -38,6 +39,7 @@ export interface UserContextParams {
   token?: string;
   name?: string;
   phone?: string;
+  restaurantId?: string;
   address: Address[];
   email?: string;
   voucher?: Voucher;
@@ -52,7 +54,7 @@ export interface UserContextParams {
   removeVoucher: () => void;
   hydrate: (userData: UserAuthParams) => void;
   logout: () => void;
-  addItem: (item: CartItemTypes) => void;
+  addItem: (item: CartItemTypes, restaurantId?: string) => void;
   removeItem: (item: CartItemTypes) => void;
 }
 
@@ -69,6 +71,7 @@ export interface ActionParams {
   type: ActionType;
   payload?: UserAuthParams;
   item: CartItemTypes;
+  restaurantId?: string;
 }
 export interface ProviderProps {
   // any props that come into the component

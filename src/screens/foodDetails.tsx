@@ -47,25 +47,42 @@ const FoodDetails = ({
   }
 
   const addToCart = () => {
-    if (check?.name) {
-      userInfo.addItem({
-        id: foodDetails.id,
-        variation: check.name,
-        price: check.price,
-        quantity: counter,
-        name: foodDetails.name,
-        compositeId: `${foodDetails.id}${check.name}`,
+    if (
+      userInfo.restaurantId &&
+      userInfo.restaurantId !== route.params.restaurantId
+    ) {
+      userInfo.hydrate({
+        cartItem: [],
+        address: userInfo.address,
+        restaurantId: undefined,
       });
+    }
+
+    if (check?.name) {
+      userInfo.addItem(
+        {
+          itemId: foodDetails.id,
+          variation: check.name,
+          price: check.price,
+          quantity: counter,
+          name: foodDetails.name,
+          compositeId: `${foodDetails.id}${check.name}`,
+        },
+        route.params.restaurantId,
+      );
       return navigation.goBack();
     }
 
-    userInfo.addItem({
-      id: foodDetails.id,
-      price: foodDetails.price ?? 0,
-      quantity: counter,
-      name: foodDetails.name,
-      compositeId: `${foodDetails.id}`,
-    });
+    userInfo.addItem(
+      {
+        itemId: foodDetails.id,
+        price: foodDetails.price,
+        quantity: counter,
+        name: foodDetails.name,
+        compositeId: `${foodDetails.id}`,
+      },
+      route.params.restaurantId,
+    );
     navigation.goBack();
   };
 

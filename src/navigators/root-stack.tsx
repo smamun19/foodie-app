@@ -30,10 +30,14 @@ export type RootStackParamList = {
   Otp: {email: string; fromSignup?: Boolean};
   ResetPassword: {email: string};
   Restaurant: {id: string};
-  FoodDetails: {id: number};
+  FoodDetails: {id: number; restaurantId: string};
   Cart: undefined;
   Voucher: undefined;
-  Checkout: {totalAmount: number; subTotal?: number; deliveryFee: number};
+  Checkout: {
+    totalAmount: number;
+    subTotal?: number;
+    deliveryFee: number;
+  };
   ProfileEdit: {title: string};
   AddressEdit: {edit: boolean; address?: Address};
   HelpQuery: {id: number};
