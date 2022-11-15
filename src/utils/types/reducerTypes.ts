@@ -24,6 +24,7 @@ export interface UserAuthParams {
   name?: string;
   phone?: string;
   restaurantId?: string;
+  currentOrderId?: string;
   address: Address[];
   email?: string;
   voucher?: Voucher;
@@ -40,6 +41,7 @@ export interface UserContextParams {
   name?: string;
   phone?: string;
   restaurantId?: string;
+  currentOrderId?: string;
   address: Address[];
   email?: string;
   voucher?: Voucher;

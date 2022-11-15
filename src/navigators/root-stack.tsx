@@ -35,7 +35,7 @@ export type RootStackParamList = {
   Voucher: undefined;
   Checkout: {
     totalAmount: number;
-    subTotal?: number;
+    subTotal: number;
     deliveryFee: number;
   };
   ProfileEdit: {title: string};

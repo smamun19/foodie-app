@@ -99,6 +99,7 @@ const Provider: FC<ProviderProps> = ({children}) => {
     phone: state.phone,
     address: state.address,
     restaurantId: state.restaurantId,
+    currentOrderId: state.currentOrderId,
     id: state.id,
     updatedAt: state.updatedAt,
     roles: state.roles,
@@ -175,6 +176,7 @@ const Provider: FC<ProviderProps> = ({children}) => {
       id,
       darkMode,
       restaurantId,
+      currentOrderId,
     } = state;
     setItem('userInfo', {
       name,
@@ -188,6 +190,7 @@ const Provider: FC<ProviderProps> = ({children}) => {
       address,
       id,
       restaurantId,
+      currentOrderId,
       darkMode,
     });
   }, [state]);

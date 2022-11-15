@@ -129,6 +129,8 @@ export interface Variation {
 
 export interface Order {
   restaurantId: string;
+  totalFee: number;
+  subTotalFee: number;
   data: OrderItem[];
 }
 
@@ -137,4 +139,29 @@ export interface OrderItem {
   price: number;
   variation?: string;
   quantity: number;
+}
+
+export interface OrderDetails {
+  id: string;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+  restaurantId: string;
+  subTotalFee: number;
+  totalFee: number;
+  restaurant: Restaurant;
+  items: OrderedItem[];
+  voucher?: Voucher;
+}
+
+export interface OrderedItem {
+  itemId: number;
+  quantity: number;
+  price: number;
+  variation: string;
+  createdAt: Date;
+  updatedAt: Date;
+  orderId: string;
+  item: Item;
 }

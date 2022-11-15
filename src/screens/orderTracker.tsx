@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useCallback, useContext, useRef, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -8,16 +8,19 @@ import {
   UIManager,
   ScrollView,
   LayoutAnimation,
+  Alert,
 } from 'react-native';
 import Container from '../components/Container';
 import CustomHeader from '../components/CustomHeader';
 import Spacer from '../components/Spacer';
 import {RootStackScreensProps} from '../navigators/root-stack';
 import {UserContext} from '../services/userContext';
-import {Voucher} from '../utils/types/user';
+import {OrderDetails, Voucher} from '../utils/types/user';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import ThemedText from '../components/ThemedText';
+import {useFocusEffect} from '@react-navigation/native';
+import {currentOrder} from '../services/user';
 
 if (
   Platform.OS === 'android' &&
@@ -26,7 +29,7 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-interface OrderDetailsProps {
+interface OrderInfoProps {
   id: string;
   restaurant: string;
   address: string;
@@ -41,7 +44,7 @@ interface ViewDetailsProps {
   total: number;
 }
 
-const OrderDetails = ({address, id, restaurant, total}: OrderDetailsProps) => {
+const OrderInfo = ({address, id, restaurant, total}: OrderInfoProps) => {
   return (
     <View style={styles.od}>
       <View style={styles.odChildren}>
@@ -90,7 +93,7 @@ const ViewDetails = ({
       {voucher ? (
         <View style={styles.odChildren}>
           <ThemedText>Voucher:{voucher.name}</ThemedText>
-          <ThemedText>Tk {voucher.value}</ThemedText>
+          <ThemedText>-Tk {voucher.value}</ThemedText>
         </View>
       ) : null}
       <View style={styles.odChildren}>
@@ -105,6 +108,39 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
   const userInfo = useContext(UserContext);
   const [grow, setGrow] = useState<Boolean>(false);
   const scrollViewRef = useRef<ScrollView>(null);
+  const [currentOrderDetails, setCurrentOrderDetials] =
+    useState<OrderDetails>();
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!userInfo.currentOrderId) {
+        return Alert.alert(
+          'Error!',
+          'Unable to process your request at this moment',
+          undefined,
+          {
+            cancelable: true,
+          },
+        );
+      }
+      currentOrder(userInfo.currentOrderId, userInfo.token)
+        .then(result => setCurrentOrderDetials(result.details))
+        .catch(() => {
+          Alert.alert(
+            'Error!',
+            'Unable to process your request at this moment',
+            undefined,
+            {
+              cancelable: true,
+            },
+          );
+        });
+    }, [userInfo.currentOrderId, userInfo.token]),
+  );
+
+  if (!currentOrderDetails) {
+    return null;
+  }
 
   const ViewDetailsHanlder = () => {
     setGrow(!grow);
@@ -140,11 +176,11 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
       <Spacer height={20} />
       <View>
         <ThemedText style={styles.boldText}>Order Details</ThemedText>
-        <OrderDetails
+        <OrderInfo
           address="Delivery address"
-          id="das564faf"
-          restaurant="Restaurant name"
-          total={300}
+          id={currentOrderDetails.id}
+          restaurant={currentOrderDetails.restaurant.title}
+          total={currentOrderDetails.totalFee}
         />
       </View>
       <Spacer height={10} />
@@ -164,11 +200,13 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
       {grow && (
         <View>
           <View>
-            {userInfo.cartItem.map(e => {
+            {currentOrderDetails.items.map(e => {
               return (
-                <View key={e.compositeId} style={styles.odChildren}>
+                <View
+                  key={`${e.itemId}-${e.orderId}-${e.price}`}
+                  style={styles.odChildren}>
                   <ThemedText>
-                    {e.quantity}x {e.name}
+                    {e.quantity}x {e.item.name}
                     {e.variation ? `- ${e.variation}` : null}
                   </ThemedText>
                   <ThemedText>Tk {e.price * e.quantity}</ThemedText>
@@ -177,14 +215,14 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
             })}
             <View style={[styles.odChildren, styles.boldBorderTop]}>
               <ThemedText style={styles.boldText}>Subtotal</ThemedText>
-              <ThemedText>Tk 300</ThemedText>
+              <ThemedText>Tk {currentOrderDetails.subTotalFee}</ThemedText>
             </View>
 
             <ViewDetails
-              total={300}
+              total={currentOrderDetails.totalFee}
               deliveryFee={15}
               tax={12}
-              voucher={userInfo.voucher}
+              voucher={currentOrderDetails.voucher}
             />
           </View>
           <Spacer height={20} />
@@ -196,7 +234,7 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
                 Cash on delivery
               </ThemedText>
             </View>
-            <ThemedText>Tk 300</ThemedText>
+            <ThemedText>{currentOrderDetails.totalFee}</ThemedText>
           </View>
         </View>
       )}

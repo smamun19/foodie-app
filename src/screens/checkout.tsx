@@ -11,7 +11,7 @@ import Spacer from '../components/Spacer';
 import Divider from '../components/Divider';
 import BingMapsView from 'react-native-bing-maps';
 import ThemedText from '../components/ThemedText';
-import {orderItem} from '../services/user';
+import {createOrder} from '../services/user';
 
 const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
   const userInfo = useContext(UserContext);
@@ -21,16 +21,31 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
 
   const orderHandler = async () => {
     try {
-      await orderItem(
-        {data: userInfo.cartItem, restaurantId: userInfo.restaurantId},
+      if (!userInfo.restaurantId) {
+        throw new Error();
+      }
+      const {details, message, statusCode} = await createOrder(
+        {
+          data: userInfo.cartItem,
+          restaurantId: userInfo.restaurantId,
+          subTotalFee: route.params.subTotal,
+          totalFee: route.params.totalAmount,
+        },
+        userInfo.voucher?.id,
         userInfo.token,
       );
+      if (statusCode !== 201) {
+        return Alert.alert('Error!', message, undefined, {
+          cancelable: true,
+        });
+      }
+      await userInfo.hydrate({
+        cartItem: [],
+        address: userInfo.address,
+        currentOrderId: details.id,
+        voucher: undefined,
+      });
 
-      // if (res.statusCode !== 200) {
-      //   return Alert.alert('Error!', res.message, undefined, {
-      //     cancelable: true,
-      //   });
-      // }
       navigation.navigate('OrderTracker');
     } catch (error) {
       return Alert.alert(
