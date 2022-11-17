@@ -49,6 +49,13 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
     );
   }
 
+  const addMoreItemHandler = () => {
+    if (!userInfo.restaurantId) {
+      return null;
+    }
+    navigation.navigate('Restaurant', {id: userInfo.restaurantId});
+  };
+
   return (
     <Container
       header={
@@ -104,6 +111,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
           containerStyle={styles.addMoreBtnContainer}
           textStyle={styles.addMoreBtnText}
           title="Add more items"
+          onPress={addMoreItemHandler}
         />
         <Spacer height={30} />
         <View style={styles.subTotal}>

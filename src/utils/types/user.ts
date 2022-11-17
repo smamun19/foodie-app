@@ -8,6 +8,7 @@ export interface User {
   phone?: string;
   email: string;
   address: Address[];
+  currentOrderId?: string;
   voucher?: Voucher;
   createdAt: string;
   updatedAt: string;

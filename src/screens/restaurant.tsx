@@ -36,21 +36,19 @@ const Restaurant = ({
   const voucherValue = userInfo.voucher?.value ?? 0;
 
   useEffect(() => {
-    if (!restaurantWithItems) {
-      getRestaurantItems(route.params.id)
-        .then(result => setRestaurantWithItems(result.details))
-        .catch(() => {
-          Alert.alert(
-            'Error!',
-            'Unable to process your request at this moment',
-            undefined,
-            {
-              cancelable: true,
-            },
-          );
-        });
-    }
-  }, [restaurantWithItems, route.params.id]);
+    getRestaurantItems(route.params.id)
+      .then(result => setRestaurantWithItems(result.details))
+      .catch(() => {
+        Alert.alert(
+          'Error!',
+          'Unable to process your request at this moment',
+          undefined,
+          {
+            cancelable: true,
+          },
+        );
+      });
+  }, [route.params.id]);
 
   const totalItem = useMemo(() => {
     return userInfo.cartItem.reduce((previousValue, currentValue) => {
