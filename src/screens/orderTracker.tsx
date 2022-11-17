@@ -155,7 +155,7 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
       header={
         <CustomHeader
           title="Your order"
-          onLeftPress={() => navigation.goBack()}
+          onLeftPress={() => navigation.navigate('Drawer')}
           name="help"
           color="red"
           size={30}

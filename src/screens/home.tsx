@@ -1,5 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Pressable,
+} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from '../components/CustomButton';
@@ -13,7 +19,7 @@ import {UserContext} from '../services/userContext';
 import {Restaurant, Restaurants} from '../utils/types/user';
 
 const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
-  const {address} = useContext(UserContext);
+  const {address, currentOrderId} = useContext(UserContext);
   const [restaurants, setRestaurants] = useState<Restaurants[]>();
   const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>();
 
@@ -185,6 +191,19 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
           );
         }}
       />
+      {currentOrderId ? (
+        <Pressable
+          onPress={() => {
+            navigation.navigate('OrderTracker');
+          }}
+          style={styles.conditionalFooter}>
+          <ThemedText>restaurant name</ThemedText>
+          <View style={styles.orderStatus}>
+            <ThemedText style={styles.footerText1}>Order status</ThemedText>
+            <ThemedText style={styles.footerText}> OrderTime</ThemedText>
+          </View>
+        </Pressable>
+      ) : null}
     </View>
   );
 };
@@ -220,6 +239,21 @@ const styles = StyleSheet.create({
   locationBtn: {height: 30},
   locationBtnText: {color: 'red'},
   headerText: {padding: 5, color: 'red'},
+  conditionalFooter: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    backgroundColor: 'grey',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    height: 80,
+  },
+  footerText: {alignSelf: 'center'},
+  footerText1: {alignSelf: 'center', flex: 1},
+  orderStatus: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default Home;
