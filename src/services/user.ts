@@ -20,6 +20,7 @@ const reverseGeocodingUrl = `${baseUrl}/user/get-geo-address`;
 const getAddressUrl = `${baseUrl}/user/myaddresses`;
 const orderItemUrl = `${baseUrl}/user/order-item`;
 const currentOrderUrl = `${baseUrl}/user/current-order`;
+const findCurrentOrderUrl = `${baseUrl}/user/find-current-order`;
 
 export const addVoucher = async (name: string, token?: string) => {
   const result = await requestHandler(
@@ -166,6 +167,14 @@ export const currentOrder = async (id: string, token?: string) => {
     undefined,
     token,
   );
+  const res: FetchDetails<OrderDetails> = await result.json();
+
+  return res;
+};
+
+export const findCurrentOrder = async (id: string, token?: string) => {
+  const result = await requestHandler(findCurrentOrderUrl, 'POST', {id}, token);
+
   const res: FetchDetails<OrderDetails> = await result.json();
 
   return res;

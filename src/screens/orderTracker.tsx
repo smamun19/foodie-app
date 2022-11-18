@@ -170,7 +170,9 @@ const OrderTracker = ({navigation}: RootStackScreensProps<'OrderTracker'>) => {
           style={styles.img}
         />
         <ThemedText style={styles.orderStatusText}>
-          Got your order {userInfo.name}!
+          {currentOrderDetails.status === 'Pending'
+            ? `Got your order ${userInfo.name}!`
+            : `Order Status: ${currentOrderDetails.status}`}
         </ThemedText>
       </View>
       <Spacer height={20} />

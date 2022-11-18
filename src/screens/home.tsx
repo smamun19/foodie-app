@@ -1,11 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  Pressable,
-} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from '../components/CustomButton';
@@ -15,13 +10,43 @@ import CustomInput from '../components/TextInput';
 import ThemedText from '../components/ThemedText';
 import {DrawerScreensProps} from '../navigators/drawer';
 import {getAllRestaurants, getRestaurants} from '../services/public';
+import {findCurrentOrder} from '../services/user';
 import {UserContext} from '../services/userContext';
-import {Restaurant, Restaurants} from '../utils/types/user';
+import {OrderDetails, Restaurant, Restaurants} from '../utils/types/user';
 
 const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
-  const {address, currentOrderId} = useContext(UserContext);
+  const userInfo = useContext(UserContext);
   const [restaurants, setRestaurants] = useState<Restaurants[]>();
   const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>();
+  const [orderInfo, setOrderInfo] = useState<OrderDetails>();
+
+  useFocusEffect(
+    useCallback(() => {
+      if (userInfo.currentOrderId) {
+        findCurrentOrder(userInfo.currentOrderId, userInfo.token)
+          .then(result => {
+            if (!result.details) {
+              userInfo.hydrate({
+                cartItem: userInfo.cartItem,
+                address: userInfo.address,
+                currentOrderId: undefined,
+              });
+            }
+            setOrderInfo(result.details);
+          })
+          .catch(() => {
+            Alert.alert(
+              'Error!',
+              'Unable to process your request at this moment',
+              undefined,
+              {
+                cancelable: true,
+              },
+            );
+          });
+      }
+    }, [userInfo]),
+  );
 
   const getAllRestaurantsHandler = async () => {
     try {
@@ -79,19 +104,19 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
               <MaterialIcons name="menu" size={30} color="red" />
             </TouchableOpacity>
             <View style={styles.leftHeader1}>
-              {address.length !== 0 ? (
+              {userInfo.address.length !== 0 ? (
                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate('AddressEdit', {
-                      address: address[0],
+                      address: userInfo.address[0],
                       edit: true,
                     })
                   }>
                   <ThemedText style={styles.text2}>
-                    {address[0].label ?? address[0].name}
+                    {userInfo.address[0].label ?? userInfo.address[0].name}
                   </ThemedText>
                   <ThemedText style={styles.text}>
-                    {address[0].details}
+                    {userInfo.address[0].details}
                   </ThemedText>
                 </TouchableOpacity>
               ) : (
@@ -191,18 +216,22 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
           );
         }}
       />
-      {currentOrderId ? (
-        <Pressable
-          onPress={() => {
-            navigation.navigate('OrderTracker');
-          }}
-          style={styles.conditionalFooter}>
-          <ThemedText>restaurant name</ThemedText>
-          <View style={styles.orderStatus}>
-            <ThemedText style={styles.footerText1}>Order status</ThemedText>
-            <ThemedText style={styles.footerText}> OrderTime</ThemedText>
-          </View>
-        </Pressable>
+      {orderInfo ? (
+        <View style={styles.btnContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('OrderTracker');
+            }}
+            style={styles.conditionalFooter}>
+            <ThemedText>{orderInfo.restaurant.title}</ThemedText>
+            <View style={styles.orderStatus}>
+              <ThemedText style={styles.footerText1}>
+                {orderInfo.status}
+              </ThemedText>
+              <ThemedText style={styles.footerText}> OrderTime</ThemedText>
+            </View>
+          </TouchableOpacity>
+        </View>
       ) : null}
     </View>
   );
@@ -242,10 +271,18 @@ const styles = StyleSheet.create({
   conditionalFooter: {
     justifyContent: 'center',
     alignItems: 'flex-start',
-    backgroundColor: 'grey',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
     height: 80,
+    backgroundColor: 'white',
+    borderWidth: 2,
+    borderTopColor: 'black',
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    padding: 5,
+  },
+  btnContainer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
   },
   footerText: {alignSelf: 'center'},
   footerText1: {alignSelf: 'center', flex: 1},
