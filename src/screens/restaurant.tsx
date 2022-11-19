@@ -90,7 +90,9 @@ const Restaurant = ({
         scrollEventThrottle={16}
         ref={sectionRef}
         sections={restaurantWithItems?.restaurantItems}
-        renderSectionFooter={() => <View style={styles.sectionFooter} />}
+        renderSectionFooter={() => (
+          <View style={!userInfo.darkMode && styles.sectionFooter} />
+        )}
         ListHeaderComponent={({}) => (
           <FoodItemHeader
             sectionRef={sectionRef}
@@ -105,6 +107,9 @@ const Restaurant = ({
         )}
         renderItem={({item}) => (
           <FoodItem
+            containerStyle={
+              !userInfo.darkMode && styles.borderBottomWidthAndColor
+            }
             price={item.price}
             name={item.name}
             description={item.details}
@@ -265,7 +270,11 @@ const styles = StyleSheet.create({
   },
   specialOffer: {top: 340},
   noSpecialOffer: {top: 240},
-  sectionFooter: {backgroundColor: '#f5f4f2', height: 15},
+  sectionFooter: {borderBottomColor: '#f5f4f2', borderBottomWidth: 15},
+  borderBottomWidthAndColor: {
+    borderBottomColor: '#dedddc',
+    borderBottomWidth: 1,
+  },
 });
 
 export default Restaurant;

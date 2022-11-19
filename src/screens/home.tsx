@@ -1,6 +1,12 @@
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useTheme} from '@react-navigation/native';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Pressable,
+} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from '../components/CustomButton';
@@ -19,6 +25,7 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
   const [restaurants, setRestaurants] = useState<Restaurants[]>();
   const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>();
   const [orderInfo, setOrderInfo] = useState<OrderDetails>();
+  const {colors} = useTheme();
 
   useFocusEffect(
     useCallback(() => {
@@ -218,19 +225,24 @@ const Home = ({navigation}: DrawerScreensProps<'Home'>) => {
       />
       {orderInfo ? (
         <View style={styles.btnContainer}>
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               navigation.navigate('OrderTracker');
             }}
-            style={styles.conditionalFooter}>
-            <ThemedText>{orderInfo.restaurant.title}</ThemedText>
+            style={[
+              styles.conditionalFooter,
+              {backgroundColor: colors.background},
+            ]}>
+            <ThemedText style={styles.footerText}>
+              {orderInfo.restaurant.title}
+            </ThemedText>
             <View style={styles.orderStatus}>
               <ThemedText style={styles.footerText1}>
                 {orderInfo.status}
               </ThemedText>
-              <ThemedText style={styles.footerText}> OrderTime</ThemedText>
+              <ThemedText style={styles.footerText2}> 25-32 mins</ThemedText>
             </View>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       ) : null}
     </View>
@@ -272,20 +284,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     height: 80,
-    backgroundColor: 'white',
     borderWidth: 2,
     borderTopColor: 'black',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    padding: 5,
+    paddingHorizontal: 20,
   },
   btnContainer: {
     position: 'absolute',
     bottom: 0,
     width: '100%',
   },
-  footerText: {alignSelf: 'center'},
-  footerText1: {alignSelf: 'center', flex: 1},
+  footerText: {fontWeight: 'bold', color: 'red'},
+  footerText2: {fontWeight: 'bold'},
+  footerText1: {fontWeight: 'bold', flex: 1},
   orderStatus: {
     flexDirection: 'row',
     justifyContent: 'center',
