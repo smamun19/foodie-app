@@ -14,7 +14,6 @@ export const darkTheme = {
   dark: true,
   colors: {
     ...DarkTheme.colors,
-
     background: 'black',
     text: 'white',
   },

@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {View, StyleSheet, Switch, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Switch, TouchableOpacity, Alert} from 'react-native';
 import CardView from '../components/CardView';
 import Container from '../components/Container';
 import CustomButton from '../components/CustomButton';
@@ -11,6 +11,7 @@ import Spacer from '../components/Spacer';
 import Divider from '../components/Divider';
 import BingMapsView from 'react-native-bing-maps';
 import ThemedText from '../components/ThemedText';
+import {createOrder} from '../services/user';
 
 const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
   const userInfo = useContext(UserContext);
@@ -18,12 +19,52 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+  const orderHandler = async () => {
+    try {
+      if (!userInfo.restaurantId) {
+        throw new Error();
+      }
+      const {details, message, statusCode} = await createOrder(
+        {
+          data: userInfo.cartItem,
+          restaurantId: userInfo.restaurantId,
+          subTotalFee: route.params.subTotal,
+          totalFee: route.params.totalAmount,
+        },
+        userInfo.voucher?.id,
+        userInfo.token,
+      );
+      if (statusCode !== 201) {
+        return Alert.alert('Error!', message, undefined, {
+          cancelable: true,
+        });
+      }
+      await userInfo.hydrate({
+        cartItem: [],
+        address: userInfo.address,
+        currentOrderId: details.id,
+        voucher: undefined,
+      });
+
+      navigation.navigate('OrderTracker');
+    } catch (error) {
+      return Alert.alert(
+        'Error!',
+        'Unable to process your request at this moment',
+        undefined,
+        {
+          cancelable: true,
+        },
+      );
+    }
+  };
+
   return (
     <Container
       header={
         <CustomHeader
           title="Checkout"
-          onLeftPress={() => navigation.navigate('Cart')}
+          onLeftPress={() => navigation.goBack()}
         />
       }
       footer={
@@ -42,7 +83,7 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
             containerStyle={styles.btn}
             textStyle={styles.btnText}
             title="Place order"
-            onPress={() => navigation.navigate('OrderTracker')}
+            onPress={orderHandler}
           />
         </View>
       }>
@@ -138,7 +179,8 @@ const Checkout = ({navigation, route}: RootStackScreensProps<'Checkout'>) => {
             return (
               <View key={e.compositeId} style={styles.address}>
                 <ThemedText style={styles.bold}>
-                  {e.quantity}x {e.name} - {e.variation}
+                  {e.quantity}x {e.name}
+                  {e.variation ? `- ${e.variation}` : null}
                 </ThemedText>
                 <ThemedText style={styles.bold}>
                   Tk {e.price * e.quantity}

@@ -47,6 +47,9 @@ const reducer = (
     case ActionType.REMOVE_VOUCHER:
       return {...state, voucher: undefined};
     case ActionType.ADD_TO_CART: {
+      if (!state.restaurantId) {
+        state.restaurantId = action.restaurantId;
+      }
       const isExistIndex = state.cartItem?.findIndex(
         e => e.compositeId === action.item?.compositeId,
       );
@@ -95,6 +98,8 @@ const Provider: FC<ProviderProps> = ({children}) => {
     email: state.email,
     phone: state.phone,
     address: state.address,
+    restaurantId: state.restaurantId,
+    currentOrderId: state.currentOrderId,
     id: state.id,
     updatedAt: state.updatedAt,
     roles: state.roles,
@@ -131,11 +136,18 @@ const Provider: FC<ProviderProps> = ({children}) => {
     logout: () => {
       dispacth({type: ActionType.LOGOUT, item: {price: 0, quantity: 0}});
     },
-    addItem: (item: CartItemTypes) => {
-      dispacth({type: ActionType.ADD_TO_CART, item});
+    addItem: (item: CartItemTypes, restaurantId?: string) => {
+      dispacth({
+        type: ActionType.ADD_TO_CART,
+        item,
+        restaurantId,
+      });
     },
     removeItem: (item: CartItemTypes) => {
-      dispacth({type: ActionType.REMOVE_FROM_CART, item});
+      dispacth({
+        type: ActionType.REMOVE_FROM_CART,
+        item,
+      });
     },
   };
 
@@ -163,6 +175,8 @@ const Provider: FC<ProviderProps> = ({children}) => {
       address,
       id,
       darkMode,
+      restaurantId,
+      currentOrderId,
     } = state;
     setItem('userInfo', {
       name,
@@ -175,6 +189,8 @@ const Provider: FC<ProviderProps> = ({children}) => {
       roles,
       address,
       id,
+      restaurantId,
+      currentOrderId,
       darkMode,
     });
   }, [state]);

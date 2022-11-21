@@ -1,7 +1,14 @@
 import {baseUrl} from '../constants/api';
 import {requestHandler} from '../utils/request';
 import {FetchDetails, FetchOk} from '../utils/types/api';
-import {Address, GeoLocation, User, Voucher} from '../utils/types/user';
+import {
+  Address,
+  GeoLocation,
+  Order,
+  OrderDetails,
+  User,
+  Voucher,
+} from '../utils/types/user';
 const addVoucherUrl = `${baseUrl}/user/addvoucher`;
 const userInfoUrl = `${baseUrl}/user/userinfo`;
 const editInfoUrl = `${baseUrl}/user/editinfo`;
@@ -11,6 +18,9 @@ const editAddressUrl = `${baseUrl}/user/edit-address`;
 const removeAddressUrl = `${baseUrl}/user/remove-address`;
 const reverseGeocodingUrl = `${baseUrl}/user/get-geo-address`;
 const getAddressUrl = `${baseUrl}/user/myaddresses`;
+const orderItemUrl = `${baseUrl}/user/order-item`;
+const currentOrderUrl = `${baseUrl}/user/current-order`;
+const findCurrentOrderUrl = `${baseUrl}/user/find-current-order`;
 
 export const addVoucher = async (name: string, token?: string) => {
   const result = await requestHandler(
@@ -130,6 +140,42 @@ export const getAddress = async (token?: string) => {
 export const removeAddress = async (id: number, token?: string) => {
   const result = await requestHandler(removeAddressUrl, 'POST', {id}, token);
   const res: FetchDetails<Address[]> = await result.json();
+
+  return res;
+};
+
+export const createOrder = async (
+  {data, restaurantId, subTotalFee, totalFee}: Order,
+  voucherId?: number,
+  token?: string,
+) => {
+  const result = await requestHandler(
+    orderItemUrl,
+    'POST',
+    {data, restaurantId, subTotalFee, totalFee, voucherId},
+    token,
+  );
+  const res: FetchDetails<OrderDetails> = await result.json();
+
+  return res;
+};
+
+export const currentOrder = async (id: string, token?: string) => {
+  const result = await requestHandler(
+    `${currentOrderUrl}?id=${id}`,
+    'GET',
+    undefined,
+    token,
+  );
+  const res: FetchDetails<OrderDetails> = await result.json();
+
+  return res;
+};
+
+export const findCurrentOrder = async (id: string, token?: string) => {
+  const result = await requestHandler(findCurrentOrderUrl, 'POST', {id}, token);
+
+  const res: FetchDetails<OrderDetails> = await result.json();
 
   return res;
 };

@@ -10,7 +10,7 @@ const CartCard = ({
   price,
   quantity,
   variation,
-  id,
+  itemId,
   compositeId,
 }: CartItemTypes) => {
   const userInfo = useContext(UserContext);
@@ -18,7 +18,7 @@ const CartCard = ({
   const removeItem = () => {
     if (variation) {
       userInfo.removeItem({
-        id: id,
+        itemId: itemId,
         variation: variation,
         price: price,
         quantity: 1,
@@ -29,7 +29,7 @@ const CartCard = ({
     }
 
     userInfo.removeItem({
-      id: id,
+      itemId: itemId,
       price: price,
       quantity: 1,
       name: name,
@@ -40,7 +40,7 @@ const CartCard = ({
   const addQuantity = () => {
     if (variation) {
       userInfo.addItem({
-        id: id,
+        itemId: itemId,
         variation: variation,
         price: price,
         quantity: 1,
@@ -51,7 +51,7 @@ const CartCard = ({
     }
 
     userInfo.addItem({
-      id: id,
+      itemId: itemId,
       price: price,
       quantity: 1,
       name: name,

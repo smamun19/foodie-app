@@ -34,10 +34,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
     return (
       <Container
         header={
-          <CustomHeader
-            title="Cart"
-            onLeftPress={() => navigation.navigate('Restaurant')}
-          />
+          <CustomHeader title="Cart" onLeftPress={() => navigation.goBack()} />
         }>
         <View style={styles.emptyCart}>
           <ThemedText>Hungry?</ThemedText>
@@ -52,13 +49,17 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
     );
   }
 
+  const addMoreItemHandler = () => {
+    if (!userInfo.restaurantId) {
+      return null;
+    }
+    navigation.navigate('Restaurant', {id: userInfo.restaurantId});
+  };
+
   return (
     <Container
       header={
-        <CustomHeader
-          title="Cart"
-          onLeftPress={() => navigation.navigate('Restaurant')}
-        />
+        <CustomHeader title="Cart" onLeftPress={() => navigation.goBack()} />
       }
       footer={
         <View style={styles.footer}>
@@ -96,7 +97,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
         {userInfo.cartItem.map(e => (
           <CartCard
             name={e.name}
-            id={e.id}
+            itemId={e.itemId}
             price={e.price}
             quantity={e.quantity}
             variation={e.variation}
@@ -110,6 +111,7 @@ const Cart = ({navigation}: RootStackScreensProps<'Cart'>) => {
           containerStyle={styles.addMoreBtnContainer}
           textStyle={styles.addMoreBtnText}
           title="Add more items"
+          onPress={addMoreItemHandler}
         />
         <Spacer height={30} />
         <View style={styles.subTotal}>
